@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Mochila" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/bdazzled_blue</item>
+        <item name="colorPrimaryDark">@color/pale_cerulean</item>
+        <item name="colorPrimaryVariant">@color/bdazzled_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/bdazzled_blue</item>
+        <item name="colorSecondaryVariant">@color/bdazzled_blue</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
+    </style>
+
+    <style name="Theme.Mochila.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Mochila.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Mochila.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
