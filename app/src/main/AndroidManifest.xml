@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mochila">
-        <activity android:name=".principal.TarefaActivity"></activity>
+        <activity android:name=".principal.TarefaActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".principal.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
