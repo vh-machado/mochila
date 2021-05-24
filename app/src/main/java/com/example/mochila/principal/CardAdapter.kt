@@ -21,8 +21,8 @@ class CardAdapter(
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentItem = cardList[position]
 
-        holder.textView1.text = currentItem.text1
-        holder.textView2.text = currentItem.text2
+        holder.tarefaTitulo.text = currentItem.text1
+        holder.tarefaData.text = currentItem.text2
         holder.progressTask.setProgress(currentItem.progresso,true)
     }
 
@@ -30,8 +30,8 @@ class CardAdapter(
 
     inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val textView1: TextView = itemView.text_view_1
-        val textView2: TextView = itemView.text_view_2
+        val tarefaTitulo: TextView = itemView.tarefa_titulo
+        val tarefaData: TextView = itemView.tarefa_data
         val progressTask: ProgressBar = itemView.progress_task
 
         init {

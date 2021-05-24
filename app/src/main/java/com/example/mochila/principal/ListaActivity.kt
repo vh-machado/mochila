@@ -1,17 +1,26 @@
 package com.example.mochila.principal
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mochila.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlin.random.Random
 
 class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
     private val cardList = gerarLista(7)
     private val adapter = CardAdapter(cardList,this)
+    val TAG = "ListaActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +29,23 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
+
+        botao_signout.setOnClickListener {
+            //Firebase.auth.signOut()
+            FirebaseAuth.getInstance().signOut()
+            var googleSignInClient: GoogleSignInClient
+            val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build()
+            googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+            googleSignInClient.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
+        botao_menu.setOnClickListener{
+            startActivity(Intent(this, TarefaActivity::class.java))
+        }
     }
 
     fun inserirItem(view: View){
@@ -27,7 +53,7 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
 
         val newItem = CardItem(
             "Nova tarefa na posição $index",
-            "Descrição",
+            "Data",
             0
         )
 
@@ -60,9 +86,28 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
                 else -> R.drawable.ic_sun
             }
              */
-            val item = CardItem("Tarefa $i", "Descrição",50)
+            val item = CardItem("Tarefa $i", "Data",50)
             list += item
         }
         return list
+    }
+
+    private fun setTabs() {
+
+        val adapter = ViewPagerListaAdapter(supportFragmentManager)
+        val listaDisciplina = DisciplinaFragment.newInstance(true)
+        adapter.addFragment(listaDisciplina, "Cálculo")
+        adapter.addFragment(listaDisciplina, "Programação")
+        adapter.addFragment(listaDisciplina, "Matemática")
+
+        viewPager_Lista.adapter = adapter
+        tabLayout_Lista.setupWithViewPager(viewPager_Lista)
+
+//        //Definição dos ícones de cada tab
+//        tabLayout_HomePage.getTabAt(0)!!.setIcon(R.drawable.ic_series_roxo)
+//        tabLayout_HomePage.getTabAt(1)!!.setIcon(R.drawable.ic_home_roxo)
+//        tabLayout_HomePage.getTabAt(2)!!.setIcon(R.drawable.ic_claquete_flaticon)
+        // Seta o item principal
+        viewPager_Lista.setCurrentItem(1)
     }
 }
