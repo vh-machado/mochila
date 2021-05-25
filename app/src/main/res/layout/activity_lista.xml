@@ -1,122 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".principal.ListaActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/barra_menu"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:backgroundTint="@color/gunmetal">
-
-        <RelativeLayout
-            android:id="@+id/layout_menu"
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:paddingRight="4dp"
-            android:paddingLeft="4dp"
-            >
-            <ImageView
-                android:id="@+id/botao_menu"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:padding="5dp"
-                android:src="@drawable/ic_menu"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MOCHILA"
-                android:layout_margin="8dp"
-                android:padding="4dp"
-                android:layout_toEndOf="@id/botao_menu"
-                android:textColor="@color/white"
-                android:fontFamily="@font/fredoka_one"
-                android:textSize="20sp"/>
-
-            <ImageView
-                android:id="@+id/botao_signout"
-                android:layout_width="40dp"
-                android:layout_margin="8dp"
-                android:padding="5dp"
-                android:layout_alignParentEnd="true"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_signout"
-                />
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/barra_tabs"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout_Lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_below="@id/barra_menu"
-        tools:context=".principal.ListaActivity">
+        app:tabTextColor="@color/white"
+        android:background="@color/bdazzled_blue"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabPadding="3dp"
+        android:isScrollContainer="true"/>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout_Lista"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:tabTextColor="@color/white"
-            app:tabIndicatorColor="@color/bdazzled_blue"
-            app:tabSelectedTextColor="@color/bdazzled_blue"/>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager_Lista"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </androidx.viewpager.widget.ViewPager>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager_Lista"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:layout_below="@id/barra_tabs"
-        android:visibility="visible"
-        tools:listitem="@layout/card_item"
-        android:background="@color/pale_cerulean"/>
-    <!--
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:clipToPadding="true"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/burnt_sienna"
-            android:text="Inserir item"
-            android:layout_weight="1"
-            android:onClick="inserirItem"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/burnt_sienna"
-            android:text="Remover item"
-            android:layout_weight="1"
-            android:onClick="removerItem"/>
-
-    </LinearLayout>
-    -->
-</RelativeLayout>
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
+</LinearLayout>

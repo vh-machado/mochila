@@ -17,21 +17,26 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlin.random.Random
 
-class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
+class ListaActivity : AppCompatActivity() {
+    /*
+    , CardAdapter.OnItemClickListener
     private val cardList = gerarLista(7)
     private val adapter = CardAdapter(cardList,this)
     val TAG = "ListaActivity"
-
+    */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
+        setTabs()
 
+        /*
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
+        */
 
+        /*
         botao_signout.setOnClickListener {
-            //Firebase.auth.signOut()
             FirebaseAuth.getInstance().signOut()
             var googleSignInClient: GoogleSignInClient
             val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -46,8 +51,11 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
         botao_menu.setOnClickListener{
             startActivity(Intent(this, TarefaActivity::class.java))
         }
+        */
+
     }
 
+    /*
     fun inserirItem(view: View){
         val index: Int = Random.nextInt(8)
 
@@ -91,14 +99,23 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
         }
         return list
     }
+    */
 
     private fun setTabs() {
 
         val adapter = ViewPagerListaAdapter(supportFragmentManager)
-        val listaDisciplina = DisciplinaFragment.newInstance(true)
-        adapter.addFragment(listaDisciplina, "Cálculo")
-        adapter.addFragment(listaDisciplina, "Programação")
-        adapter.addFragment(listaDisciplina, "Matemática")
+        val listaCalculo = DisciplinaFragment.newInstance(true)
+        val listaProgramacao = DisciplinaFragment.newInstance(true)
+        val listaMatematica = DisciplinaFragment.newInstance(true)
+        val listaFilosofia = DisciplinaFragment.newInstance(true)
+        val listaSociologia = DisciplinaFragment.newInstance(true)
+        val listaMetodologia = DisciplinaFragment.newInstance(true)
+        adapter.addFragment(listaCalculo, "Cálculo")
+        adapter.addFragment(listaProgramacao, "Programação")
+        adapter.addFragment(listaMatematica, "Matemática")
+        adapter.addFragment(listaFilosofia, "Filosofia")
+        adapter.addFragment(listaSociologia, "Sociologia")
+        adapter.addFragment(listaMetodologia, "Metodologia")
 
         viewPager_Lista.adapter = adapter
         tabLayout_Lista.setupWithViewPager(viewPager_Lista)
@@ -108,6 +125,6 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
 //        tabLayout_HomePage.getTabAt(1)!!.setIcon(R.drawable.ic_home_roxo)
 //        tabLayout_HomePage.getTabAt(2)!!.setIcon(R.drawable.ic_claquete_flaticon)
         // Seta o item principal
-        viewPager_Lista.setCurrentItem(1)
+        viewPager_Lista.setCurrentItem(0)
     }
 }
