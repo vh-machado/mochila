@@ -8,6 +8,50 @@
     android:orientation="vertical"
     tools:context=".principal.ListaActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/layout_menu"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            >
+            <ImageView
+                android:id="@+id/botao_menu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_menu"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MOCHILA"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:layout_toEndOf="@id/botao_menu"
+                android:textColor="@color/white"
+                android:fontFamily="@font/fredoka_one"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/botao_signout"
+                android:layout_width="40dp"
+                android:layout_margin="8dp"
+                android:padding="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_signout"
+                />
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_Lista"
         android:layout_width="match_parent"
@@ -17,7 +61,7 @@
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"
         app:tabPadding="3dp"
-        android:isScrollContainer="true"/>
+        app:tabMode="scrollable"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager_Lista"

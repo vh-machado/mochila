@@ -22,11 +22,8 @@ class DisciplinaFragment: Fragment(), CardAdapter.OnItemClickListener{
     var Disciplina: Boolean? = null
     private lateinit var cardAdapter: CardAdapter
 
-    // alt
     private val cardList = gerarLista(7)
-    //private val adapter = CardAdapter(cardList,this)
     val TAG = "ListaActivity"
-    // alt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,14 +48,6 @@ class DisciplinaFragment: Fragment(), CardAdapter.OnItemClickListener{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_disciplina, container, false)
-        /*
-        Picasso.get().load(mAuth?.photoUrl).into(view.iv_perfil)
-        view.tv_perfil_name.setText(mAuth?.displayName)
-        view.iv_exit_app.setOnClickListener {
-            //signOut()
-            InicarSplash()
-        }
-         */
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
         view.recycler_view.setHasFixedSize(true)
         cardAdapter = CardAdapter(cardList,this)
@@ -66,7 +55,6 @@ class DisciplinaFragment: Fragment(), CardAdapter.OnItemClickListener{
         return view
     }
 
-    // alt
     fun inserirItem(view: View){
         val index: Int = Random.nextInt(8)
 
@@ -98,17 +86,9 @@ class DisciplinaFragment: Fragment(), CardAdapter.OnItemClickListener{
     private fun gerarLista(size: Int): ArrayList<CardItem> {
         val list = ArrayList<CardItem>()
         for (i in 0 until size) {
-            /*
-            val drawable = when (i % 3) {
-                0 -> R.drawable.ic_baseline
-                1 -> R.drawable.ic_assignment
-                else -> R.drawable.ic_sun
-            }
-             */
             val item = CardItem("Tarefa $i", "Data",50)
             list += item
         }
         return list
     }
-    // alt
 }

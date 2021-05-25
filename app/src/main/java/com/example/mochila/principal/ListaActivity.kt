@@ -18,24 +18,12 @@ import kotlinx.android.synthetic.main.activity_lista.*
 import kotlin.random.Random
 
 class ListaActivity : AppCompatActivity() {
-    /*
-    , CardAdapter.OnItemClickListener
-    private val cardList = gerarLista(7)
-    private val adapter = CardAdapter(cardList,this)
-    val TAG = "ListaActivity"
-    */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
         setTabs()
 
-        /*
-        recycler_view.adapter = adapter
-        recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.setHasFixedSize(true)
-        */
-
-        /*
         botao_signout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             var googleSignInClient: GoogleSignInClient
@@ -51,7 +39,6 @@ class ListaActivity : AppCompatActivity() {
         botao_menu.setOnClickListener{
             startActivity(Intent(this, TarefaActivity::class.java))
         }
-        */
 
     }
 
@@ -75,30 +62,6 @@ class ListaActivity : AppCompatActivity() {
         cardList.removeAt(index)
         adapter.notifyItemRemoved(index)
     }
-
-    override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Tarefa $position clicada", Toast.LENGTH_SHORT).show()
-        val clickedItem: CardItem = cardList[position]
-        clickedItem.text1 = "clicado"
-        clickedItem.progresso = clickedItem.progresso + 10
-        adapter.notifyItemChanged(position)
-    }
-
-    private fun gerarLista(size: Int): ArrayList<CardItem> {
-        val list = ArrayList<CardItem>()
-        for (i in 0 until size) {
-            /*
-            val drawable = when (i % 3) {
-                0 -> R.drawable.ic_baseline
-                1 -> R.drawable.ic_assignment
-                else -> R.drawable.ic_sun
-            }
-             */
-            val item = CardItem("Tarefa $i", "Data",50)
-            list += item
-        }
-        return list
-    }
     */
 
     private fun setTabs() {
@@ -119,12 +82,6 @@ class ListaActivity : AppCompatActivity() {
 
         viewPager_Lista.adapter = adapter
         tabLayout_Lista.setupWithViewPager(viewPager_Lista)
-
-//        //Definição dos ícones de cada tab
-//        tabLayout_HomePage.getTabAt(0)!!.setIcon(R.drawable.ic_series_roxo)
-//        tabLayout_HomePage.getTabAt(1)!!.setIcon(R.drawable.ic_home_roxo)
-//        tabLayout_HomePage.getTabAt(2)!!.setIcon(R.drawable.ic_claquete_flaticon)
-        // Seta o item principal
         viewPager_Lista.setCurrentItem(0)
     }
 }
