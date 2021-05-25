@@ -4,6 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
+    android:background="@color/gunmetal"
+    tools:context=".principal.SplashActivity">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="106dp"
+        android:layout_height="206dp"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.462"
+        app:srcCompat="@drawable/logo_mochila_claro" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="205dp"
+        android:layout_height="67dp"
+        android:fontFamily="@font/fredoka_one"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="MOCHILA"
+        android:textColor="@color/burnt_sienna"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.265" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="90.5dp"
+        android:background="@drawable/design_signin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="90.5dp"
+        android:background="@drawable/design_signin"
+        android:rotationX="180"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

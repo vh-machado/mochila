@@ -17,21 +17,26 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlin.random.Random
 
-class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
+class ListaActivity : AppCompatActivity() {
+    /*
+    , CardAdapter.OnItemClickListener
     private val cardList = gerarLista(7)
     private val adapter = CardAdapter(cardList,this)
     val TAG = "ListaActivity"
-
+    */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
+        setTabs()
 
+        /*
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
+        */
 
+        /*
         botao_signout.setOnClickListener {
-            //Firebase.auth.signOut()
             FirebaseAuth.getInstance().signOut()
             var googleSignInClient: GoogleSignInClient
             val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -46,8 +51,11 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
         botao_menu.setOnClickListener{
             startActivity(Intent(this, TarefaActivity::class.java))
         }
+        */
+
     }
 
+    /*
     fun inserirItem(view: View){
         val index: Int = Random.nextInt(8)
 
@@ -91,6 +99,7 @@ class ListaActivity : AppCompatActivity(), CardAdapter.OnItemClickListener {
         }
         return list
     }
+    */
 
     private fun setTabs() {
 
