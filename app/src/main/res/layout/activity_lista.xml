@@ -14,8 +14,10 @@
         android:layout_height="wrap_content"
         app:tabTextColor="@color/white"
         android:background="@color/bdazzled_blue"
-        app:tabIndicatorColor="@color/bdazzled_blue"
-        app:tabSelectedTextColor="@color/bdazzled_blue"/>
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabPadding="3dp"
+        android:isScrollContainer="true"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager_Lista"

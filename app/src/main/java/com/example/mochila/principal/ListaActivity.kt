@@ -104,10 +104,18 @@ class ListaActivity : AppCompatActivity() {
     private fun setTabs() {
 
         val adapter = ViewPagerListaAdapter(supportFragmentManager)
-        val listaDisciplina = DisciplinaFragment.newInstance(true)
-        adapter.addFragment(listaDisciplina, "Cálculo")
-        adapter.addFragment(listaDisciplina, "Programação")
-        adapter.addFragment(listaDisciplina, "Matemática")
+        val listaCalculo = DisciplinaFragment.newInstance(true)
+        val listaProgramacao = DisciplinaFragment.newInstance(true)
+        val listaMatematica = DisciplinaFragment.newInstance(true)
+        val listaFilosofia = DisciplinaFragment.newInstance(true)
+        val listaSociologia = DisciplinaFragment.newInstance(true)
+        val listaMetodologia = DisciplinaFragment.newInstance(true)
+        adapter.addFragment(listaCalculo, "Cálculo")
+        adapter.addFragment(listaProgramacao, "Programação")
+        adapter.addFragment(listaMatematica, "Matemática")
+        adapter.addFragment(listaFilosofia, "Filosofia")
+        adapter.addFragment(listaSociologia, "Sociologia")
+        adapter.addFragment(listaMetodologia, "Metodologia")
 
         viewPager_Lista.adapter = adapter
         tabLayout_Lista.setupWithViewPager(viewPager_Lista)
@@ -117,6 +125,6 @@ class ListaActivity : AppCompatActivity() {
 //        tabLayout_HomePage.getTabAt(1)!!.setIcon(R.drawable.ic_home_roxo)
 //        tabLayout_HomePage.getTabAt(2)!!.setIcon(R.drawable.ic_claquete_flaticon)
         // Seta o item principal
-        viewPager_Lista.setCurrentItem(1)
+        viewPager_Lista.setCurrentItem(0)
     }
 }
