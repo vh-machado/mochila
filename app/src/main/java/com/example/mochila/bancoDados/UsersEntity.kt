@@ -8,7 +8,5 @@ data class UsersEntity (
     @PrimaryKey(autoGenerate = false)
     val id: String,
     var nome: String,
-    var email: String,
-    var instituicao: String,
-    var curso: String
+    var email: String
 )

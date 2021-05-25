@@ -22,17 +22,12 @@ class RegistroActivity : AppCompatActivity() {
         botaoRegistrar.setOnClickListener{
             var estudante = Usuario(
                 nome.getText().toString(),
-                email.getText().toString(),
-                instituicao.getText().toString(),
-                curso.getText().toString()
-            )
+                email.getText().toString())
             val id = UUID.randomUUID().toString()
             val userScope = UserScope(
                 id,
                 nome.getText().toString(),
-                email.getText().toString(),
-                instituicao.getText().toString(),
-                curso.getText().toString()
+                email.getText().toString()
             )
             /*
             addUserList(userScope)
@@ -46,11 +41,11 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     fun addUserList(userScope: UserScope) {
-        viewModelUser.saveNewMedia(UsersEntity(userScope.id, userScope.nome, userScope.email, userScope.instituicao, userScope.curso))
+        viewModelUser.saveNewMedia(UsersEntity(userScope.id, userScope.nome, userScope.email))
     }
 
     fun removeUserList(userScope: UserScope) {
-        viewModelUser.removeMedia(UsersEntity(userScope.id, userScope.nome, userScope.email, userScope.instituicao, userScope.curso))
+        viewModelUser.removeMedia(UsersEntity(userScope.id, userScope.nome, userScope.email))
     }
 
 
