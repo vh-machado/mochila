@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".principal.TarefaActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/barra_menu"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/gunmetal">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/layout_menu"
@@ -31,15 +31,10 @@
                 android:id="@+id/mochila_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="5dp"
+                android:layout_margin="8dp"
                 android:layout_toEndOf="@id/botao_menu"
                 android:fontFamily="@font/fredoka_one"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:paddingStart="4dp"
+                android:padding="4dp"
                 android:text="MOCHILA"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
@@ -53,24 +48,24 @@
                 android:layout_toEndOf="@id/mochila_menu"
                 android:fontFamily="@font/roboto_black"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:paddingEnd="4dp"
-                android:text="• Disciplina"
+                android:paddingBottom="4dp"
+                android:text="•  Disciplina"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/barra_menu"
         android:background="@color/pale_cerulean"
         android:elevation="5dp"
-        android:paddingTop="10dp"
         android:paddingLeft="15dp"
+        android:paddingTop="10dp"
         android:paddingRight="15dp">
 
         <RelativeLayout
@@ -100,9 +95,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_toEndOf="@id/circulo_card"
+                android:fontFamily="@font/roboto_black"
                 android:padding="8dp"
                 android:text="Título da tarefa"
-                android:fontFamily="@font/roboto_black"
                 android:textColor="@color/white"
                 android:textSize="19sp"
                 android:textStyle="bold" />
@@ -112,10 +107,10 @@
             android:id="@+id/card1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#F1F3F6"
             android:layout_below="@id/layout_titulo"
-            app:flow_horizontalAlign="center"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="#F1F3F6"
+            app:flow_horizontalAlign="center">
 
             <ScrollView
                 android:id="@+id/scroll"
@@ -452,9 +447,9 @@
                                 android:layout_marginBottom="4dp"
                                 android:background="@drawable/rounded_shape"
                                 android:backgroundTint="@color/bdazzled_blue"
+                                android:fontFamily="@font/roboto_black"
                                 android:padding="8dp"
                                 android:text="Adicionar"
-                                android:fontFamily="@font/roboto_black"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -464,4 +459,4 @@
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

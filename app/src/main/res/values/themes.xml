@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Mochila" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/bdazzled_blue</item>
-        <item name="colorPrimaryDark">@color/pale_cerulean</item>
+        <item name="colorPrimary">@color/gunmetal</item>
+        <item name="colorPrimaryDark">@color/gunmetal</item>
         <item name="colorPrimaryVariant">@color/bdazzled_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
