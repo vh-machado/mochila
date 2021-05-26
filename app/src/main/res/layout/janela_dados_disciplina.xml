@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_shape"
+    android:backgroundTint="@color/light_cyan"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/botao_fechar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="clip_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_fechar"
+            app:tint="@color/gunmetal" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:contentDescription="image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_lista"
+            app:tint="@color/burnt_sienna" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:lines="2"
+        android:padding="10dp"
+        android:text="Consulte as informações da disciplina ou exclua a disciplina para excluir a lista"
+        android:textColor="@color/gunmetal"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/nome_disciplina"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_shape"
+        android:backgroundTint="@color/pale_cerulean"
+        android:elevation="5dp"
+        android:fontFamily="@font/roboto"
+        android:padding="15dp"
+        android:text="Disciplina"
+        android:textColor="@color/gunmetal"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/campo_nome_professor"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_shape"
+        android:backgroundTint="@color/pale_cerulean"
+        android:elevation="5dp"
+        android:fontFamily="@font/roboto"
+        android:padding="15dp"
+        android:text="Professor"
+        android:textColor="@color/gunmetal"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/campo_email_professor"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_shape"
+        android:backgroundTint="@color/pale_cerulean"
+        android:elevation="5dp"
+        android:fontFamily="@font/roboto"
+        android:padding="15dp"
+        android:text="E-mail do professor"
+        android:textColor="@color/gunmetal"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <ImageButton
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_shape"
+            android:elevation="5dp"
+            android:src="@drawable/ic_deletar" />
+
+        <android.widget.Button
+            android:id="@+id/botao_confirmar_excluir_disciplina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_shape"
+            android:backgroundTint="#701F0A"
+            android:elevation="5dp"
+            android:fontFamily="@font/roboto_black"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Excluir"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</LinearLayout>
