@@ -18,7 +18,7 @@ class RegistroActivity : AppCompatActivity() {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
-
+        /*
         botaoRegistrar.setOnClickListener{
             var estudante = Usuario(
                 nome.getText().toString(),
@@ -47,6 +47,7 @@ class RegistroActivity : AppCompatActivity() {
     fun removeUserList(userScope: UserScope) {
         viewModelUser.removeMedia(UsersEntity(userScope.id, userScope.nome, userScope.email))
     }
+  */
 
-
+    }
 }
