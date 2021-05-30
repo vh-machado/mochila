@@ -12,12 +12,14 @@
         <activity android:name=".principal.janelinhaTarefa">
      
         </activity>
-        <activity android:name=".principal.SplashActivity"></activity>
+        <activity android:name=".principal.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
         <activity
             android:name=".principal.TarefaActivity"
             android:windowSoftInputMode="adjustPan" />

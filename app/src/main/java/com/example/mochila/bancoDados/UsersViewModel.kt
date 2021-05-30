@@ -39,5 +39,9 @@ class UsersViewModel(app: Application): AndroidViewModel(app) {
             repository.updateDisciplinas(disciplinas, id)
         }
     }
+
+    fun lerDisciplinas(id: String): List<String> {
+        return repository.getDisciplinasListTask(id)
+    }
 }
 
