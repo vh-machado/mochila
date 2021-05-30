@@ -14,4 +14,10 @@ interface TarefasDAO {
 
     @Delete
     suspend fun removeOfTarefasList(tarefa: TarefaEntity)
+
+    @Update
+    suspend fun updateTarefas(tarefa: TarefaEntity)
+
+
+
 }

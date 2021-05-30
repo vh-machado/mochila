@@ -9,5 +9,6 @@ data class TarefaEntity (
     var dataEntrega: Int,
     var concluido: Boolean,
     var etiquetas: ArrayList<String>,
-    var checkList: ArrayList<String>
+    var checkList: ArrayList<String>,
+
 )
