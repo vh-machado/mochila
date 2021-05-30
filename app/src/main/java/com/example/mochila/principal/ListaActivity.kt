@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mochila.R
+import com.example.mochila.bancoDados.UsersEntity
+import com.example.mochila.bancoDados.UsersViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -15,11 +18,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
+import kotlinx.android.synthetic.main.janela_registro_disciplina.*
+import java.util.ArrayList
 import kotlin.random.Random
 
 class ListaActivity : AppCompatActivity() {
 
+    private lateinit var viewModelUser: UsersViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
         setTabs()
@@ -37,8 +45,9 @@ class ListaActivity : AppCompatActivity() {
         }
 
         botao_menu.setOnClickListener{
-            startActivity(Intent(this, TarefaActivity::class.java))
+            startActivity(Intent(this, RegistroActivity::class.java))
         }
+        //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()
 
     }
 
@@ -66,7 +75,8 @@ class ListaActivity : AppCompatActivity() {
 
     private fun setTabs() {
 
-        val adapter = ViewPagerListaAdapter(supportFragmentManager)
+
+        /*
         val listaCalculo = DisciplinaFragment.newInstance(true)
         val listaProgramacao = DisciplinaFragment.newInstance(true)
         val listaMatematica = DisciplinaFragment.newInstance(true)
@@ -79,9 +89,74 @@ class ListaActivity : AppCompatActivity() {
         adapter.addFragment(listaFilosofia, "Filosofia")
         adapter.addFragment(listaSociologia, "Sociologia")
         adapter.addFragment(listaMetodologia, "Metodologia")
+        */
 
+        //var dadosUsuario: UsersEntity?
+        //val position = intent.getSerializableExtra("position") as? Int
+        /*
+        viewModelUser.userList.observe(this) {
+            dadosUsuario = it[0]
+            disciplinas = dadosUsuario?.disciplinas.toString()
+            Log.i("Fragmento a ser criado", disciplinas)
+        }
+         */
+        viewModelUser.userList.observe(this){
+            Log.i("Usuário", it.toString())
+            if (viewModelUser.userList.value?.get(0)?.disciplinas != ""){
+                val adapter = ViewPagerListaAdapter(supportFragmentManager)
+                var disciplinas = "Lista"
+                disciplinas = viewModelUser.userList.value!![0].disciplinas
+                var listaDisciplina = DisciplinaFragment.newInstance(true)
+                adapter.addFragment(listaDisciplina, disciplinas)
+                viewPager_Lista.adapter = adapter
+                tabLayout_Lista.setupWithViewPager(viewPager_Lista)
+                viewPager_Lista.setCurrentItem(0)
+                Log.i("Usuário", it.toString())
+                Log.i("Usuário", disciplinas)
+            }else{
+                Toast.makeText(this,"Adicione disciplinas no perfil para criar listas.", Toast.LENGTH_LONG).show()
+            }
+
+        }
+        /*
+        var listaDisciplina = DisciplinaFragment.newInstance(true)
+        adapter.addFragment(listaDisciplina, disciplinas)
         viewPager_Lista.adapter = adapter
         tabLayout_Lista.setupWithViewPager(viewPager_Lista)
         viewPager_Lista.setCurrentItem(0)
+        */
+
+        /*
+        val position = intent.getSerializableExtra("position") as? Int
+        viewModelUser.userList.observe(this) {
+            var userDados = it[position!!]
+            var disciplinas = userDados.disciplinas
+        }
+
+        var listaDisciplina = DisciplinaFragment.newInstance(true)
+        adapter.addFragment(listaDisciplina, disciplinas)
+
+         */
+        /*
+        var disciplinas: ArrayList<String>? = null
+        val usuario = intent.getSerializableExtra("usuario") as? Boolean
+        if(usuario == true) {
+            val position = intent.getSerializableExtra("position") as? Int
+            viewModelUser.userList.observe(this) {
+                var userDados = it[position!!]
+                disciplinas = userDados.disciplinas
+            }
+        }
+        disciplinas!!.forEach {
+            adapter.addFragment(listaDisciplina, it)
+        }
+        */
+
+        /*
+        viewPager_Lista.adapter = adapter
+        tabLayout_Lista.setupWithViewPager(viewPager_Lista)
+        viewPager_Lista.setCurrentItem(0)
+        */
+
     }
 }

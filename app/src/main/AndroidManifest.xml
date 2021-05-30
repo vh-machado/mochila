@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mochila">
         <activity android:name=".principal.janelinhaTarefa">
-
+     
         </activity>
         <activity android:name=".principal.SplashActivity"></activity>
             <intent-filter>
