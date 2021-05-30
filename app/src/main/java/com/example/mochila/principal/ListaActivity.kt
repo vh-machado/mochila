@@ -1,5 +1,6 @@
 package com.example.mochila.principal
 
+import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,8 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mochila.R
-import com.example.mochila.bancoDados.UsersEntity
-import com.example.mochila.bancoDados.UsersViewModel
+import com.example.mochila.bancoDados.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -28,6 +28,7 @@ class ListaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
         setTabs()
@@ -100,6 +101,7 @@ class ListaActivity : AppCompatActivity() {
             Log.i("Fragmento a ser criado", disciplinas)
         }
          */
+
         viewModelUser.userList.observe(this){
             Log.i("Usuário", it.toString())
             if (viewModelUser.userList.value?.get(0)?.disciplinas != ""){
@@ -118,25 +120,8 @@ class ListaActivity : AppCompatActivity() {
             }
 
         }
-        /*
-        var listaDisciplina = DisciplinaFragment.newInstance(true)
-        adapter.addFragment(listaDisciplina, disciplinas)
-        viewPager_Lista.adapter = adapter
-        tabLayout_Lista.setupWithViewPager(viewPager_Lista)
-        viewPager_Lista.setCurrentItem(0)
-        */
 
-        /*
-        val position = intent.getSerializableExtra("position") as? Int
-        viewModelUser.userList.observe(this) {
-            var userDados = it[position!!]
-            var disciplinas = userDados.disciplinas
-        }
 
-        var listaDisciplina = DisciplinaFragment.newInstance(true)
-        adapter.addFragment(listaDisciplina, disciplinas)
-
-         */
         /*
         var disciplinas: ArrayList<String>? = null
         val usuario = intent.getSerializableExtra("usuario") as? Boolean

@@ -22,4 +22,8 @@ class UsersRepository(private val usersDAO: UsersDAO){
         usersDAO.update(disciplinas, id)
     }
 
+    fun getDisciplinasListTask(id: String): List<String> {
+        var lerDadosDiciplina: List<String> = usersDAO.getDisciplinasList(id)
+        return lerDadosDiciplina
+    }
 }
