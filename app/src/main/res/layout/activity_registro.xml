@@ -9,6 +9,51 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/layout_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp">
+
+            <ImageView
+                android:id="@+id/botao_menu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_menu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_toEndOf="@id/botao_menu"
+                android:fontFamily="@font/fredoka_one"
+                android:padding="4dp"
+                android:text="MOCHILA"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/botao_signout"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_signout" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -34,7 +79,7 @@
                 android:layout_height="488dp"
                 android:layout_marginTop="225dp"
                 android:backgroundTint="@color/bdazzled_blue"
-                app:cardCornerRadius="10dp"
+                app:cardCornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.476"
@@ -46,40 +91,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:padding="8dp">
+                    android:padding="2dp">
 
-
-                    <TextView
-                        android:id="@+id/textView4"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@id/textView5"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="11dp"
-                        android:layout_marginTop="75dp"
-                        android:layout_marginEnd="22dp"
-                        android:layout_marginBottom="311dp"
-                        android:hint="Nome:"
-                        android:textColorHint="@color/white" />
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:layout_marginTop="70dp">
+
+                        <TextView
+                            android:id="@+id/textview_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:text="Nome"
+                            android:textColor="@color/white"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="370dp"
-                        android:layout_height="37dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="11dp"
-                        android:layout_marginTop="116dp"
-                        android:layout_marginEnd="22dp"
-                        android:layout_marginBottom="273dp"
-                        android:hint="E-mail:"
-                        android:textColorHint="@color/white" />
+                        <TextView
+                            android:id="@+id/textview_useremail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textview_username"
+                            android:fontFamily="@font/roboto"
+                            android:text="E-mail"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
 
                     <com.google.android.material.card.MaterialCardView
 
@@ -90,12 +134,9 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-
                         android:layout_marginTop="166dp"
-
-                        android:layout_marginEnd="3dp"
                         android:backgroundTint="@color/white"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.476"
@@ -106,7 +147,6 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingLeft="5dp"
                             android:paddingTop="5dp">
 
                             <TextView
@@ -117,15 +157,15 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginEnd="168dp"
-                                android:layout_marginBottom="206dp"
-                                android:fontFamily="@font/roboto"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="9dp"
+                                android:layout_marginEnd="164dp"
+                                android:layout_marginBottom="207dp"
+                                android:fontFamily="@font/roboto_black"
+                                android:padding="3dp"
                                 android:text="Disciplinas"
-                                android:textColor="@color/bdazzled_blue"
-                                android:textSize="18sp"
-                                android:textStyle="bold">
+                                android:textColor="@color/burnt_sienna"
+                                android:textSize="18sp">
 
                             </TextView>
 
@@ -137,17 +177,18 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:layout_marginTop="35dp"
-                                android:layout_marginEnd="10dp"
-                                android:layout_marginBottom="17dp"
+                                android:layout_marginTop="50dp"
+                                android:layout_marginBottom="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
                                 android:visibility="visible"
                                 tools:visibility="visible">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
                                     android:orientation="vertical">
 
                                     <com.google.android.material.card.MaterialCardView
@@ -155,18 +196,14 @@
                                         android:id="@+id/materialCardView3"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentStart="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_alignParentBottom="true"
-
                                         android:layout_marginEnd="3dp"
                                         android:layout_marginBottom="10dp"
                                         android:backgroundTint="@color/light_cyan"
-                                        android:padding="3dp"
+                                        android:padding="10dp"
                                         android:paddingBottom="15dp"
                                         app:cardBackgroundColor="@color/light_cyan"
                                         app:cardCornerRadius="10dp"
+                                        app:cardElevation="5dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintHorizontal_bias="0.476"
@@ -178,7 +215,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
-                                            android:padding="8dp">
+                                            android:padding="2dp">
 
 
                                             <TextView
@@ -198,7 +235,7 @@
                                                 android:layout_marginRight="5dp"
                                                 android:layout_marginBottom="28dp"
                                                 android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
+                                                android:fontFamily="@font/roboto"
                                                 android:hint="Disciplina:"
                                                 android:textColorHint="@color/browser_actions_title_color"
                                                 android:textSize="14sp">
@@ -246,17 +283,13 @@
                                         android:id="@+id/materialCardView5"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentStart="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_alignParentBottom="true"
-
                                         android:layout_marginEnd="3dp"
                                         android:layout_marginBottom="10dp"
                                         android:backgroundTint="@color/light_cyan"
                                         android:padding="3dp"
                                         app:cardBackgroundColor="@color/light_cyan"
                                         app:cardCornerRadius="10dp"
+                                        app:cardElevation="5dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintHorizontal_bias="0.476"
@@ -268,7 +301,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
-                                            android:padding="8dp">
+                                            android:padding="2dp">
 
 
                                             <TextView
@@ -337,17 +370,13 @@
                                         android:id="@+id/materialCardView7"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentStart="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_alignParentBottom="true"
-
                                         android:layout_marginEnd="3dp"
                                         android:layout_marginBottom="10dp"
                                         android:backgroundTint="@color/light_cyan"
                                         android:padding="3dp"
                                         app:cardBackgroundColor="@color/light_cyan"
                                         app:cardCornerRadius="10dp"
+                                        app:cardElevation="5dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintHorizontal_bias="0.476"
@@ -359,7 +388,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
-                                            android:padding="8dp">
+                                            android:padding="2dp">
 
 
                                             <TextView
@@ -379,7 +408,7 @@
                                                 android:layout_marginRight="5dp"
                                                 android:layout_marginBottom="28dp"
                                                 android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
+                                                android:fontFamily="@font/roboto"
                                                 android:hint="Disciplina:"
                                                 android:textColorHint="@color/browser_actions_title_color"
                                                 android:textSize="14sp">
@@ -423,19 +452,19 @@
                                     </com.google.android.material.card.MaterialCardView>
 
                                     <ImageButton
-                                        android:id="@+id/imageButton"
+                                        android:id="@+id/botao_abre_add_disciplina"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
                                         android:background="@drawable/circulo"
-
+                                        android:elevation="5dp"
                                         app:srcCompat="@android:drawable/ic_input_add"
-                                        app:tint="@color/black" />
+                                        app:tint="@color/gunmetal" />
 
                                 </LinearLayout>
                             </ScrollView>
 
                         </RelativeLayout>
-
 
 
                     </com.google.android.material.card.MaterialCardView>
@@ -452,11 +481,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginStart="120dp"
             android:layout_marginTop="150dp"
-            android:layout_marginEnd="141dp"
             android:src="@drawable/perfil" />
-
 
 
     </RelativeLayout>

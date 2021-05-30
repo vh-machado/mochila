@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mochila">
         <activity android:name=".principal.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".principal.TarefaActivity"
@@ -21,11 +25,7 @@
             android:label="@string/title_activity_lista"
             android:theme="@style/Theme.Mochila.NoActionBar" />
         <activity android:name=".principal.RegistroActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
