@@ -17,7 +17,8 @@ class TarefaActivity : AppCompatActivity() {
                     }
 
     }
-    fun creatAlertAddEtiqueta(){
+    fun creatAlertAddEtiqueta() {
+        /*
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded).create()
         val  view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
         builder.setView(view)
@@ -27,5 +28,8 @@ class TarefaActivity : AppCompatActivity() {
         builder.show()
         builder.dismiss()
 
+    }
+
+         */
     }
 }
