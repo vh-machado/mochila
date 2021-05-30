@@ -28,5 +28,16 @@ class UsersViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    fun updateMedia(user: UsersEntity){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateUsersListTask(user)
+        }
+    }
+
+    fun atualizaDisciplinas(disciplinas: String, id: String){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateDisciplinas(disciplinas, id)
+        }
+    }
 }
 

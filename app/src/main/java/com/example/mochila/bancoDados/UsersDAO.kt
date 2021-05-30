@@ -1,6 +1,5 @@
 package com.example.mochila.bancoDados
 
-import androidx.room.Dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
@@ -12,6 +11,17 @@ interface UsersDAO {
     @Query("SELECT * FROM userstable")
     fun getUsersList(): LiveData<List<UsersEntity>>
 
+    @Query("SELECT disciplinas FROM userstable")
+    fun getDisciplinas(): List<String>
+
     @Delete
     suspend fun removeOfUsersList(user: UsersEntity)
+
+    @Update
+    suspend fun updateUsers(user: UsersEntity)
+
+    @Query("UPDATE userstable SET disciplinas=:disciplinas WHERE id = :id")
+    fun update(disciplinas: String?, id: String)
+
+
 }

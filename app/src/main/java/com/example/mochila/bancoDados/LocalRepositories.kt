@@ -14,4 +14,12 @@ class UsersRepository(private val usersDAO: UsersDAO){
         usersDAO.removeOfUsersList(user)
     }
 
+    suspend fun updateUsersListTask(user: UsersEntity){
+        usersDAO.updateUsers(user)
+    }
+
+    suspend fun updateDisciplinas(disciplinas: String, id: String){
+        usersDAO.update(disciplinas, id)
+    }
+
 }
