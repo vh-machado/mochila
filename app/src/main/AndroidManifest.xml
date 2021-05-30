@@ -22,8 +22,12 @@
 
         <activity
             android:name=".principal.TarefaActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".principal.LoginActivity" />
+            android:windowSoftInputMode="adjustPan" >
+
+        </activity>
+        <activity android:name=".principal.LoginActivity">
+
+        </activity>
         <activity
             android:name=".principal.ListaActivity"
             android:label="@string/title_activity_lista"

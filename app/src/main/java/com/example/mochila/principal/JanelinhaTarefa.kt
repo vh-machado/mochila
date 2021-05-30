@@ -25,6 +25,10 @@ class janelinhaTarefa : AppCompatActivity() {
         botSalvar.setOnClickListener {
             Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show()
             setOnListIdChips()
+            finish()
+        }
+        botFechar.setOnClickListener {
+            finish()
         }
     }
 
