@@ -62,7 +62,9 @@
                 android:id="@+id/card10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/light_cyan"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:cardBackgroundColor="@color/pale_cerulean"
                 app:cardCornerRadius="20dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,130 +137,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/textview_etiqueta"
-                                app:singleSelection="true"
+                                app:singleSelection="false"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp">
 
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta1"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checkable="true"
-                                    android:checked="true"
-
-                                    android:text="Apresentação"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:checkedIconEnabled="true"
-                                    app:checkedIconTint="@color/white"
-                                    app:checkedIconVisible="false"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:chipIcon="@drawable/ic_launcher_background"
-                                    app:chipIconEnabled="true"
-                                    app:chipIconTint="@color/white"
-                                    app:chipIconVisible="false"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta2"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Cálculo"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:chipIcon="@drawable/circulo"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta3"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Escrita"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta4"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Estudo"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta5"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Leitura"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta6"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Pesquisa"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta7"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Grupo"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta8"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Vídeo"
-                                    android:textColor="@color/white"
-                                    android:textSize="14sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/etiqueta9"
-                                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Vídeo-aula"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    app:checkedIcon="@drawable/ic_mtrl_chip_checked_circle"
-                                    app:chipBackgroundColor="@color/pale_cerulean"
-                                    app:closeIconVisible="false" />
 
                             </com.google.android.material.chip.ChipGroup>
 
