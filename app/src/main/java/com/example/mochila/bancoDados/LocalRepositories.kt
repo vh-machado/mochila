@@ -21,6 +21,11 @@ class UsersRepository(private val usersDAO: UsersDAO){
     suspend fun updateDisciplinas(disciplinas: String, id: String){
         usersDAO.update(disciplinas, id)
     }
+    
+    fun getDisciplinasListTask(id: String): List<String> {
+        var lerDadosDiciplina: List<String> = usersDAO.getDisciplinasList(id)
+        return lerDadosDiciplina
+    }
 
 }
 class TarefaRepository(private val tarefaDAO: TarefasDAO){

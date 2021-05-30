@@ -98,7 +98,6 @@ fun removeUserList(userScope: UserScope) {
 
 
             var disciplinas = view.campo_nome_disciplina.getText().toString()
-            textview_username.setText(disciplinas)
 
             /*
             var disciplinas: ArrayList<String>? = null
@@ -114,42 +113,9 @@ fun removeUserList(userScope: UserScope) {
             */
             Log.i("Usuário não-atualizado", viewModelUser.userList.value.toString())
             var dadosUsuario: UsersEntity? = null
-            /*
-            viewModelUser.userList.observe(this) {
-
-                if (viewModelUser.userList.value == null || viewModelUser.userList.value!![0].disciplinas == ""){
-                    dadosUsuario = it[0]
-                    val usuarioAtualizado = UsersEntity(
-                        dadosUsuario!!.id,
-                        dadosUsuario!!.nome,
-                        dadosUsuario!!.email,
-                        disciplinas
-                    )
-                    //viewModelUser.updateMedia(usuarioAtualizado)
-                    viewModelUser.atualizaDisciplinas(disciplinas, dadosUsuario!!.id)
-                }
-                Log.i("Usuário atualizado", viewModelUser.userList.value.toString())
-            }
-            */
+            // Atualiza a disciplina
             viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
             Log.i("Usuário atualizado", viewModelUser.userList.value?.get(0).toString())
-            /*
-            Log.i("Usuário não-atualizado", viewModelUser.userList.value.toString())
-            val usuarioAtualizado = UsersEntity(
-                viewModelUser.userList.value!!.get(0).id,
-                viewModelUser.userList.value!!.get(0).nome,
-                viewModelUser.userList.value!!.get(0).email,
-                disciplinas
-            )
-
-            viewModelUser.updateMedia(usuarioAtualizado)
-            Log.i("Usuário atualizado", usuarioAtualizado.toString())
-            */
-            /*
-            viewModelUser.userList.observe(this) {
-                Log.i("Usuário atualizado", it.toString())
-            }
-             */
 
             builder.dismiss()
         }
@@ -158,17 +124,6 @@ fun removeUserList(userScope: UserScope) {
             builder.dismiss()
         }
 
-    }
-
-    fun addUserList(user: UsersEntity) {
-        viewModelUser.saveNewMedia(
-            UsersEntity(
-                user.id,
-                user.nome,
-                user.email,
-                user.disciplinas
-            )
-        )
     }
 
 }

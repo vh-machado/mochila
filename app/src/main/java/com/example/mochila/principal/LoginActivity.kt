@@ -117,7 +117,6 @@ class LoginActivity : AppCompatActivity() {
                     var email = user.email.toString()
                     var disciplinas = ""
                     viewModelUser.saveNewMedia(UsersEntity(id, nome, email, disciplinas))
-                    Toast.makeText(this, "Criou", Toast.LENGTH_LONG).show()
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
