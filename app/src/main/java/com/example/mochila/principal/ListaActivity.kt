@@ -25,9 +25,12 @@ import kotlin.random.Random
 class ListaActivity : AppCompatActivity() {
 
     private lateinit var viewModelUser: UsersViewModel
+    private lateinit var viewModelDisciplinas: DisciplinasViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
+        viewModelDisciplinas = ViewModelProvider(this).get(DisciplinasViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
@@ -92,16 +95,28 @@ class ListaActivity : AppCompatActivity() {
         adapter.addFragment(listaMetodologia, "Metodologia")
         */
 
-        //var dadosUsuario: UsersEntity?
-        //val position = intent.getSerializableExtra("position") as? Int
-        /*
-        viewModelUser.userList.observe(this) {
-            dadosUsuario = it[0]
-            disciplinas = dadosUsuario?.disciplinas.toString()
-            Log.i("Fragmento a ser criado", disciplinas)
-        }
-         */
+        viewModelDisciplinas.disciplinasList.observe(this){
+            Log.i("Disciplinas", it.toString())
+            if (viewModelDisciplinas.disciplinasList.value != null){
+                val adapter = ViewPagerListaAdapter(supportFragmentManager)
 
+                var dadosDisciplinas = viewModelDisciplinas.disciplinasList.value
+                lateinit var disciplina: String
+                dadosDisciplinas!!.forEach {
+                    disciplina = it.nomeDisciplina
+                    var listaDisciplina = DisciplinaFragment.newInstance(true)
+                    adapter.addFragment(listaDisciplina, disciplina)
+                    Log.i("Disciplina fragmento", it.nomeDisciplina)
+                }
+                viewPager_Lista.adapter = adapter
+                tabLayout_Lista.setupWithViewPager(viewPager_Lista)
+                viewPager_Lista.setCurrentItem(0)
+                Log.i("Disciplinas", it.toString())
+            }else{
+                Toast.makeText(this,"Adicione disciplinas no perfil para criar listas.", Toast.LENGTH_LONG).show()
+            }
+        }
+        /*
         viewModelUser.userList.observe(this){
             Log.i("Usuário", it.toString())
             if (viewModelUser.userList.value?.get(0)?.disciplinas != ""){
@@ -118,30 +133,9 @@ class ListaActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Adicione disciplinas no perfil para criar listas.", Toast.LENGTH_LONG).show()
             }
-
-        }
-
-
-        /*
-        var disciplinas: ArrayList<String>? = null
-        val usuario = intent.getSerializableExtra("usuario") as? Boolean
-        if(usuario == true) {
-            val position = intent.getSerializableExtra("position") as? Int
-            viewModelUser.userList.observe(this) {
-                var userDados = it[position!!]
-                disciplinas = userDados.disciplinas
-            }
-        }
-        disciplinas!!.forEach {
-            adapter.addFragment(listaDisciplina, it)
         }
         */
 
-        /*
-        viewPager_Lista.adapter = adapter
-        tabLayout_Lista.setupWithViewPager(viewPager_Lista)
-        viewPager_Lista.setCurrentItem(0)
-        */
 
     }
 }

@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mochila.bancoDados.UsersViewModel
 import com.example.mochila.bancoDados.UsersEntity
 import com.example.mochila.R
+import com.example.mochila.bancoDados.DisciplinasEntity
+import com.example.mochila.bancoDados.DisciplinasViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -27,10 +29,11 @@ import kotlinx.android.synthetic.main.janela_registro_disciplina.view.*
 
 class RegistroActivity : AppCompatActivity() {
     private lateinit var viewModelUser: UsersViewModel
-    //var dadosDisciplina: List<String>? = null
+    private lateinit var viewModelDisciplinas: DisciplinasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
+        viewModelDisciplinas = ViewModelProvider(this).get(DisciplinasViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
@@ -97,25 +100,23 @@ fun removeUserList(userScope: UserScope) {
              */
 
 
-            var disciplinas = view.campo_nome_disciplina.getText().toString()
+            var disciplina = view.campo_nome_disciplina.getText().toString()
+            var nomeProfessor = view.campo_nome_professor.getText().toString()
+            var emailProfessor = view.campo_email_professor.getText().toString()
 
-            /*
-            var disciplinas: ArrayList<String>? = null
-            val usuario = intent.getSerializableExtra("usuario") as? Boolean
-            if(usuario == true) {
-                val position = intent.getSerializableExtra("position") as? Int
-                viewModelUser.userList.observe(this) {
-                    var userDados = it[position!!]
-                    disciplinas = userDados.disciplinas
-                    disciplinas!!.add(campo_nome_disciplina.text.toString())
-                }
-            }
-            */
-            Log.i("Usuário não-atualizado", viewModelUser.userList.value.toString())
-            var dadosUsuario: UsersEntity? = null
+            Log.i("Disciplinas não-atualizadas", viewModelDisciplinas.disciplinasList.value.toString())
             // Atualiza a disciplina
-            viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
-            Log.i("Usuário atualizado", viewModelUser.userList.value?.get(0).toString())
+            //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+            viewModelDisciplinas.saveNewMedia(
+                DisciplinasEntity(
+                    UUID.randomUUID().toString(),
+                    Firebase.auth.currentUser!!.uid,
+                    disciplina,
+                    nomeProfessor,
+                    emailProfessor
+                )
+            )
+            Log.i("Disciplinas atualizadas", viewModelDisciplinas.disciplinasList.value.toString())
 
             builder.dismiss()
         }

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.*
 
 @Database(
-    entities = [UsersEntity::class,TarefaEntity::class],
-    version = 2,
+    entities = [UsersEntity::class,TarefaEntity::class,DisciplinasEntity::class],
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(ConverterArray::class)
@@ -13,6 +13,7 @@ abstract class AppDataBase : RoomDatabase() {
 
     abstract fun usersDAO(): UsersDAO
     abstract fun tarefaDAO(): TarefasDAO
+    abstract fun disciplinasDAO(): DisciplinasDAO
 
     companion object {
         @Volatile

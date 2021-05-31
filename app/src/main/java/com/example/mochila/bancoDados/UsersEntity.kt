@@ -12,15 +12,15 @@ data class UsersEntity(
     val id: String = "",
     var nome: String = "",
     var email: String = "",
-    var disciplinas: String = ""
 )
 
+/*
 @Entity
 class UsersUpdate(
     @ColumnInfo(name = "id") var id: String = "",
     @ColumnInfo(name = "disciplinas") private var disciplinas: String = ""
 )
-
+*/
 
 
 

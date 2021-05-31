@@ -34,6 +34,7 @@ class UsersViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    /*
     fun atualizaDisciplinas(disciplinas: String, id: String){
         viewModelScope.launch(Dispatchers.IO){
             repository.updateDisciplinas(disciplinas, id)
@@ -43,5 +44,6 @@ class UsersViewModel(app: Application): AndroidViewModel(app) {
     fun lerDisciplinas(id: String): List<String> {
         return repository.getDisciplinasListTask(id)
     }
+     */
 }
 
