@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import com.example.mochila.R
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 import kotlinx.android.synthetic.main.activity_tarefa.*
 
 class TarefaActivity : AppCompatActivity() {
@@ -16,6 +16,7 @@ class TarefaActivity : AppCompatActivity() {
          val intent = Intent(this, janelinhaTarefa::class.java)
             startActivity(intent)
         }
+
 
     }
 
