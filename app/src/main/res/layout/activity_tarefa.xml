@@ -163,7 +163,113 @@
                                 android:textSize="16sp" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="0dp">
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#F1F3F6"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/textview_data"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/roboto"
+                                android:text="Data de Entrega"
+                                android:textColor="@color/gunmetal"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+
+                                app:layout_constraintBottom_toTopOf="@id/textDate"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textDate"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="32dp"
+                                android:background="@drawable/rounded_shape"
+                                android:backgroundTint="#C2CEDC"
+                                android:ems="5"
+                                android:lines="1"
+                                android:padding="8dp"
+                                android:textColor="@color/gunmetal"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/textview_data" />
+
+                            <ImageView
+                                android:id="@+id/botao_contato"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/rounded_shape"
+                                android:elevation="15dp"
+                                android:padding="10dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/textDate"
+                                app:layout_constraintEnd_toStartOf="@+id/cardView4"
+                                app:layout_constraintHorizontal_bias="0.724"
+                                app:layout_constraintStart_toEndOf="@+id/textDate"
+                                app:layout_constraintTop_toTopOf="@+id/textview_data"
+                                app:layout_constraintVertical_bias="1.0"
+                                app:srcCompat="@android:drawable/ic_dialog_email" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardView4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:padding="10dp"
+                                app:cardBackgroundColor="#7FD65D"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="5dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.923"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.907">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="5dp">
+
+                                    <TextView
+                                        android:id="@+id/textview_concluir"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginRight="2dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:fontFamily="@font/roboto_black"
+                                        android:text="Concluir"
+                                        android:textColor="@color/white"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:id="@+id/imageView6"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_toEndOf="@id/textview_concluir"
+                                        app:srcCompat="@drawable/ic_checkbox" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                    <!--
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card3"
                         android:layout_width="match_parent"
@@ -265,11 +371,12 @@
                                         android:layout_marginBottom="10dp"
                                         android:layout_toEndOf="@id/textview_concluir"
                                         app:srcCompat="@drawable/ic_checkbox" />
+
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
-
+                    -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card4"
                         android:layout_width="match_parent"
@@ -295,22 +402,35 @@
                                 android:textStyle="bold" />
 
                             <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/chipGroupTarefa"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/textview_etiqueta"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="10dp">
+
+
+                            </com.google.android.material.chip.ChipGroup>
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/botAdicionarEtiqueta"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/textview_etiqueta">
+                                android:layout_below="@id/chipGroupTarefa"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:text="+"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:chipBackgroundColor="@color/bdazzled_blue"
+                                app:closeIconVisible="false" />
 
-
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/botAdicionarEtiqueta"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="+"
-                                    android:textColor="@color/white"
-                                    android:textSize="13sp"
-                                    android:textStyle="bold"
-                                    app:chipBackgroundColor="@color/bdazzled_blue"
-                                    app:closeIconVisible="false" />
-                            </com.google.android.material.chip.ChipGroup>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
