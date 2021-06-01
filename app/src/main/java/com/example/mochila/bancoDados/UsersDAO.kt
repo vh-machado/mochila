@@ -17,13 +17,14 @@ interface UsersDAO {
     @Update
     suspend fun updateUsers(user: UsersEntity)
 
+    /*
     // Atualiza a disciplina através do id
     @Query("UPDATE userstable SET disciplinas=:disciplinas WHERE id = :id")
     fun update(disciplinas: String?, id: String)
 
-    // Acessa as disciplinas
+    // Acessa as disciplinas (Teste falhou)
     @Query("SELECT disciplinas FROM userstable WHERE id = :id")
     fun getDisciplinasList(id: String): List<String>
-
+    */
 
 }

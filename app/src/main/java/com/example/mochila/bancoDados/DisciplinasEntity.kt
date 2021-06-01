@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "disciplinastable")
 data class DisciplinasEntity (
-    @PrimaryKey
-    val id: String = "",
-    var nome: String = "",
+    @PrimaryKey(autoGenerate = false)
+    val disciplinaId: String = "",
+    var usuarioId: String = "",
+    var nomeDisciplina: String = "",
     var nomeProfessor: String = "",
     var emailProfessor: String = ""
 )

@@ -115,8 +115,8 @@ class LoginActivity : AppCompatActivity() {
                     var id = user!!.uid
                     var nome = user.displayName.toString()
                     var email = user.email.toString()
-                    var disciplinas = ""
-                    viewModelUser.saveNewMedia(UsersEntity(id, nome, email, disciplinas))
+                    //var disciplinas = ""
+                    viewModelUser.saveNewMedia(UsersEntity(id, nome, email))
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.

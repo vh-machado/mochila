@@ -18,6 +18,7 @@ class UsersRepository(private val usersDAO: UsersDAO){
         usersDAO.updateUsers(user)
     }
 
+    /*
     suspend fun updateDisciplinas(disciplinas: String, id: String){
         usersDAO.update(disciplinas, id)
     }
@@ -26,11 +27,15 @@ class UsersRepository(private val usersDAO: UsersDAO){
         var lerDadosDiciplina: List<String> = usersDAO.getDisciplinasList(id)
         return lerDadosDiciplina
     }
-
+    */
 }
 class TarefaRepository(private val tarefaDAO: TarefasDAO){
 
-    val readAllData: LiveData<List<TarefaEntity>> = tarefaDAO.getTarefasList()
+    var readAllData: LiveData<List<TarefaEntity>>
+
+    init{
+        readAllData = tarefaDAO.getTarefasList()
+    }
 
     suspend fun saveInTarefasListTask(tarefa: TarefaEntity){
         tarefaDAO.saveInTarefasList(tarefa)
@@ -42,6 +47,27 @@ class TarefaRepository(private val tarefaDAO: TarefasDAO){
 
     suspend fun updateTarefasListTask(tarefa: TarefaEntity){
         tarefaDAO.updateTarefas(tarefa)
+    }
+
+    suspend fun getAllTarefas(): LiveData<List<TarefaEntity>>{
+        return readAllData
+    }
+}
+
+class DisciplinasRepository(private val disciplinasDAO: DisciplinasDAO){
+
+    val readAllData: LiveData<List<DisciplinasEntity>> = disciplinasDAO.getDisciplinasList()
+
+    suspend fun saveInDisciplinasListTask(disciplina: DisciplinasEntity){
+        disciplinasDAO.saveInDisciplinasList(disciplina)
+    }
+
+    suspend fun removeOfDisciplinasListTask(disciplina: DisciplinasEntity){
+        disciplinasDAO.removeOfDisciplinasList(disciplina)
+    }
+
+    suspend fun updateDisciplinasListTask(disciplina: DisciplinasEntity){
+        disciplinasDAO.updateDisciplinas(disciplina)
     }
 
 }
