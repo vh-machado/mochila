@@ -22,7 +22,7 @@ class janelinhaTarefa : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var etiCheck = ArrayList<String>()
+
         binding = ActivityJanelinhaTarefaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setDefaultChips(setListChips())
@@ -30,8 +30,7 @@ class janelinhaTarefa : AppCompatActivity() {
 
         botSalvar.setOnClickListener {
             Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show()
-
-
+            shareInfosChipsIntent(getOnListIdChips())
 
         }
         botFechar.setOnClickListener {
@@ -78,7 +77,6 @@ class janelinhaTarefa : AppCompatActivity() {
                 R.color.bdazzled_blue
             )
 
-
             chip.setTextColor(getResources().getColor(R.color.white))
 
             binding.apply {
@@ -88,7 +86,6 @@ class janelinhaTarefa : AppCompatActivity() {
                     chipGroup.removeView(chip as View)
                 }
             }
-
 
         }
     }
@@ -113,23 +110,26 @@ class janelinhaTarefa : AppCompatActivity() {
             "Vídeo-aula"
         )
 
-
     }
 
 
-    private fun setOnListIdChips() {
-
+    private fun getOnListIdChips():ArrayList<String> {
+        var etiCheck = ArrayList<String>()
         chipGroup.checkedChipIds.forEach {
-            Log.i("CHIP ID", it.toString())
-
+            var chip = chipGroup.findViewById<Chip>(it)
+            etiCheck.add(chip.text.toString())
 
         }
-
+        return etiCheck
 
     }
 
-
-
+    private fun shareInfosChipsIntent(chips: ArrayList<String>){
+        val intent = Intent(this, TarefaActivity:: class.java)
+        intent.putExtra("chips",chips)
+        startActivity(intent)
+        finish()
+    }
 
 }
 
