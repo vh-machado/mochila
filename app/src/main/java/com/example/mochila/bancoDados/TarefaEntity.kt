@@ -4,7 +4,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "tarefa")
 data class TarefaEntity (
     @PrimaryKey(autoGenerate = false)
-    val id: String,
+    val tarefaId: String,
     var disciplinaId: String,
     var titulo: String,
     var descricao: String,

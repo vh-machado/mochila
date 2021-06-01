@@ -24,7 +24,8 @@ import kotlinx.android.synthetic.main.fragment_disciplina.view.*
 import kotlin.random.Random
 
 class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
-    var Disciplina: Boolean? = null
+    var disciplinaBoolean: Boolean? = null
+    var idDisciplina: String? = null
     private lateinit var cardAdapter: CardAdapter
 
     private lateinit var viewModelTarefa: TarefaViewModel
@@ -36,18 +37,21 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
         super.onCreate(savedInstanceState)
 
         if (arguments != null) {
-            Disciplina = arguments?.getBoolean(disciplina)
+            disciplinaBoolean = arguments?.getBoolean(disciplinaKey)
+            idDisciplina = arguments?.getString(idDisciplinaKey)
         }
 
     }
 
     companion object {
-        private val disciplina = "disciplina"
+        private const val disciplinaKey = "disciplina"
+        private const val idDisciplinaKey = "idDisciplina"
 
-        fun newInstance(Disciplina: Boolean): DisciplinaFragment {
+        fun newInstance(Disciplina: Boolean, IdDisciplina: String): DisciplinaFragment {
             val fragment = DisciplinaFragment()
             val args = Bundle()
-            args.putBoolean(disciplina, Disciplina)
+            args.putBoolean(disciplinaKey, Disciplina)
+            args.putString(idDisciplinaKey, IdDisciplina)
             fragment.arguments = args
             return fragment
         }
@@ -66,28 +70,39 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
         viewModelTarefa.getTarefas().observe(viewLifecycleOwner, Observer<List<TarefaEntity>?> {
             if (it.isNotEmpty()) {
-                if(cardList[0].titulo == ""){
-                    cardList.removeAt(0)
+                if(cardList.isNotEmpty()){
+                    if(cardList[0].titulo == ""){
+                        cardList.removeAt(0)
+                    }
                 }
-                Log.i("entrou no if", it.toString())
+                var listaDados: MutableList<CardItem> = mutableListOf(CardItem("", "", 0))
                 it.forEach {
-                    var newCard = CardItem(
-                        it.titulo,
-                        it.dataEntrega,
-                        0
-                    )
-                    cardList.add(newCard)
-                    Log.i("cardList",cardList.toString())
+                    if(it.disciplinaId == idDisciplina){
+                        var newCard = CardItem(
+                            it.titulo,
+                            it.dataEntrega,
+                            0
+                        )
+                        listaDados.add(newCard)
+                        Log.i("item adicionado", listaDados.toString())
+                    }
                 }
-                cardAdapter = CardAdapter(cardList,this)
-                view.recycler_view.adapter = cardAdapter
-
                 // Atualiza RecyclerView
-                Log.i("Atualizar RecyclerView", it.toString())
+                if(listaDados.size > 1){
+                    listaDados.removeAt(0)
+                    cardList = listaDados
+                    Log.i("cardList",cardList.toString())
+                    cardAdapter = CardAdapter(cardList,this)
+                    view.recycler_view.adapter = cardAdapter
 
-                //cardAdapter.setCards(cardList)
-                cardAdapter.notifyDataSetChanged()
-                Toast.makeText(activity, "RecyclerView atualizado", Toast.LENGTH_SHORT).show()
+                    Log.i("Atualizar RecyclerView", it.toString())
+
+                    //cardAdapter.setCards(cardList)
+                    cardAdapter.notifyDataSetChanged()
+                }else{
+                    Toast.makeText(activity, "Adicione tarefas no botão superior direito", Toast.LENGTH_SHORT).show()
+                }
+
             }
         })
 

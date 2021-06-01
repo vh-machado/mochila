@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mochila.R
 import com.example.mochila.bancoDados.*
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlinx.android.synthetic.main.janela_registro_disciplina.*
+import java.util.*
 
 class ListaActivity : AppCompatActivity() {
 
     private lateinit var viewModelUser: UsersViewModel
     private lateinit var viewModelDisciplinas: DisciplinasViewModel
     private lateinit var viewModelTarefa: TarefaViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
@@ -48,19 +51,39 @@ class ListaActivity : AppCompatActivity() {
         //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()
 
         botao_add_tarefa.setOnClickListener {
-            viewModelTarefa.saveNewMedia(
-                TarefaEntity(
-                    "001",
-                    "01",
-                    "Exercício",
-                    "a",
-                    "01/06/2021",
-                    false,
-                    arrayListOf("Cálculo", "Escrita"),
-                    arrayListOf("Rasunho", "Caneta"),
+            if(viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true){
+                var tabDisciplina = viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
+                var tabIdDisciplina: String? = null
+                Log.i("Tab nome", tabDisciplina)
+                viewModelDisciplinas.disciplinasList.value?.forEach {
+                    if (it.nomeDisciplina == tabDisciplina){
+                        tabIdDisciplina = it.disciplinaId
+                    }
+                }
+
+                viewModelTarefa.saveNewMedia(
+                    TarefaEntity(
+                        UUID.randomUUID().toString(),
+                        tabIdDisciplina!!,
+                        "Exercício",
+                        "a",
+                        "01/06/2021",
+                        false,
+                        arrayListOf("Cálculo", "Escrita"),
+                        arrayListOf("Rasunho", "Caneta"),
+                    )
                 )
-            )
-            Log.i("Tarefa Adicionada",viewModelTarefa.getTarefas().value.toString())
+                Log.i("Tarefa Adicionada",viewModelTarefa.getTarefas().value.toString())
+
+                startActivity(Intent(this, TarefaActivity::class.java))
+            }else{
+                Toast.makeText(
+                    this,
+                    "Adicione disciplinas no perfil antes de criar tarefas.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
         }
 
     }
@@ -109,12 +132,11 @@ class ListaActivity : AppCompatActivity() {
             Log.i("Disciplinas", it.toString())
             if (viewModelDisciplinas.disciplinasList.value != null) {
                 val adapter = ViewPagerListaAdapter(supportFragmentManager)
-
                 var dadosDisciplinas = viewModelDisciplinas.disciplinasList.value
                 lateinit var disciplina: String
                 dadosDisciplinas!!.forEach {
                     disciplina = it.nomeDisciplina
-                    var listaDisciplina = DisciplinaFragment.newInstance(true)
+                    var listaDisciplina = DisciplinaFragment.newInstance(true, it.disciplinaId)
                     adapter.addFragment(listaDisciplina, disciplina)
                     Log.i("Disciplina fragmento", it.nomeDisciplina)
                 }
