@@ -59,7 +59,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         setDefaultChips(foraChips)
 
         botAdicionarEtiqueta.setOnClickListener {
-            val intent = Intent(this, janelinhaTarefa::class.java)
+         val intent = Intent(this, janelinhaTarefa::class.java)
             startActivity(intent)
         }
 
@@ -112,7 +112,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
                     creatAlertDialog(chip)
 
 
-                }
+            }
 
             }
         }
@@ -122,7 +122,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         builder.setTitle(chip.text.toString())
         builder.setMessage("Deseja remover essa etiqueta?")
         builder.setPositiveButton("Sim"){
-                dialog, which ->
+            dialog, which ->
             chipGroupTarefa.removeView(chip)
             Toast.makeText(this,"Etiqueta removida", Toast.LENGTH_SHORT).show()
         }
