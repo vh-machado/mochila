@@ -1,4 +1,4 @@
 package com.example.mochila.principal
 
-data class CardItem(var text1: String, var text2: String, var progresso: Int){
+data class CardItem(var titulo: String, var data: String, var progresso: Int){
 }

@@ -15,6 +15,9 @@ import com.example.mochila.bancoDados.UsersEntity
 import com.example.mochila.R
 import com.example.mochila.bancoDados.DisciplinasEntity
 import com.example.mochila.bancoDados.DisciplinasViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -46,6 +49,18 @@ class RegistroActivity : AppCompatActivity() {
 
         botao_menu.setOnClickListener {
             startActivity(Intent(this, ListaActivity::class.java))
+        }
+
+        botao_signout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            var googleSignInClient: GoogleSignInClient
+            val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build()
+            googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+            googleSignInClient.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
     /*

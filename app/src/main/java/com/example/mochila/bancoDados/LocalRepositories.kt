@@ -31,7 +31,11 @@ class UsersRepository(private val usersDAO: UsersDAO){
 }
 class TarefaRepository(private val tarefaDAO: TarefasDAO){
 
-    val readAllData: LiveData<List<TarefaEntity>> = tarefaDAO.getTarefasList()
+    var readAllData: LiveData<List<TarefaEntity>>
+
+    init{
+        readAllData = tarefaDAO.getTarefasList()
+    }
 
     suspend fun saveInTarefasListTask(tarefa: TarefaEntity){
         tarefaDAO.saveInTarefasList(tarefa)
@@ -45,6 +49,9 @@ class TarefaRepository(private val tarefaDAO: TarefasDAO){
         tarefaDAO.updateTarefas(tarefa)
     }
 
+    suspend fun getAllTarefas(): LiveData<List<TarefaEntity>>{
+        return readAllData
+    }
 }
 
 class DisciplinasRepository(private val disciplinasDAO: DisciplinasDAO){

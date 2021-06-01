@@ -1,41 +1,34 @@
 package com.example.mochila.principal
 
-import android.app.Application
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mochila.R
 import com.example.mochila.bancoDados.*
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlinx.android.synthetic.main.janela_registro_disciplina.*
-import java.util.ArrayList
-import kotlin.random.Random
 
 class ListaActivity : AppCompatActivity() {
 
     private lateinit var viewModelUser: UsersViewModel
     private lateinit var viewModelDisciplinas: DisciplinasViewModel
-
+    private lateinit var viewModelTarefa: TarefaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
         viewModelDisciplinas = ViewModelProvider(this).get(DisciplinasViewModel::class.java)
+        viewModelTarefa = ViewModelProvider(this).get(TarefaViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
+        // Definir as abas das listas/disciplinas
         setTabs()
 
+        /*
         botao_signout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             var googleSignInClient: GoogleSignInClient
@@ -47,11 +40,28 @@ class ListaActivity : AppCompatActivity() {
             googleSignInClient.signOut()
             startActivity(Intent(this, LoginActivity::class.java))
         }
+        */
 
-        botao_menu.setOnClickListener{
+        botao_menu.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }
         //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()
+
+        botao_add_tarefa.setOnClickListener {
+            viewModelTarefa.saveNewMedia(
+                TarefaEntity(
+                    "001",
+                    "01",
+                    "Exercício",
+                    "a",
+                    "01/06/2021",
+                    false,
+                    arrayListOf("Cálculo", "Escrita"),
+                    arrayListOf("Rasunho", "Caneta"),
+                )
+            )
+            Log.i("Tarefa Adicionada",viewModelTarefa.getTarefas().value.toString())
+        }
 
     }
 
@@ -95,9 +105,9 @@ class ListaActivity : AppCompatActivity() {
         adapter.addFragment(listaMetodologia, "Metodologia")
         */
 
-        viewModelDisciplinas.disciplinasList.observe(this){
+        viewModelDisciplinas.disciplinasList.observe(this) {
             Log.i("Disciplinas", it.toString())
-            if (viewModelDisciplinas.disciplinasList.value != null){
+            if (viewModelDisciplinas.disciplinasList.value != null) {
                 val adapter = ViewPagerListaAdapter(supportFragmentManager)
 
                 var dadosDisciplinas = viewModelDisciplinas.disciplinasList.value
@@ -112,8 +122,12 @@ class ListaActivity : AppCompatActivity() {
                 tabLayout_Lista.setupWithViewPager(viewPager_Lista)
                 viewPager_Lista.setCurrentItem(0)
                 Log.i("Disciplinas", it.toString())
-            }else{
-                Toast.makeText(this,"Adicione disciplinas no perfil para criar listas.", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Adicione disciplinas no perfil para criar listas.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
         /*

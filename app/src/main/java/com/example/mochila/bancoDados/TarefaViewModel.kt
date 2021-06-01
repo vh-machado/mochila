@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TarefaViewModel(app: Application): AndroidViewModel(app) {
+class TarefaViewModel(app: Application) : AndroidViewModel(app) {
 
     val tarefaList: LiveData<List<TarefaEntity>>
     private val repository: TarefaRepository
@@ -16,22 +16,26 @@ class TarefaViewModel(app: Application): AndroidViewModel(app) {
         tarefaList = repository.readAllData
     }
 
-    fun saveNewMedia(tarefa: TarefaEntity){
+    fun saveNewMedia(tarefa: TarefaEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveInTarefasListTask(tarefa)
         }
     }
 
-    fun removeMedia(tarefa: TarefaEntity){
+    fun removeMedia(tarefa: TarefaEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.removeOfTarefasListTask(tarefa)
         }
     }
 
-    fun updateMedia(tarefa: TarefaEntity){
-        viewModelScope.launch(Dispatchers.IO){
+    fun updateMedia(tarefa: TarefaEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.updateTarefasListTask(tarefa)
         }
+    }
+
+    fun getTarefas(): LiveData<List<TarefaEntity>> {
+        return tarefaList
     }
 }
 

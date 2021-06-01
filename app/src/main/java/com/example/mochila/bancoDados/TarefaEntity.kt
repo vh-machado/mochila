@@ -5,8 +5,10 @@ import androidx.room.PrimaryKey
 data class TarefaEntity (
     @PrimaryKey(autoGenerate = false)
     val id: String,
+    var disciplinaId: String,
+    var titulo: String,
     var descricao: String,
-    var dataEntrega: Int,
+    var dataEntrega: String,
     var concluido: Boolean,
     var etiquetas: ArrayList<String>,
     var checkList: ArrayList<String>,
