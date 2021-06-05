@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +18,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
+import androidx.lifecycle.ViewModelProvider
 import com.example.mochila.R
 import com.example.mochila.bancoDados.TarefaEntity
+import com.example.mochila.bancoDados.TarefaViewModel
 import com.example.mochila.databinding.ActivityTarefaBinding
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.*
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.view.*
 
@@ -31,6 +35,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+    private lateinit var viewModelTarefa: TarefaViewModel
 
     var dia = 0
     var mes = 0
@@ -43,7 +48,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     // Pertence ao código de etiqueta
     var cout = 0
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        viewModelTarefa = ViewModelProvider(this).get(TarefaViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tarefa)
 
@@ -52,8 +57,13 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         setContentView(binding.root)
 
 
-        val chips = intent.getSerializableExtra("chips")as? ArrayList<String>
+        var chips = intent.getSerializableExtra("chips")as? ArrayList<String>
         val tarefaSelecionada = intent.getSerializableExtra("tarefa")as?TarefaEntity
+        if(tarefaSelecionada != null){
+            multilineDescricao.setText(tarefaSelecionada!!.descricao)
+            textDate.setText(tarefaSelecionada.dataEntrega)
+            chips = tarefaSelecionada.etiquetas
+        }
 
         var listaChips = arrayListOf<String>()
         chips?.forEach {
@@ -69,8 +79,12 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         setDefaultChips(foraChips)
 
         botAdicionarEtiqueta.setOnClickListener {
-            val intent = Intent(this, janelinhaTarefa::class.java)
+           createAlertAddEtiqueta()
+        }
+        botao_menu.setOnClickListener {
+            val intent = Intent(this, ListaActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         /*
@@ -216,9 +230,128 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         builder.create().show()
 
     }
-    //ARMAZENAR
+    fun createAlertAddEtiqueta() {
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded).create()
+        val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+        builder.setView(view)
+        var window = builder.window
+        window!!.setGravity(Gravity.CENTER)
+        builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        builder.show()
+        setDefaultChips(setListChips())
+        entryChip()
+
+        botSalvar.setOnClickListener {
+            Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show()
+            shareInfosChipsIntent(getOnListIdChips())
+
+        }
+        botFechar.setOnClickListener {
+            builder.dismiss()
+        }
+    }
+    private fun entryChip() {
+
+        infoEtiqueta.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+
+                binding.apply {
+                    val name = infoEtiqueta.text.toString()
+                    if(campoVazio()!= true){
+                        creatChips(name, true)
+                        infoEtiqueta.text!!.clear()
+                    }
+                }
+
+                return@setOnKeyListener true
+            }
+            false
+        }
+
+    }
+
+    private fun creatChips1(name: String, closeIconStatus: Boolean) {
+        val chip = Chip(this)
+        chip.apply {
+            cout = cout + 1
+            text = name
+            chipIcon = ContextCompat.getDrawable(
+                this@TarefaActivity,
+                R.drawable.ic_launcher_background
+            )
+            id = cout
+            isChipIconVisible = false
+            isCloseIconVisible = closeIconStatus
+            isClickable = true
+            isCheckable = true
+
+            chip.chipBackgroundColor = getColorStateList(
+                R.color.bdazzled_blue
+            )
+
+            chip.setTextColor(getResources().getColor(R.color.white))
+
+            binding.apply {
+                chipGroup.addView(chip as View)
+
+                chip.setOnCloseIconClickListener {
+                    chipGroup.removeView(chip as View)
+                }
+            }
+
+        }
+    }
 
     private fun setDefaultChips(list: List<String>) {
+        list.forEach {
+            creatChips1(it, false)
+
+        }
+    }
+
+    private fun setListChips(): List<String> {
+        return listOf(
+            "Apresentação",
+            "Cálculo",
+            "Escrita",
+            "Estudo",
+            "Leitura",
+            "Pesquisa",
+            "Grupo",
+            "Vídeo",
+            "Vídeo-aula"
+        )
+
+    }
+
+
+    private fun getOnListIdChips():ArrayList<String> {
+        var etiCheck = ArrayList<String>()
+        chipGroup.checkedChipIds.forEach {
+            var chip = chipGroup.findViewById<Chip>(it)
+            etiCheck.add(chip.text.toString())
+
+        }
+        return etiCheck
+
+    }
+
+    private fun shareInfosChipsIntent(chips: ArrayList<String>){
+        val intent = Intent(this, TarefaActivity:: class.java)
+        intent.putExtra("chips",chips)
+        startActivity(intent)
+        finish()
+    }
+    private fun campoVazio():Boolean{
+        val eti = infoEtiqueta.text.toString()
+        if(eti.isNullOrBlank()== true){
+            Toast.makeText(this,"Para criar etiquetas é necessário informar um nome! Verifique se o campo foi preenchido", Toast.LENGTH_SHORT).show()
+        }
+        return true
+    }
+        //ARMAZENAR
+
+    private fun setDefaultChips1(list: List<String>) {
         list.forEach {
             creatChips(it, false)
         }
