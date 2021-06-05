@@ -21,6 +21,7 @@ class ListaActivity : AppCompatActivity() {
     private lateinit var viewModelTarefa: TarefaViewModel
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
         viewModelDisciplinas = ViewModelProvider(this).get(DisciplinasViewModel::class.java)
@@ -71,10 +72,10 @@ class ListaActivity : AppCompatActivity() {
                         tamanhoLista.toString(),
                         tabIdDisciplina!!,
                         "Exercício",
-                        "",
-                        "",
+                        "Funciona",
+                        "05/06/2021",
                         false,
-                        arrayListOf(""),
+                        arrayListOf("Relatório", "Prova"),
                         arrayListOf(""),
                     )
                 )

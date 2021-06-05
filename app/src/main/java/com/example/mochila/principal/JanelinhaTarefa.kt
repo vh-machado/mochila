@@ -16,7 +16,7 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.*
 
 class janelinhaTarefa : AppCompatActivity() {
-
+    /*
     private lateinit var binding: ActivityJanelinhaTarefaBinding
     var cout = 0
 
@@ -139,7 +139,7 @@ class janelinhaTarefa : AppCompatActivity() {
         }
         return true
     }
-
+ */
 }
 
 
