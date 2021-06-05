@@ -24,10 +24,6 @@ import kotlinx.android.synthetic.main.activity_janelinha_tarefa.view.*
 
 import kotlinx.android.synthetic.main.activity_tarefa.*
 import kotlinx.android.synthetic.main.activity_tarefa.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
