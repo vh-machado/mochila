@@ -45,9 +45,11 @@ class janelinhaTarefa : AppCompatActivity() {
 
                 binding.apply {
                     val name = infoEtiqueta.text.toString()
-                    creatChips(name, true)
+                    if(campoVazio()!= true){
+                        creatChips(name, true)
+                        infoEtiqueta.text!!.clear()
+                    }
 
-                    infoEtiqueta.text!!.clear()
 
                 }
 
@@ -129,6 +131,13 @@ class janelinhaTarefa : AppCompatActivity() {
         intent.putExtra("chips",chips)
         startActivity(intent)
         finish()
+    }
+    private fun campoVazio():Boolean{
+        val eti = infoEtiqueta.text.toString()
+        if(eti.isNullOrBlank()== true){
+           Toast.makeText(this,"Para criar etiquetas é necessário informar um nome! Verifique se o campo foi preenchido", Toast.LENGTH_SHORT).show()
+        }
+        return true
     }
 
 }

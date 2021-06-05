@@ -125,10 +125,12 @@ fun removeUserList(userScope: UserScope) {
             viewModelDisciplinas.saveNewMedia(
                 DisciplinasEntity(
                     UUID.randomUUID().toString(),
-                    Firebase.auth.currentUser!!.uid,
+                    "id",
                     disciplina,
                     nomeProfessor,
-                    emailProfessor
+                    emailProfessor,
+                    0
+
                 )
             )
             Log.i("Disciplinas atualizadas", viewModelDisciplinas.disciplinasList.value.toString())
