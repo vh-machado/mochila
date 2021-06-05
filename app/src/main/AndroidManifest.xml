@@ -13,11 +13,7 @@
      
         </activity>
         <activity android:name=".principal.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -31,7 +27,13 @@
         <activity
             android:name=".principal.ListaActivity"
             android:label="@string/title_activity_lista"
-            android:theme="@style/Theme.Mochila.NoActionBar" />
+            android:theme="@style/Theme.Mochila.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".principal.RegistroActivity">
 
         </activity>

@@ -137,6 +137,14 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
         clickedItem.titulo = "clicado"
         clickedItem.progresso = clickedItem.progresso + 10
         cardAdapter.notifyItemChanged(position)
+        //Passar de uma activity para outra os dados
+        val tarefa = viewModelTarefa.tarefaList.value?.get(position)
+        val intent = Intent(activity,TarefaActivity::class.java)
+        val adapter = cardAdapter
+        intent.putExtra("tarefa", tarefa)
+        adapter.notifyDataSetChanged()
+        startActivity(intent)
+
     }
 
     /*

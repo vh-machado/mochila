@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Database(
     entities = [UsersEntity::class,TarefaEntity::class,DisciplinasEntity::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(ConverterArray::class)

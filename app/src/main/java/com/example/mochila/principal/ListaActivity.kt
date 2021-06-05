@@ -54,27 +54,43 @@ class ListaActivity : AppCompatActivity() {
             if(viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true){
                 var tabDisciplina = viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
                 var tabIdDisciplina: String? = null
+                var tamanhoLista: Int = 0
+                var disciplinaDados: DisciplinasEntity? = null
                 Log.i("Tab nome", tabDisciplina)
                 viewModelDisciplinas.disciplinasList.value?.forEach {
                     if (it.nomeDisciplina == tabDisciplina){
                         tabIdDisciplina = it.disciplinaId
+                        tamanhoLista = it.quantidadeTarefa
+                        disciplinaDados = it
+
                     }
                 }
 
                 viewModelTarefa.saveNewMedia(
                     TarefaEntity(
-                        UUID.randomUUID().toString(),
+                        tamanhoLista.toString(),
                         tabIdDisciplina!!,
                         "Exercício",
-                        "a",
-                        "01/06/2021",
+                        "",
+                        "",
                         false,
-                        arrayListOf("Cálculo", "Escrita"),
-                        arrayListOf("Rasunho", "Caneta"),
+                        arrayListOf(""),
+                        arrayListOf(""),
                     )
                 )
                 Log.i("Tarefa Adicionada",viewModelTarefa.getTarefas().value.toString())
-
+                Toast.makeText(this,viewModelTarefa.getTarefas().value.toString(), Toast.LENGTH_SHORT).show()
+                Log.i("Tarefas salvas",viewModelTarefa.tarefaList.value.toString())
+                viewModelDisciplinas.updateMedia(
+                    DisciplinasEntity(
+                         disciplinaDados!!.disciplinaId,
+                         disciplinaDados!!.usuarioId,
+                         disciplinaDados!!.nomeDisciplina,
+                         disciplinaDados!!.nomeProfessor,
+                         disciplinaDados!!.emailProfessor,
+                        (tamanhoLista + 1)
+                    )
+                )
                 startActivity(Intent(this, TarefaActivity::class.java))
             }else{
                 Toast.makeText(

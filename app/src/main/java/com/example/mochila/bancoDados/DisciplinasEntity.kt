@@ -10,5 +10,6 @@ data class DisciplinasEntity (
     var usuarioId: String = "",
     var nomeDisciplina: String = "",
     var nomeProfessor: String = "",
-    var emailProfessor: String = ""
+    var emailProfessor: String = "",
+    var quantidadeTarefa : Int = 0
 )
