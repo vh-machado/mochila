@@ -17,8 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
+import androidx.lifecycle.ViewModelProvider
 import com.example.mochila.R
 import com.example.mochila.bancoDados.TarefaEntity
+import com.example.mochila.bancoDados.TarefaViewModel
 import com.example.mochila.databinding.ActivityTarefaBinding
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.*
@@ -32,6 +34,8 @@ import kotlin.collections.ArrayList
 
 class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
+    private lateinit var viewModelTarefa: TarefaViewModel
+
     var dia = 0
     var mes = 0
     var ano = 0
@@ -43,6 +47,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     // Pertence ao código de etiqueta
     var cout = 0
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModelTarefa = ViewModelProvider(this).get(TarefaViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tarefa)
@@ -51,9 +56,14 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         binding = ActivityTarefaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var chips = intent.getSerializableExtra("chips") as? ArrayList<String>
+        val tarefaSelecionada = intent.getSerializableExtra("tarefa") as? TarefaEntity
 
-        val chips = intent.getSerializableExtra("chips")as? ArrayList<String>
-        val tarefaSelecionada = intent.getSerializableExtra("tarefa")as?TarefaEntity
+        if (tarefaSelecionada != null) {
+            multilineDescricao.setText(tarefaSelecionada.descricao)
+            textDate.setText(tarefaSelecionada.dataEntrega)
+            chips = tarefaSelecionada.etiquetas
+        }
 
         var listaChips = arrayListOf<String>()
         chips?.forEach {
@@ -141,14 +151,14 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             //val quemEnvia = "vivibraz045@gmail.com"
 
 
-           val destinatario = ("vh.machado.silva@gmail.com,marcushuriel80@gmail.com").trim()
+            val destinatario = ("vh.machado.silva@gmail.com,marcushuriel80@gmail.com").trim()
             // method call for email intent with these inputs as parameters
 
             getContato(destinatario)
         }
     }
 
-    private fun getDateCalendar(){
+    private fun getDateCalendar() {
         val cal: Calendar = Calendar.getInstance()
         dia = cal.get(Calendar.DAY_OF_MONTH)
         mes = cal.get(Calendar.MONTH)
@@ -163,7 +173,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     }
 
     //ARMAZENAR
-    override fun onDateSet(view: DatePicker?, ano: Int, mes: Int, diaDoMes: Int){
+    override fun onDateSet(view: DatePicker?, ano: Int, mes: Int, diaDoMes: Int) {
         diaSalvo = String.format("%02d", diaDoMes)
         mesSalvo = String.format("%02d", mes)
         anoSalvo = ano.toString()
@@ -172,7 +182,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     }
 
     // ARMAZENAR
-    private  fun creatChips(name: String, closeIconStatus: Boolean){
+    private fun creatChips(name: String, closeIconStatus: Boolean) {
         val chip = Chip(this)
         chip.apply {
             cout += 1
@@ -200,8 +210,9 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             }
         }
     }
+
     // ARMAZENAR
-    fun creatAlertDialog(chip:Chip){
+    fun creatAlertDialog(chip: Chip) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(chip.text.toString())
         builder.setMessage("Deseja remover essa etiqueta?")
@@ -226,7 +237,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     //Aqui termina o código de etiqueta
 
     //Código para enviar e-mail para o professor
-    private fun getContato(destinatario: String){
+    private fun getContato(destinatario: String) {
         /*ACTION_SEND action to launch an email cliente installed on your Android device */
         val mIntent = Intent(Intent.ACTION_SEND)
         /*To send an email you need to specify mailto: as URI using setData()nethid and
@@ -244,7 +255,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             // start email intent
             startActivity(Intent.createChooser(mIntent, "Choose email cliente..."))
 
-        } catch (e: Exception){
+        } catch (e: Exception) {
             // if any thing goes wrong for example no email client application or any exception
             // get and show exception message
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()

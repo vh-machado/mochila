@@ -71,10 +71,10 @@ class ListaActivity : AppCompatActivity() {
                         tamanhoLista.toString(),
                         tabIdDisciplina!!,
                         "Exercício",
-                        "",
-                        "",
+                        "aaa",
+                        "01/01/01",
                         false,
-                        arrayListOf(""),
+                        arrayListOf("a","b","c"),
                         arrayListOf(""),
                     )
                 )
