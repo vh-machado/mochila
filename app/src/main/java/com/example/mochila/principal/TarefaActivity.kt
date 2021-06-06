@@ -37,8 +37,6 @@ import kotlin.collections.ArrayList
 class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var viewModelTarefa: TarefaViewModel
 
-    private lateinit var viewModelTarefa: TarefaViewModel
-
     var dia = 0
     var mes = 0
     var ano = 0
@@ -49,6 +47,9 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     // Pertence ao código de etiqueta
     var cout = 0
+    var cout1 = 0
+    var chips: ArrayList<String>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelTarefa = ViewModelProvider(this).get(TarefaViewModel::class.java)
 
@@ -59,7 +60,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         binding = ActivityTarefaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var chips = intent.getSerializableExtra("chips") as? ArrayList<String>
+        //var chips = intent.getSerializableExtra("chips") as? ArrayList<String>
         val tarefaSelecionada = intent.getSerializableExtra("tarefa") as? TarefaEntity
 
         if(tarefaSelecionada != null){
@@ -241,49 +242,139 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        builder.window!!.setLayout(700,1100)
         builder.show()
-        setDefaultChips(setListChips())
-        entryChip()
 
-        botSalvar.setOnClickListener {
-            Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show()
-            shareInfosChipsIntent(getOnListIdChips())
+        fun creatChips1(name: String, closeIconStatus: Boolean) {
+            //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+            val chip = Chip(this)
+            chip.apply {
+                cout1 = cout1 + 1
+                text = name
+                chipIcon = ContextCompat.getDrawable(
+                    this@TarefaActivity,
+                    R.drawable.ic_launcher_background
+                )
+                id = cout1
+                isChipIconVisible = false
+                isCloseIconVisible = closeIconStatus
+                isClickable = true
+                isCheckable = true
+
+                chip.chipBackgroundColor = getColorStateList(
+                    R.color.bdazzled_blue
+                )
+
+                chip.setTextColor(getResources().getColor(R.color.white))
+
+                view.chipGroup.addView(chip as View)
+
+                chip.setOnCloseIconClickListener {
+                    view.chipGroup.removeView(chip as View)
+                }
+
+                Log.i("Chip criado", chip.text.toString())
+
+            }
+        }
+
+        fun campoVazio():Boolean{
+            //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+            val eti = view.infoEtiqueta.text.toString()
+            if(eti.isNullOrBlank()== true){
+                Toast.makeText(this,"Para criar etiquetas é necessário informar um nome! Verifique se o campo foi preenchido", Toast.LENGTH_SHORT).show()
+                return true
+            }else{
+                return false
+            }
+        }
+
+        fun entryChip() {
+            //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+            view.infoEtiqueta.setOnKeyListener { v, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+
+                    val name = view.infoEtiqueta.text.toString()
+                    if(campoVazio()!= true){
+                        creatChips1(name, true)
+                        Log.i("Novo chip", view.infoEtiqueta.text.toString())
+                        view.infoEtiqueta.text!!.clear()
+                    }
+
+                    return@setOnKeyListener true
+                }
+                false
+            }
 
         }
-        botFechar.setOnClickListener {
+
+        fun setDefaultChips1(list: List<String>) {
+            list.forEach {
+                creatChips1(it, false)
+
+            }
+        }
+
+        fun getOnListIdChips():ArrayList<String> {
+            //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+            var etiCheck = ArrayList<String>()
+            view.chipGroup.checkedChipIds.forEach {
+                var chip = view.chipGroup.findViewById<Chip>(it)
+                etiCheck.add(chip.text.toString())
+
+            }
+            return etiCheck
+
+        }
+
+        fun setListChips(): List<String> {
+            return listOf(
+                "Apresentação",
+                "Cálculo",
+                "Escrita",
+                "Estudo",
+                "Leitura",
+                "Pesquisa",
+                "Grupo",
+                "Vídeo",
+                "Vídeo-aula"
+            )
+
+        }
+
+        setDefaultChips1(setListChips())
+        entryChip()
+
+        view.botSalvar.setOnClickListener {
+            Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show()
+            chips = getOnListIdChips()
+            Log.i("Chips selecionados",chips.toString())
+            //shareInfosChipsIntent(getOnListIdChips())
+            var listaChips = arrayListOf<String>()
+            chips?.forEach {
+                listaChips.add(it)
+            }
+            setDefaultChips(listaChips)
+            builder.dismiss()
+
+        }
+        view.botFechar.setOnClickListener {
             builder.dismiss()
         }
     }
-    private fun entryChip() {
 
-        infoEtiqueta.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-
-                binding.apply {
-                    val name = infoEtiqueta.text.toString()
-                    if(campoVazio()!= true){
-                        creatChips(name, true)
-                        infoEtiqueta.text!!.clear()
-                    }
-                }
-
-                return@setOnKeyListener true
-            }
-            false
-        }
-
-    }
-
-    private fun creatChips1(name: String, closeIconStatus: Boolean) {
+    /*
+    fun creatChips1(name: String, closeIconStatus: Boolean) {
+        val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
         val chip = Chip(this)
         chip.apply {
-            cout = cout + 1
+            cout1 = cout1 + 1
             text = name
             chipIcon = ContextCompat.getDrawable(
                 this@TarefaActivity,
                 R.drawable.ic_launcher_background
             )
-            id = cout
+            id = cout1
             isChipIconVisible = false
             isCloseIconVisible = closeIconStatus
             isClickable = true
@@ -295,67 +386,33 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
             chip.setTextColor(getResources().getColor(R.color.white))
 
-            binding.apply {
-                chipGroup.addView(chip as View)
+            view.chipGroup.addView(chip as View)
 
-                chip.setOnCloseIconClickListener {
-                    chipGroup.removeView(chip as View)
-                }
+            chip.setOnCloseIconClickListener {
+                view.chipGroup.removeView(chip as View)
             }
 
-        }
-    }
-
-    private fun setDefaultChips(list: List<String>) {
-        list.forEach {
-            creatChips1(it, false)
+            Log.i("Chip criado", chip.text.toString())
 
         }
     }
-
-    private fun setListChips(): List<String> {
-        return listOf(
-            "Apresentação",
-            "Cálculo",
-            "Escrita",
-            "Estudo",
-            "Leitura",
-            "Pesquisa",
-            "Grupo",
-            "Vídeo",
-            "Vídeo-aula"
-        )
-
-    }
+    */
 
 
-    private fun getOnListIdChips():ArrayList<String> {
-        var etiCheck = ArrayList<String>()
-        chipGroup.checkedChipIds.forEach {
-            var chip = chipGroup.findViewById<Chip>(it)
-            etiCheck.add(chip.text.toString())
 
-        }
-        return etiCheck
 
-    }
 
+    /*
     private fun shareInfosChipsIntent(chips: ArrayList<String>){
         val intent = Intent(this, TarefaActivity:: class.java)
         intent.putExtra("chips",chips)
         startActivity(intent)
         finish()
     }
-    private fun campoVazio():Boolean{
-        val eti = infoEtiqueta.text.toString()
-        if(eti.isNullOrBlank()== true){
-            Toast.makeText(this,"Para criar etiquetas é necessário informar um nome! Verifique se o campo foi preenchido", Toast.LENGTH_SHORT).show()
-        }
-        return true
-    }
+    */
         //ARMAZENAR
 
-    private fun setDefaultChips1(list: List<String>) {
+    private fun setDefaultChips(list: List<String>) {
         list.forEach {
             creatChips(it, false)
         }

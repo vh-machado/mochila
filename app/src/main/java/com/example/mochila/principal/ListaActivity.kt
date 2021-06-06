@@ -76,7 +76,7 @@ class ListaActivity : AppCompatActivity() {
                         "05/06/2021",
                         false,
                         arrayListOf("Relatório", "Prova"),
-                        arrayListOf(""),
+                        arrayListOf("")
                     )
                 )
                 Log.i("Tarefa Adicionada",viewModelTarefa.getTarefas().value.toString())
