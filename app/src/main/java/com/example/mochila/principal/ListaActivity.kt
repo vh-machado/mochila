@@ -55,7 +55,7 @@ class ListaActivity : AppCompatActivity() {
             if(viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true){
                 var tabDisciplina = viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
                 var tabIdDisciplina: String? = null
-                var tamanhoLista: Int = 0
+                var tamanhoLista = 0
                 var disciplinaDados: DisciplinasEntity? = null
                 Log.i("Tab nome", tabDisciplina)
                 viewModelDisciplinas.disciplinasList.value?.forEach {
@@ -79,8 +79,8 @@ class ListaActivity : AppCompatActivity() {
                         arrayListOf("")
                     )
                 )
-                Log.i("Tarefa Adicionada",viewModelTarefa.getTarefas().value.toString())
-                Toast.makeText(this,viewModelTarefa.getTarefas().value.toString(), Toast.LENGTH_SHORT).show()
+                Log.i("Tarefa Adicionada",viewModelTarefa.tarefaList.value.toString())
+                Toast.makeText(this,viewModelTarefa.tarefaList.value.toString(), Toast.LENGTH_SHORT).show()
                 Log.i("Tarefas salvas",viewModelTarefa.tarefaList.value.toString())
                 viewModelDisciplinas.updateMedia(
                     DisciplinasEntity(
@@ -92,7 +92,29 @@ class ListaActivity : AppCompatActivity() {
                         (tamanhoLista + 1)
                     )
                 )
-                startActivity(Intent(this, TarefaActivity::class.java))
+                /*
+                var indice: Int? = null
+                viewModelTarefa.tarefaList.observe(this, {
+                    Log.i("Tarefas", it.toString())
+                    it.forEach {
+                        if(it.tarefaId == tamanhoLista.toString()){
+                            Log.i("Tarefa encontrada", it.toString())
+                            indice = tamanhoLista
+                        }
+                    }
+                })
+
+                val tarefa = viewModelTarefa.tarefaList.value?.get(indice!!)
+                val intent = Intent(this,TarefaActivity::class.java)
+                intent.putExtra("tarefaNova", tarefa)
+                startActivity(intent)
+                 */
+
+                val intent = Intent(this,TarefaActivity::class.java)
+                intent.putExtra("idTarefa", tamanhoLista.toString())
+                intent.putExtra("idDisciplina", disciplinaDados!!.disciplinaId)
+                startActivity(intent)
+
             }else{
                 Toast.makeText(
                     this,
@@ -128,22 +150,6 @@ class ListaActivity : AppCompatActivity() {
     */
 
     private fun setTabs() {
-
-
-        /*
-        val listaCalculo = DisciplinaFragment.newInstance(true)
-        val listaProgramacao = DisciplinaFragment.newInstance(true)
-        val listaMatematica = DisciplinaFragment.newInstance(true)
-        val listaFilosofia = DisciplinaFragment.newInstance(true)
-        val listaSociologia = DisciplinaFragment.newInstance(true)
-        val listaMetodologia = DisciplinaFragment.newInstance(true)
-        adapter.addFragment(listaCalculo, "Cálculo")
-        adapter.addFragment(listaProgramacao, "Programação")
-        adapter.addFragment(listaMatematica, "Matemática")
-        adapter.addFragment(listaFilosofia, "Filosofia")
-        adapter.addFragment(listaSociologia, "Sociologia")
-        adapter.addFragment(listaMetodologia, "Metodologia")
-        */
 
         viewModelDisciplinas.disciplinasList.observe(this) {
             Log.i("Disciplinas", it.toString())

@@ -5,11 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.Toast
@@ -18,8 +21,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
+import androidx.core.view.forEach
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.example.mochila.R
+import com.example.mochila.bancoDados.DisciplinasEntity
+import com.example.mochila.bancoDados.DisciplinasViewModel
 import com.example.mochila.bancoDados.TarefaEntity
 import com.example.mochila.bancoDados.TarefaViewModel
 import com.example.mochila.databinding.ActivityTarefaBinding
@@ -36,6 +43,9 @@ import kotlin.collections.ArrayList
 
 class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var viewModelTarefa: TarefaViewModel
+    private lateinit var viewModelDisciplinas: DisciplinasViewModel
+
+    var tarefaAtual: TarefaEntity? = null
 
     var dia = 0
     var mes = 0
@@ -49,9 +59,11 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     var cout = 0
     var cout1 = 0
     var chips: ArrayList<String>? = null
+    var checklist: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelTarefa = ViewModelProvider(this).get(TarefaViewModel::class.java)
+        viewModelDisciplinas = ViewModelProvider(this).get(DisciplinasViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tarefa)
@@ -61,13 +73,39 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         setContentView(binding.root)
 
         //var chips = intent.getSerializableExtra("chips") as? ArrayList<String>
-        val tarefaSelecionada = intent.getSerializableExtra("tarefa") as? TarefaEntity
+        /*
+        val tarefaSelecionada = intent.getSerializableExtra("tarefaClicada") as? TarefaEntity
+        val tarefaCriada = intent.getSerializableExtra("tarefaNova") as? TarefaEntity
 
-        if(tarefaSelecionada != null){
-            multilineDescricao.setText(tarefaSelecionada!!.descricao)
-            textDate.setText(tarefaSelecionada.dataEntrega)
-            chips = tarefaSelecionada.etiquetas
+        if (tarefaSelecionada != null) {
+            tarefaAtual = tarefaSelecionada
+        } else if (tarefaCriada != null) {
+            tarefaAtual = tarefaCriada
         }
+        */
+
+        var idTarefa = intent.getSerializableExtra("idTarefa") as String
+        var idDisciplina = intent.getSerializableExtra("idDisciplina") as String
+        Log.i("idTarefa", idTarefa)
+        Log.i("idDisciplina", idDisciplina)
+        tarefaAtual = viewModelTarefa.lerTarefa(idTarefa, idDisciplina).value
+        /*
+        viewModelTarefa.tarefaList.observe(this,{})
+        Log.i("tarefaList", viewModelTarefa.tarefaList.value.toString())
+        viewModelTarefa.tarefaList.value?.forEach {
+            Log.i("Tarefa listada", it.toString())
+            if (it.tarefaId == idTarefa && it.disciplinaId == idDisciplina) {
+                tarefaAtual = it
+            }
+        }
+        */
+
+        // Setando os Dados Armazenados da Tarefa
+        textView_lista_disciplina.setText(idDisciplina)
+        titulo_tarefa.setText(tarefaAtual!!.titulo)
+        multilineDescricao.setText(tarefaAtual!!.descricao)
+        textDate.setText(tarefaAtual!!.dataEntrega)
+        chips = tarefaAtual!!.etiquetas
 
         var listaChips = arrayListOf<String>()
         chips?.forEach {
@@ -83,7 +121,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         setDefaultChips(foraChips)
 
         botAdicionarEtiqueta.setOnClickListener {
-           createAlertAddEtiqueta()
+            createAlertAddEtiqueta()
         }
         botao_menu.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
@@ -91,35 +129,70 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             finish()
         }
 
-        /*
-        multilineDescricao.isGone = true
-        textDescricao.isGone = false
-        botao_salvar_descricao.isGone = true
+        // Manipulação do Título da Tarefa
+        titulo_tarefa.inputType = InputType.TYPE_NULL
+        titulo_tarefa.setOnTouchListener { v, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
 
-        textDescricao.setOnClickListener{
-            multilineDescricao.isGone = false
-            textDescricao.isGone = true
-            botao_salvar_descricao.isGone = false
-        }
+                titulo_tarefa.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+                titulo_tarefa.isCursorVisible = true
+                titulo_tarefa.isFocusableInTouchMode = true
+                Log.i("Titulo inputype != 0", titulo_tarefa.inputType.toString())
 
-        botao_salvar_descricao.setOnClickListener {
-            textDescricao.text = multilineDescricao.text
-            multilineDescricao.isGone = true
-            textDescricao.isGone = false
-            botao_salvar_descricao.isGone = true
-        }
-         */
+                titulo_tarefa.setOnKeyListener { v1, keyCode, event1 ->
+                    if (keyCode == KeyEvent.KEYCODE_ENTER && event1.action == KeyEvent.ACTION_UP) {
+                        //Atualização do Título da Tarefa no Banco de Dados
+                        viewModelTarefa.atualizaTitulo(
+                            titulo_tarefa.text.toString(),
+                            tarefaAtual!!.tarefaId,
+                            tarefaAtual!!.disciplinaId
+                        )
+                        titulo_tarefa.inputType = InputType.TYPE_NULL
+                        Log.i("Titulo inputype == 0", titulo_tarefa.inputType.toString())
 
-        /*
-        multilineDescricao.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                        return@setOnKeyListener true
+                    }
+                    false
+                }
 
-
-                return@setOnKeyListener true
+                return@setOnTouchListener true
+            } else if (event.action == KeyEvent.ACTION_UP) {
+                v.performClick()
+                return@setOnTouchListener false
             }
             false
         }
-        */
+
+        // Manipulação do MultiLine EditText da Descrição da tarefa
+        botao_salvar_descricao.visibility = INVISIBLE
+        botao_editar_descricao.visibility = VISIBLE
+        //multilineDescricao.setRawInputType(EditorInfo.TYPE_NULL)
+        multilineDescricao.isEnabled = false
+
+        botao_editar_descricao.setOnClickListener {
+            botao_editar_descricao.visibility = INVISIBLE
+            botao_salvar_descricao.visibility = VISIBLE
+            multilineDescricao.isCursorVisible = true
+            multilineDescricao.isFocusableInTouchMode = true
+            //multilineDescricao.setRawInputType(EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE)
+            multilineDescricao.isEnabled = true
+            multilineDescricao.requestFocus()
+        }
+
+        botao_salvar_descricao.setOnClickListener {
+            botao_salvar_descricao.visibility = INVISIBLE
+            botao_editar_descricao.visibility = VISIBLE
+            //multilineDescricao.setRawInputType(EditorInfo.TYPE_NULL)
+            //Atualização da Descrição da Tarefa no Banco de Dados
+            viewModelTarefa.atualizaDescricao(
+                multilineDescricao.text.toString(),
+                tarefaAtual!!.tarefaId,
+                tarefaAtual!!.disciplinaId
+            )
+            multilineDescricao.isEnabled = false
+        }
+
+        // Manipulação do Checklist da Tarefa
         layout_input.isGone = true
         botao_add_tarefa_menor.isGone = false
 
@@ -134,8 +207,18 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
                 Log.i("inputCheckbox", inputCheckbox.getText().toString())
                 checkbox.text = inputCheckbox.text
                 //inputCheckbox.imeOptions = EditorInfo.IME_ACTION_NEXT
+                checklist?.add(inputCheckbox.text.toString())
+                Log.i("Checklist", checklist.toString())
+                //Atualização do Checklist da Tarefa no Banco de Dados
+                viewModelTarefa.atualizaChecklist(
+                    checklist!!,
+                    tarefaAtual!!.tarefaId,
+                    tarefaAtual!!.disciplinaId
+                )
+
                 inputCheckbox.text.clear()
                 linear_layout_tarefas.addView(checkbox as View)
+
 
                 return@setOnKeyListener true
             }
@@ -180,16 +263,21 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    //ARMAZENAR
     override fun onDateSet(view: DatePicker?, ano: Int, mes: Int, diaDoMes: Int) {
         diaSalvo = String.format("%02d", diaDoMes)
         mesSalvo = String.format("%02d", mes)
         anoSalvo = ano.toString()
         var data = "$diaSalvo/$mesSalvo/$anoSalvo"
         textDate.setText(data)
+
+        //Atualização da Data de Entrega da Tarefa no Banco de Dados
+        viewModelTarefa.atualizaDataEntrega(
+            data,
+            tarefaAtual!!.tarefaId,
+            tarefaAtual!!.disciplinaId
+        )
     }
 
-    // ARMAZENAR
     private fun creatChips(name: String, closeIconStatus: Boolean) {
         val chip = Chip(this)
         chip.apply {
@@ -219,7 +307,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    // ARMAZENAR
     fun creatAlertDialog(chip: Chip) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(chip.text.toString())
@@ -235,6 +322,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         builder.create().show()
 
     }
+
     fun createAlertAddEtiqueta() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded).create()
         val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
@@ -242,11 +330,18 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        builder.window!!.setLayout(700,1100)
+        builder.window!!.setLayout(700, 1100)
         builder.show()
+
+        var chipsDisponiveis: ArrayList<String> = arrayListOf("")
 
         fun creatChips1(name: String, closeIconStatus: Boolean) {
             //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+            chipsDisponiveis.removeIf {
+                it == ""
+            }
+            chipsDisponiveis.add(name)
+            Log.i("Chips disponíveis", chipsDisponiveis.toString())
             val chip = Chip(this)
             chip.apply {
                 cout1 = cout1 + 1
@@ -278,24 +373,48 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             }
         }
 
-        fun campoVazio():Boolean{
+        fun getOnListIdChips(): ArrayList<String> {
             //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
+            var etiCheck = ArrayList<String>()
+            view.chipGroup.checkedChipIds.forEach {
+                var chip = view.chipGroup.findViewById<Chip>(it)
+                etiCheck.add(chip.text.toString())
+
+            }
+            return etiCheck
+
+        }
+
+        fun etiquetaRepetida(etiqueta: String): Boolean {
+            chipsDisponiveis.forEach {
+                if (it == etiqueta) {
+                    Toast.makeText(this, "Essa etiqueta já existe", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+            }
+            return false
+        }
+
+        fun campoVazio(): Boolean {
             val eti = view.infoEtiqueta.text.toString()
-            if(eti.isNullOrBlank()== true){
-                Toast.makeText(this,"Para criar etiquetas é necessário informar um nome! Verifique se o campo foi preenchido", Toast.LENGTH_SHORT).show()
+            if (eti.isNullOrBlank() == true) {
+                Toast.makeText(
+                    this,
+                    "Para criar etiquetas é necessário informar um nome! Verifique se o campo foi preenchido",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return true
-            }else{
+            } else {
                 return false
             }
         }
 
         fun entryChip() {
-            //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
             view.infoEtiqueta.setOnKeyListener { v, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
 
                     val name = view.infoEtiqueta.text.toString()
-                    if(campoVazio()!= true){
+                    if (!campoVazio() && !etiquetaRepetida(name)) {
                         creatChips1(name, true)
                         Log.i("Novo chip", view.infoEtiqueta.text.toString())
                         view.infoEtiqueta.text!!.clear()
@@ -313,18 +432,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
                 creatChips1(it, false)
 
             }
-        }
-
-        fun getOnListIdChips():ArrayList<String> {
-            //val view: View = LayoutInflater.from(this).inflate(R.layout.activity_janelinha_tarefa, null)
-            var etiCheck = ArrayList<String>()
-            view.chipGroup.checkedChipIds.forEach {
-                var chip = view.chipGroup.findViewById<Chip>(it)
-                etiCheck.add(chip.text.toString())
-
-            }
-            return etiCheck
-
         }
 
         fun setListChips(): List<String> {
@@ -348,13 +455,21 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         view.botSalvar.setOnClickListener {
             Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show()
             chips = getOnListIdChips()
-            Log.i("Chips selecionados",chips.toString())
+            Log.i("Chips selecionados", chips.toString())
             //shareInfosChipsIntent(getOnListIdChips())
             var listaChips = arrayListOf<String>()
             chips?.forEach {
                 listaChips.add(it)
             }
             setDefaultChips(listaChips)
+
+            //Atualização das Etiquetas da Tarefa no Banco de Dados
+            viewModelTarefa.atualizaEtiquetas(
+                listaChips,
+                tarefaAtual!!.tarefaId,
+                tarefaAtual!!.disciplinaId
+            )
+
             builder.dismiss()
 
         }
@@ -399,9 +514,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     */
 
 
-
-
-
     /*
     private fun shareInfosChipsIntent(chips: ArrayList<String>){
         val intent = Intent(this, TarefaActivity:: class.java)
@@ -410,7 +522,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         finish()
     }
     */
-        //ARMAZENAR
+    //ARMAZENAR
 
     private fun setDefaultChips(list: List<String>) {
         list.forEach {

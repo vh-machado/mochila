@@ -68,7 +68,7 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
         view.recycler_view.setHasFixedSize(true)
 
-        viewModelTarefa.getTarefas().observe(viewLifecycleOwner, Observer<List<TarefaEntity>?> {
+        viewModelTarefa.tarefaList.observe(viewLifecycleOwner, Observer<List<TarefaEntity>?> {
             if (it.isNotEmpty()) {
                 if(cardList.isNotEmpty()){
                     if(cardList[0].titulo == ""){
@@ -138,6 +138,7 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
         clickedItem.progresso = clickedItem.progresso + 10
         cardAdapter.notifyItemChanged(position)
         //Passar de uma activity para outra os dados
+        /*
         var indice: Int? = null
         viewModelTarefa.tarefaList.value?.forEach{
             if(it.tarefaId == position.toString()){
@@ -146,9 +147,12 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
         }
         val tarefa = viewModelTarefa.tarefaList.value?.get(indice!!)
         Log.i("tarefaList",viewModelTarefa.tarefaList.value?.get(indice!!).toString())
+         */
         val intent = Intent(activity,TarefaActivity::class.java)
         val adapter = cardAdapter
-        intent.putExtra("tarefa", tarefa)
+        //intent.putExtra("tarefaClicada", tarefa)
+        intent.putExtra("idTarefa", position.toString())
+        intent.putExtra("idDisciplina", idDisciplina)
         adapter.notifyDataSetChanged()
         startActivity(intent)
 
