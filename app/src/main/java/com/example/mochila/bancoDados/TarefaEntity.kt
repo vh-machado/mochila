@@ -13,7 +13,8 @@ data class TarefaEntity (
     var descricao: String = "",
     var dataEntrega: String = "",
     var concluido: Boolean = false,
-    var etiquetas: ArrayList<String> = arrayListOf(""),
+    var etiquetasEscolhidas: ArrayList<String> = arrayListOf(""),
+    var etiquetasDisponiveis: ArrayList<String> = arrayListOf(""),
     var checkList: ArrayList<String> = arrayListOf("")
 // Permite passar a tarefa toda no putExtra
 ):Serializable

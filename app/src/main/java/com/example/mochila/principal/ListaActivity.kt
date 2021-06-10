@@ -71,11 +71,22 @@ class ListaActivity : AppCompatActivity() {
                     TarefaEntity(
                         tamanhoLista.toString(),
                         tabIdDisciplina!!,
-                        "Exercício",
-                        "Funciona",
-                        "05/06/2021",
+                        "Adicione um título",
+                        "",
+                        "",
                         false,
-                        arrayListOf("Relatório", "Prova"),
+                        arrayListOf(""),
+                        arrayListOf(
+                            "Apresentação",
+                            "Cálculo",
+                            "Escrita",
+                            "Estudo",
+                            "Leitura",
+                            "Pesquisa",
+                            "Grupo",
+                            "Vídeo",
+                            "Vídeo-aula"
+                        ),
                         arrayListOf("")
                     )
                 )

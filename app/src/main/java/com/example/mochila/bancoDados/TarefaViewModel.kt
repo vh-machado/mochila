@@ -62,9 +62,15 @@ class TarefaViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun atualizaEtiquetas(etiquetas: ArrayList<String>, tarefaId: String, disciplinaId: String) {
+    fun atualizaEtiquetasEscolhidas(etiquetasEscolhidas: ArrayList<String>, tarefaId: String, disciplinaId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateEtiquetasTarefa(etiquetas, tarefaId, disciplinaId)
+            repository.updateEtiquetasEscolhidasTarefa(etiquetasEscolhidas, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaEtiquetasDisponiveis(etiquetasDisponiveis: ArrayList<String>, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateEtiquetasDisponiveisTarefa(etiquetasDisponiveis, tarefaId, disciplinaId)
         }
     }
 

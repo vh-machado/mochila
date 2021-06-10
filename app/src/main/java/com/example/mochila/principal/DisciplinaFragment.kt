@@ -70,14 +70,14 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
         viewModelTarefa.tarefaList.observe(viewLifecycleOwner, Observer<List<TarefaEntity>?> {
             if (it.isNotEmpty()) {
-                if(cardList.isNotEmpty()){
-                    if(cardList[0].titulo == ""){
+                if (cardList.isNotEmpty()) {
+                    if (cardList[0].titulo == "") {
                         cardList.removeAt(0)
                     }
                 }
                 var listaDados: MutableList<CardItem> = mutableListOf(CardItem("", "", 0))
                 it.forEach {
-                    if(it.disciplinaId == idDisciplina){
+                    if (it.disciplinaId == idDisciplina) {
                         var newCard = CardItem(
                             it.titulo,
                             it.dataEntrega,
@@ -88,19 +88,23 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
                     }
                 }
                 // Atualiza RecyclerView
-                if(listaDados.size > 1){
+                if (listaDados.size > 1) {
                     listaDados.removeAt(0)
                     cardList = listaDados
-                    Log.i("cardList",cardList.toString())
-                    cardAdapter = CardAdapter(cardList,this)
+                    Log.i("cardList", cardList.toString())
+                    cardAdapter = CardAdapter(cardList, this)
                     view.recycler_view.adapter = cardAdapter
 
                     Log.i("Atualizar RecyclerView", it.toString())
 
                     //cardAdapter.setCards(cardList)
                     cardAdapter.notifyDataSetChanged()
-                }else{
-                    Toast.makeText(activity, "Adicione tarefas no botão superior direito", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Adicione tarefas no botão superior direito",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
@@ -109,20 +113,6 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
         return view
     }
-    /*
-    fun inserirCard(view: View){
-        val index: Int = cardList.size - 1
-
-        val newItem = CardItem(
-            "Nova tarefa na posição $index",
-            "Data",
-            0
-        )
-
-        cardList.add(index, newItem)
-        cardAdapter.notifyItemInserted(index)
-    }
-    */
 
     fun removerItem(view: View) {
         val index: Int = Random.nextInt(8)
@@ -133,22 +123,10 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         Toast.makeText(activity, "Tarefa $position clicada", Toast.LENGTH_SHORT).show()
-        val clickedItem: CardItem = cardList!![position]
-        clickedItem.titulo = "clicado"
-        clickedItem.progresso = clickedItem.progresso + 10
+        //val clickedItem: CardItem = cardList!![position]
+        //clickedItem.progresso = clickedItem.progresso + 10
         cardAdapter.notifyItemChanged(position)
-        //Passar de uma activity para outra os dados
-        /*
-        var indice: Int? = null
-        viewModelTarefa.tarefaList.value?.forEach{
-            if(it.tarefaId == position.toString()){
-                indice = position
-            }
-        }
-        val tarefa = viewModelTarefa.tarefaList.value?.get(indice!!)
-        Log.i("tarefaList",viewModelTarefa.tarefaList.value?.get(indice!!).toString())
-         */
-        val intent = Intent(activity,TarefaActivity::class.java)
+        val intent = Intent(activity, TarefaActivity::class.java)
         val adapter = cardAdapter
         //intent.putExtra("tarefaClicada", tarefa)
         intent.putExtra("idTarefa", position.toString())
@@ -158,14 +136,4 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
     }
 
-    /*
-    private fun gerarLista(size: Int): ArrayList<CardItem> {
-        val list = ArrayList<CardItem>()
-        for (i in 0 until size) {
-            val item = CardItem("Tarefa $i", "Data",50)
-            list += item
-        }
-        return list
-    }
-    */
 }

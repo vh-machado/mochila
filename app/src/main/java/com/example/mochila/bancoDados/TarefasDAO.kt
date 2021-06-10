@@ -34,8 +34,11 @@ interface TarefasDAO {
     @Query("UPDATE tarefa SET concluido = :concluido WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
     fun updateConcluido(concluido: Boolean, tarefaId: String, disciplinaId: String)
 
-    @Query("UPDATE tarefa SET etiquetas = :etiquetas WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
-    fun updateEtiquetas(etiquetas: ArrayList<String>, tarefaId: String, disciplinaId: String)
+    @Query("UPDATE tarefa SET etiquetasEscolhidas = :etiquetasEscolhidas WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
+    fun updateEtiquetasEscolhidas(etiquetasEscolhidas: ArrayList<String>, tarefaId: String, disciplinaId: String)
+
+    @Query("UPDATE tarefa SET etiquetasDisponiveis = :etiquetasDisponiveis WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
+    fun updateEtiquetasDisponiveis(etiquetasDisponiveis: ArrayList<String>, tarefaId: String, disciplinaId: String)
 
     @Query("UPDATE tarefa SET checklist = :checklist WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
     fun updateChecklist(checklist: ArrayList<String>, tarefaId: String, disciplinaId: String)

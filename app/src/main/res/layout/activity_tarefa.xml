@@ -95,15 +95,15 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_toEndOf="@id/circulo_card"
+                android:backgroundTint="@color/bdazzled_blue"
                 android:fontFamily="@font/roboto_black"
-                android:padding="8dp"
                 android:hint="Título da tarefa"
-                android:textColorHint="#C2CEDC"
-                android:textColor="@color/white"
-                android:textSize="19sp"
-                android:textStyle="bold"
                 android:inputType="textPersonName"
-                android:backgroundTint="@color/bdazzled_blue" />
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:textColorHint="#C2CEDC"
+                android:textSize="19sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
@@ -152,22 +152,22 @@
                                 android:textStyle="bold" />
 
                             <ImageView
+                                android:id="@+id/botao_editar_descricao"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/botao_editar_descricao"
                                 android:layout_above="@id/multilineDescricao"
                                 android:layout_alignParentEnd="true"
                                 app:srcCompat="@drawable/ic_editar"
-                                app:tint="@color/gunmetal"/>
+                                app:tint="@color/gunmetal" />
 
                             <ImageView
+                                android:id="@+id/botao_salvar_descricao"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/botao_salvar_descricao"
                                 android:layout_above="@id/multilineDescricao"
                                 android:layout_alignParentEnd="true"
                                 app:srcCompat="@drawable/ic_ok"
-                                app:tint="@color/gunmetal"/>
+                                app:tint="@color/gunmetal" />
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/multilineDescricao"
@@ -497,7 +497,7 @@
                             android:paddingBottom="8dp">
 
                             <TextView
-                                android:id="@+id/textView11"
+                                android:id="@+id/textview_checklist"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
@@ -507,18 +507,50 @@
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
+
+                            <ImageView
+                                android:id="@+id/botao_editar_checklist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@id/linear_layout_checklist"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="35dp"
+                                android:layout_marginBottom="-2dp"
+                                app:srcCompat="@drawable/ic_editar"
+                                app:tint="@color/gunmetal" />
+
+                            <ImageView
+                                android:id="@+id/botao_salvar_checklist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@id/linear_layout_checklist"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="35dp"
+                                android:layout_marginBottom="-2dp"
+                                app:srcCompat="@drawable/ic_ok"
+                                app:tint="@color/gunmetal" />
+
+                            <ImageView
+                                android:id="@+id/botao_add_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@id/linear_layout_checklist"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_add"
+                                app:tint="@color/gunmetal" />
+
                             <LinearLayout
-                                android:id="@+id/linear_layout_tarefas"
+                                android:id="@+id/linear_layout_checklist"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/textView11"
+                                android:layout_below="@id/textview_checklist"
                                 android:orientation="vertical" />
 
                             <RelativeLayout
-                                android:id="@+id/layout_input"
+                                android:id="@+id/layout_input_checklist"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/linear_layout_tarefas">
+                                android:layout_below="@id/linear_layout_checklist">
 
                                 <EditText
                                     android:id="@+id/inputCheckbox"
@@ -531,7 +563,7 @@
                                     android:textSize="14sp" />
 
                                 <ImageView
-                                    android:id="@+id/botao_fechar_input"
+                                    android:id="@+id/botao_fechar_input_checklist"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
                                     android:layout_alignParentEnd="true"
@@ -542,12 +574,24 @@
                                     app:tint="@color/burnt_sienna" />
                             </RelativeLayout>
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/layout_input_checklist"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:background="#F1F3F6"
+                                android:focusable="true"
+                                android:padding="8dp"
+                                android:text=" "
+                                android:textColor="#F1F3F6"/>
 
+                            <!--
                             <TextView
                                 android:id="@+id/botao_add_tarefa_menor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/layout_input"
+                                android:layout_below="@id/layout_input_checklist"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:background="@drawable/rounded_shape"
@@ -558,6 +602,7 @@
                                 android:text="Adicionar"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
+                                -->
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

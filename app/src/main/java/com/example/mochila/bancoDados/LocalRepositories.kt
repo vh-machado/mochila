@@ -70,8 +70,12 @@ class TarefaRepository(private val tarefaDAO: TarefasDAO){
         tarefaDAO.updateConcluido(concluido, tarefaId, disciplinaId)
     }
 
-    fun updateEtiquetasTarefa(etiquetas: ArrayList<String>, tarefaId: String, disciplinaId: String){
-        tarefaDAO.updateEtiquetas(etiquetas, tarefaId, disciplinaId)
+    fun updateEtiquetasEscolhidasTarefa(etiquetasEscolhidas: ArrayList<String>, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateEtiquetasEscolhidas(etiquetasEscolhidas, tarefaId, disciplinaId)
+    }
+
+    fun updateEtiquetasDisponiveisTarefa(etiquetasDisponiveis: ArrayList<String>, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateEtiquetasDisponiveis(etiquetasDisponiveis, tarefaId, disciplinaId)
     }
 
     fun updateChecklistTarefa(checklist: ArrayList<String>, tarefaId: String, disciplinaId: String){
