@@ -45,12 +45,41 @@ class TarefaRepository(private val tarefaDAO: TarefasDAO){
         tarefaDAO.removeOfTarefasList(tarefa)
     }
 
+    fun readTarefa(tarefaId: String, disciplinaId: String): LiveData<TarefaEntity>{
+        return tarefaDAO.getTarefa(tarefaId, disciplinaId)
+    }
+
     suspend fun updateTarefasListTask(tarefa: TarefaEntity){
         tarefaDAO.updateTarefas(tarefa)
     }
 
-    suspend fun getAllTarefas(): LiveData<List<TarefaEntity>>{
-        return readAllData
+    // Atualização dos dados das funcionalidades da tarefa
+    fun updateTituloTarefa(titulo: String, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateTitulo(titulo, tarefaId, disciplinaId)
+    }
+
+    fun updateDescricaoTarefa(descricao: String, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateDescricao(descricao, tarefaId, disciplinaId)
+    }
+
+    fun updateDataEntregaTarefa(dataEntrega: String, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateDataEntrega(dataEntrega, tarefaId, disciplinaId)
+    }
+
+    fun updateConcluidoTarefa(concluido: Boolean, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateConcluido(concluido, tarefaId, disciplinaId)
+    }
+
+    fun updateEtiquetasEscolhidasTarefa(etiquetasEscolhidas: ArrayList<String>, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateEtiquetasEscolhidas(etiquetasEscolhidas, tarefaId, disciplinaId)
+    }
+
+    fun updateEtiquetasDisponiveisTarefa(etiquetasDisponiveis: ArrayList<String>, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateEtiquetasDisponiveis(etiquetasDisponiveis, tarefaId, disciplinaId)
+    }
+
+    fun updateChecklistTarefa(checklist: ArrayList<String>, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateChecklist(checklist, tarefaId, disciplinaId)
     }
 }
 

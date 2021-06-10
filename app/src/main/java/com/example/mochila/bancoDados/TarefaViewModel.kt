@@ -34,8 +34,51 @@ class TarefaViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun getTarefas(): LiveData<List<TarefaEntity>> {
-        return tarefaList
+    fun lerTarefa(tarefaId: String, disciplinaId: String): LiveData<TarefaEntity> {
+        return repository.readTarefa(tarefaId, disciplinaId)
     }
+
+    fun atualizaTitulo(titulo: String, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateTituloTarefa(titulo, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaDescricao(descricao: String, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateDescricaoTarefa(descricao, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaDataEntrega(dataEntrega: String, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateDataEntregaTarefa(dataEntrega, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaConcluido(concluido: Boolean, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateConcluidoTarefa(concluido, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaEtiquetasEscolhidas(etiquetasEscolhidas: ArrayList<String>, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateEtiquetasEscolhidasTarefa(etiquetasEscolhidas, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaEtiquetasDisponiveis(etiquetasDisponiveis: ArrayList<String>, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateEtiquetasDisponiveisTarefa(etiquetasDisponiveis, tarefaId, disciplinaId)
+        }
+    }
+
+    fun atualizaChecklist(checklist: ArrayList<String>, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateChecklistTarefa(checklist, tarefaId, disciplinaId)
+        }
+    }
+
 }
 

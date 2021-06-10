@@ -1,26 +1,25 @@
 package com.example.mochila.bancoDados
 
 import androidx.room.TypeConverter
-import java.util.ArrayList
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
+import java.util.*
+
 
 // Converter o array
 
 class ConverterArray {
+
     @TypeConverter
-    fun fromArray(string: ArrayList<String?>?): String {
-        var string = ""
-        for (s in string) string += ","
-        return string
+    fun fromString(value: String?): ArrayList<String?>? {
+        val listType: Type = object : TypeToken<ArrayList<String?>?>() {}.type
+        return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun toArray(concatenatedString: String?): ArrayList<String> {
-       val myStrings = ArrayList<String>()
-
-        for (s in concatenatedString!!.split(",")) {
-            myStrings.add(s)
-
-        }
-       return myStrings
+    fun fromArrayList(list: ArrayList<String?>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
     }
 }
