@@ -66,26 +66,30 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         binding = ActivityTarefaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        fun defineDisciplina(disciplinaId: String): String {
-            viewModelDisciplinas.disciplinasList.value?.forEach {
-                if (disciplinaId == it.disciplinaId) {
-                    return it.nomeDisciplina
+        fun defineDisciplina(disciplinaId: String) {
+            var nome = ""
+            viewModelDisciplinas.disciplinasList.observe(this, {
+                it.forEach {
+                    if (disciplinaId == it.disciplinaId) {
+                        Log.i("Tarefa da disciplina", it.nomeDisciplina)
+                        nome = it.nomeDisciplina
+                        textView_lista_disciplina.setText("•   $nome")
+                    }
                 }
-            }
-            return ""
+            })
         }
 
         var idTarefa = intent.getSerializableExtra("idTarefa") as String
         var idDisciplina = intent.getSerializableExtra("idDisciplina") as String
         Log.i("idTarefa", idTarefa)
         Log.i("idDisciplina", idDisciplina)
-        var nomeDisciplina = defineDisciplina(idDisciplina)
-        viewModelTarefa.tarefaList
+        //viewModelTarefa.tarefaList
+        defineDisciplina(idDisciplina)
         viewModelTarefa.tarefaList.observe(this, {
             it.forEach {
                 Log.i("Tarefa listada", it.toString())
                 if (it.tarefaId == idTarefa && it.disciplinaId == idDisciplina) {
-                    setDados(it, nomeDisciplina)
+                    setDados(it)
                 }
             }
             Log.i("tarefaList", viewModelTarefa.tarefaList.value.toString())
@@ -229,9 +233,8 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    private fun setDados(tarefa: TarefaEntity, disciplina: String) {
+    private fun setDados(tarefa: TarefaEntity) {
         tarefaAtual = tarefa
-        textView_lista_disciplina.setText(disciplina)
         titulo_tarefa.setText(tarefaAtual?.titulo)
         multilineDescricao.setText(tarefaAtual?.descricao)
         textDate.setText(tarefaAtual?.dataEntrega)
