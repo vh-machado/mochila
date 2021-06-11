@@ -20,6 +20,7 @@ import com.example.mochila.R
 import com.example.mochila.bancoDados.DisciplinasViewModel
 import com.example.mochila.bancoDados.TarefaEntity
 import com.example.mochila.bancoDados.TarefaViewModel
+import com.example.mochila.bancoDados.TituloTarefaUpdate
 import com.example.mochila.databinding.ActivityTarefaBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -231,6 +232,13 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
             getContato(destinatario)
         }
+
+        cardConcluir.setOnClickListener {
+            AlertConcluir()
+
+        }
+
+
     }
 
     private fun setDados(tarefa: TarefaEntity) {
@@ -349,6 +357,24 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
                 tarefaAtual!!.disciplinaId
             )
             Toast.makeText(this, "Etiqueta removida", Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("Cancelar") { dialog, which ->
+            dialog.dismiss()
+
+        }
+        builder.create().show()
+
+    }
+
+    fun AlertConcluir() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(titulo_tarefa.text.toString())
+        builder.setMessage("Deseja concluir essa tarefa?")
+        builder.setPositiveButton("Sim") { dialog, which ->
+
+            Toast.makeText(this, "Tarefa concluida", Toast.LENGTH_SHORT).show()
+            textview_concluir.setText("Concluido")
+            cardConcluir.setCardBackgroundColor(getColorStateList(R.color.Cinza))
         }
         builder.setNegativeButton("Cancelar") { dialog, which ->
             dialog.dismiss()
