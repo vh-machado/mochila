@@ -81,6 +81,10 @@ class TarefaRepository(private val tarefaDAO: TarefasDAO){
     fun updateChecklistTarefa(checklist: ArrayList<String>, tarefaId: String, disciplinaId: String){
         tarefaDAO.updateChecklist(checklist, tarefaId, disciplinaId)
     }
+
+    fun updateChecklistConcluidoTarefa(checklistConcluido: ArrayList<String>, tarefaId: String, disciplinaId: String){
+        tarefaDAO.updateChecklistConcluido(checklistConcluido, tarefaId, disciplinaId)
+    }
 }
 
 class DisciplinasRepository(private val disciplinasDAO: DisciplinasDAO){

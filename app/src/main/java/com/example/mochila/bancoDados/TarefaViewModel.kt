@@ -80,5 +80,11 @@ class TarefaViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun atualizaChecklistConcluido(checklistConcluido: ArrayList<String>, tarefaId: String, disciplinaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateChecklistConcluidoTarefa(checklistConcluido, tarefaId, disciplinaId)
+        }
+    }
+
 }
 

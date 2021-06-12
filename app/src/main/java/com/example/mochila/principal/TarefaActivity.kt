@@ -24,6 +24,8 @@ import com.example.mochila.bancoDados.TituloTarefaUpdate
 import com.example.mochila.databinding.ActivityTarefaBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.*
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.view.*
 
@@ -51,11 +53,15 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     // Pertence ao código de etiqueta
     var cout = 0
     var cout1 = 0
+    var tarefaConcluida = false
     var chips: ArrayList<String>? = null
     var chipsDisponiveis: ArrayList<String>? = arrayListOf("")
     var checklist: ArrayList<String>? = null
+    var checklistConcluido: ArrayList<String>? = null
     var checkboxText = ""
     var editChecklist = false
+    var disciplinaNome = ""
+    var emailProfessor = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelTarefa = ViewModelProvider(this).get(TarefaViewModel::class.java)
@@ -68,13 +74,13 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         setContentView(binding.root)
 
         fun defineDisciplina(disciplinaId: String) {
-            var nome = ""
             viewModelDisciplinas.disciplinasList.observe(this, {
                 it.forEach {
                     if (disciplinaId == it.disciplinaId) {
                         Log.i("Tarefa da disciplina", it.nomeDisciplina)
-                        nome = it.nomeDisciplina
-                        textView_lista_disciplina.setText("•   $nome")
+                        disciplinaNome = it.nomeDisciplina.uppercase()
+                        textView_lista_disciplina.setText("•   $disciplinaNome")
+                        emailProfessor = it.emailProfessor
                     }
                 }
             })
@@ -102,6 +108,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         }
         botao_menu.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
+            intent.putExtra("disciplinaNome", disciplinaNome)
             startActivity(intent)
             finish()
         }
@@ -224,13 +231,12 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             /*
               val destinatario = recebe.text.toString().trim()
              */
-            //val quemEnvia = "vivibraz045@gmail.com"
-
-
-            val destinatario = ("vh.machado.silva@gmail.com").trim()
+            //val quemEnvia = (Firebase.auth.currentUser!!.email)?.trim()
+            val destinatario = (emailProfessor).trim()
+            val assunto = tarefaAtual?.titulo
             // method call for email intent with these inputs as parameters
 
-            getContato(destinatario)
+            getContato(destinatario, assunto!!)
         }
 
         cardConcluir.setOnClickListener {
@@ -246,9 +252,16 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         titulo_tarefa.setText(tarefaAtual?.titulo)
         multilineDescricao.setText(tarefaAtual?.descricao)
         textDate.setText(tarefaAtual?.dataEntrega)
+        tarefaConcluida = tarefaAtual?.concluido == true
         chips = tarefaAtual?.etiquetasEscolhidas
         chipsDisponiveis = tarefaAtual?.etiquetasDisponiveis
-        checklist = tarefaAtual?.checkList
+        checklist = tarefaAtual?.checklist
+        checklistConcluido = tarefaAtual?.checklistConcluido
+
+        if (tarefaConcluida){
+            textview_concluir.setText("Concluído")
+            cardConcluir.setCardBackgroundColor(getColorStateList(R.color.Cinza))
+        }
 
         chipGroupTarefa.removeAllViews()
         chips?.removeIf { i ->
@@ -373,8 +386,12 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         builder.setPositiveButton("Sim") { dialog, which ->
 
             Toast.makeText(this, "Tarefa concluida", Toast.LENGTH_SHORT).show()
-            textview_concluir.setText("Concluido")
-            cardConcluir.setCardBackgroundColor(getColorStateList(R.color.Cinza))
+            viewModelTarefa.atualizaConcluido(
+                true,
+                tarefaAtual!!.tarefaId,
+                tarefaAtual!!.disciplinaId
+            )
+
         }
         builder.setNegativeButton("Cancelar") { dialog, which ->
             dialog.dismiss()
@@ -519,9 +536,9 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
         fun setEtiquetasEscolha(list: ArrayList<String>) {
             list.forEach {
-                if (etiquetasPadrao.contains(it)){
+                if (etiquetasPadrao.contains(it)) {
                     criaEtiquetaEscolha(it, false)
-                }else{
+                } else {
                     criaEtiquetaEscolha(it, true)
                 }
             }
@@ -562,7 +579,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     }
     //Aqui termina o código de etiqueta
 
-    private fun entradaChecklist(){
+    private fun entradaChecklist() {
         inputCheckbox.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 checklist?.removeIf { i ->
@@ -601,7 +618,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    private fun criaCheckbox(texto: String){
+    private fun criaCheckbox(texto: String) {
 
 
         val layout_checkbox = RelativeLayout(this)
@@ -619,10 +636,10 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         checkbox.apply {
             layoutParams.width = RelativeLayout.LayoutParams.MATCH_PARENT
             layoutParams.height = RelativeLayout.LayoutParams.WRAP_CONTENT
-            setMargins(0,0,0,0,0,50)
+            setMargins(0, 0, 0, 0, 0, 50)
             text = texto
         }
-
+        checkbox.isChecked = checklistConcluido?.contains(checkbox.text) == true
 
         val layoutParams = RelativeLayout.LayoutParams(
             50,
@@ -639,11 +656,29 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         //botao_excluir_checkbox.setMargins(0,0,0,5)
         botao_excluir_checkbox.setImageResource(R.drawable.ic_fechar)
         botao_excluir_checkbox.visibility = INVISIBLE
-        if(editChecklist){
+        if (editChecklist) {
             botao_excluir_checkbox.visibility = VISIBLE
         }
 
         Log.i("Novo checkbox", checkbox.text.toString())
+
+        checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            checklistConcluido?.removeIf { i ->
+                i == ""
+            }
+            if (isChecked) {
+                checklistConcluido?.add(checkbox.text.toString())
+            } else {
+                checklistConcluido?.remove(checkbox.text.toString())
+            }
+            Log.i("ChecklistConcluido", checklistConcluido.toString())
+            //Atualização do Checklist Concluído da Tarefa no Banco de Dados
+            viewModelTarefa.atualizaChecklistConcluido(
+                checklistConcluido!!,
+                tarefaAtual!!.tarefaId,
+                tarefaAtual!!.disciplinaId
+            )
+        }
 
         botao_excluir_checkbox.setOnClickListener {
             checklist?.remove(checkbox.text.toString())
@@ -657,6 +692,15 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
             linear_layout.removeView(layout_checkbox)
 
+            if (checklistConcluido?.contains(checkbox.text)==true){
+                checklistConcluido?.remove(checkbox.text.toString())
+                viewModelTarefa.atualizaChecklistConcluido(
+                    checklistConcluido!!,
+                    tarefaAtual!!.tarefaId,
+                    tarefaAtual!!.disciplinaId
+                )
+            }
+
         }
     }
 
@@ -667,7 +711,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     }
 
     //Código para enviar e-mail para o professor
-    private fun getContato(destinatario: String) {
+    private fun getContato(destinatario: String, assunto: String) {
         /*ACTION_SEND action to launch an email cliente installed on your Android device */
         val mIntent = Intent(Intent.ACTION_SEND)
         /*To send an email you need to specify mailto: as URI using setData()nethid and
@@ -679,8 +723,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         it will be stored in array*/
         mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(destinatario))
         //put the subject in the intent
-
-        //mIntent.putExtra(Intent.EXTRA_SUBJECT, sujeito)
+        mIntent.putExtra(Intent.EXTRA_SUBJECT, assunto)
         try {
             // start email intent
             startActivity(Intent.createChooser(mIntent, "Choose email cliente..."))
