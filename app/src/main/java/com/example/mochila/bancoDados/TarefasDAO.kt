@@ -42,4 +42,7 @@ interface TarefasDAO {
 
     @Query("UPDATE tarefa SET checklist = :checklist WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
     fun updateChecklist(checklist: ArrayList<String>, tarefaId: String, disciplinaId: String)
+
+    @Query("UPDATE tarefa SET checklistConcluido = :checklistConcluido WHERE tarefaId = :tarefaId AND disciplinaId = :disciplinaId")
+    fun updateChecklistConcluido(checklistConcluido: ArrayList<String>, tarefaId: String, disciplinaId: String)
 }

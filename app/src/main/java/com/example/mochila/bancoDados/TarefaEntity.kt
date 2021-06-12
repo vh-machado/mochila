@@ -1,13 +1,15 @@
 package com.example.mochila.bancoDados
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "tarefa")
+@Entity(tableName = "tarefa", primaryKeys = ["tarefaId","disciplinaId"])
 data class TarefaEntity (
-    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo @NonNull
     val tarefaId: String = "",
+    @ColumnInfo @NonNull
     var disciplinaId: String = "",
     var titulo: String = "",
     var descricao: String = "",
@@ -15,7 +17,8 @@ data class TarefaEntity (
     var concluido: Boolean = false,
     var etiquetasEscolhidas: ArrayList<String> = arrayListOf(""),
     var etiquetasDisponiveis: ArrayList<String> = arrayListOf(""),
-    var checkList: ArrayList<String> = arrayListOf("")
+    var checklist: ArrayList<String> = arrayListOf(""),
+    var checklistConcluido: ArrayList<String> = arrayListOf("")
 // Permite passar a tarefa toda no putExtra
 ):Serializable
 
@@ -59,4 +62,11 @@ class ChecklistTarefaUpdate(
     @ColumnInfo(name = "id_tarefa") var tarefaId: String = "",
     @ColumnInfo(name = "id_disciplina") var disciplinaId: String = "",
     @ColumnInfo(name = "checklist") private var checklist: ArrayList<String> = arrayListOf("")
+)
+
+@Entity
+class ChecklistConcluidoTarefaUpdate(
+    @ColumnInfo(name = "id_tarefa") var tarefaId: String = "",
+    @ColumnInfo(name = "id_disciplina") var disciplinaId: String = "",
+    @ColumnInfo(name = "checklist_concluido") private var checklistConcluido: ArrayList<String> = arrayListOf("")
 )

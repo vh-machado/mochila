@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,8 +20,7 @@ class ListaActivity : AppCompatActivity() {
     private lateinit var viewModelUser: UsersViewModel
     private lateinit var viewModelDisciplinas: DisciplinasViewModel
     private lateinit var viewModelTarefa: TarefaViewModel
-
-
+    var nomeDisciplina = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelUser = ViewModelProvider(this).get(UsersViewModel::class.java)
@@ -29,6 +29,7 @@ class ListaActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
+
         // Definir as abas das listas/disciplinas
         setTabs()
 
@@ -52,14 +53,15 @@ class ListaActivity : AppCompatActivity() {
         //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()
 
         botao_add_tarefa.setOnClickListener {
-            if(viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true){
-                var tabDisciplina = viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
+            if (viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true) {
+                var tabNomeDisciplina =
+                    viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
                 var tabIdDisciplina: String? = null
                 var tamanhoLista = 0
                 var disciplinaDados: DisciplinasEntity? = null
-                Log.i("Tab nome", tabDisciplina)
+                Log.i("Tab nome", tabNomeDisciplina)
                 viewModelDisciplinas.disciplinasList.value?.forEach {
-                    if (it.nomeDisciplina == tabDisciplina){
+                    if (it.nomeDisciplina == tabNomeDisciplina) {
                         tabIdDisciplina = it.disciplinaId
                         tamanhoLista = it.quantidadeTarefa
                         disciplinaDados = it
@@ -87,19 +89,24 @@ class ListaActivity : AppCompatActivity() {
                             "Vídeo",
                             "Vídeo-aula"
                         ),
+                        arrayListOf(""),
                         arrayListOf("")
                     )
                 )
-                Log.i("Tarefa Adicionada",viewModelTarefa.tarefaList.value.toString())
-                Toast.makeText(this,viewModelTarefa.tarefaList.value.toString(), Toast.LENGTH_SHORT).show()
-                Log.i("Tarefas salvas",viewModelTarefa.tarefaList.value.toString())
+                Log.i("Tarefa Adicionada", viewModelTarefa.tarefaList.value.toString())
+                Toast.makeText(
+                    this,
+                    viewModelTarefa.tarefaList.value.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.i("Tarefas salvas", viewModelTarefa.tarefaList.value.toString())
                 viewModelDisciplinas.updateMedia(
                     DisciplinasEntity(
-                         disciplinaDados!!.disciplinaId,
-                         disciplinaDados!!.usuarioId,
-                         disciplinaDados!!.nomeDisciplina,
-                         disciplinaDados!!.nomeProfessor,
-                         disciplinaDados!!.emailProfessor,
+                        disciplinaDados!!.disciplinaId,
+                        disciplinaDados!!.usuarioId,
+                        disciplinaDados!!.nomeDisciplina,
+                        disciplinaDados!!.nomeProfessor,
+                        disciplinaDados!!.emailProfessor,
                         (tamanhoLista + 1)
                     )
                 )
@@ -121,12 +128,13 @@ class ListaActivity : AppCompatActivity() {
                 startActivity(intent)
                  */
 
-                val intent = Intent(this,TarefaActivity::class.java)
+                val intent = Intent(this, TarefaActivity::class.java)
                 intent.putExtra("idTarefa", tamanhoLista.toString())
                 intent.putExtra("idDisciplina", disciplinaDados!!.disciplinaId)
                 startActivity(intent)
+                finish()
 
-            }else{
+            } else {
                 Toast.makeText(
                     this,
                     "Adicione disciplinas no perfil antes de criar tarefas.",
@@ -164,7 +172,7 @@ class ListaActivity : AppCompatActivity() {
 
         viewModelDisciplinas.disciplinasList.observe(this) {
             Log.i("Disciplinas", it.toString())
-            if (viewModelDisciplinas.disciplinasList.value != null) {
+            if (viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true) {
                 val adapter = ViewPagerListaAdapter(supportFragmentManager)
                 var dadosDisciplinas = viewModelDisciplinas.disciplinasList.value
                 lateinit var disciplina: String
@@ -176,7 +184,25 @@ class ListaActivity : AppCompatActivity() {
                 }
                 viewPager_Lista.adapter = adapter
                 tabLayout_Lista.setupWithViewPager(viewPager_Lista)
-                viewPager_Lista.setCurrentItem(0)
+
+                if (intent.hasExtra("disciplinaNome")) {
+                    nomeDisciplina = intent.getStringExtra("disciplinaNome").toString()
+                    var cont = adapter.count
+                    Log.i("cont", cont.toString())
+                    var tab = ""
+                    for (i in 0..(cont - 1)) {
+                        tab = viewPager_Lista.adapter?.getPageTitle(i).toString()
+                        Log.i("tab", tab)
+                        if (tab == nomeDisciplina) {
+                            viewPager_Lista.setCurrentItem(i)
+                            break
+                        }
+                    }
+                } else {
+                    viewPager_Lista.setCurrentItem(0)
+                }
+
+                //viewPager_Lista.setCurrentItem(0)
                 Log.i("Disciplinas", it.toString())
             } else {
                 Toast.makeText(

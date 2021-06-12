@@ -47,12 +47,12 @@
                 android:layout_marginBottom="8dp"
                 android:layout_toEndOf="@id/mochila_menu"
                 android:fontFamily="@font/roboto_black"
-                android:paddingTop="4dp"
+                android:paddingTop="6dp"
                 android:paddingEnd="4dp"
-                android:paddingBottom="4dp"
-                android:text="•  Disciplina"
+                android:paddingBottom="6dp"
+                android:text="•   Disciplina"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
