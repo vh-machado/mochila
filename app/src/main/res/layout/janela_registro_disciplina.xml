@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="550dp"
     android:layout_gravity="center"
     android:background="@drawable/rounded_shape"
     android:backgroundTint="@color/white"
@@ -17,12 +17,12 @@
             android:id="@+id/botao_fechar"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="clip_horizontal"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:contentDescription="image"
             android:scaleType="centerCrop"
-            android:layout_alignParentEnd="true"
             android:src="@drawable/ic_fechar"
             app:tint="@color/gunmetal" />
     </RelativeLayout>
@@ -30,6 +30,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -53,68 +54,78 @@
         android:text="Adicione uma disciplina para criar uma lista"
         android:textColor="@color/gunmetal"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="3dp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/light_cyan"
         android:elevation="5dp"
-        android:padding="10dp">
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_nome_disciplina"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:backgroundTint="@color/light_cyan"
             android:fontFamily="@font/roboto"
             android:hint="Disciplina"
+            android:inputType="textPersonName"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:padding="10dp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/light_cyan"
-        android:elevation="5dp">
+        android:elevation="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp">
+
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_nome_professor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
+            android:layout_height="match_parent"
             android:backgroundTint="@color/light_cyan"
-            android:hint="Professor"
-            android:textSize="12sp"/>
+            android:fontFamily="@font/roboto"
+            android:hint="Professor(a):"
+            android:inputType="textPersonName"
+            android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:padding="10dp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/light_cyan"
-        android:elevation="5dp">
+        android:elevation="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_email_professor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
+            android:layout_height="match_parent"
             android:backgroundTint="@color/light_cyan"
-            android:hint="E-mail do professor"
-            android:textSize="12sp"/>
+            android:fontFamily="@font/roboto"
+            android:hint="E-mail do professor(a):"
+            android:inputType="textEmailAddress"
+            android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,18 +137,22 @@
             android:id="@+id/botao_add_disciplina"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/rounded_shape"
             android:backgroundTint="@color/burnt_sienna"
+            android:elevation="8dp"
             android:fontFamily="@font/roboto_black"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:layout_centerHorizontal="true"
             android:text="Adicionar"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:elevation="8dp" />
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </LinearLayout>

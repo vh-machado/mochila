@@ -59,7 +59,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 app:cardBackgroundColor="@color/pale_cerulean"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="15dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

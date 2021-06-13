@@ -62,6 +62,7 @@ class RegistroActivity : AppCompatActivity() {
             googleSignInClient.signOut()
             startActivity(Intent(this, LoginActivity::class.java))
         }
+
     }
     /*
     botaoRegistrar.setOnClickListener{
@@ -143,6 +144,17 @@ fun removeUserList(userScope: UserScope) {
             builder.dismiss()
         }
 
+    }
+    fun AlertAvatar(){
+
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded).create()
+        val view: View =
+            LayoutInflater.from(this).inflate(R.layout.janela_registro_disciplina, null)
+        builder.setView(view)
+        var window = builder.window
+        window!!.setGravity(Gravity.CENTER)
+        builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        builder.show()
     }
 
 }
