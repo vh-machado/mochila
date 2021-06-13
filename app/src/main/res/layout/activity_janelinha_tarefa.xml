@@ -59,20 +59,26 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 app:cardBackgroundColor="@color/pale_cerulean"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp">
 
                     <EditText
                         android:id="@+id/infoEtiqueta"
-                        android:layout_width="313dp"
-                        android:layout_height="48dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:ems="10"
                         android:fontFamily="@font/roboto"
                         android:hint="Informe uma etiqueta:"
                         android:inputType="textPersonName"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
