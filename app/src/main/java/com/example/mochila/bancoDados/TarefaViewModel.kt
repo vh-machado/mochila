@@ -22,7 +22,7 @@ class TarefaViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun removeMedia(tarefa: TarefaEntity) {
+    fun removeTarefa(tarefa: TarefaEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.removeOfTarefasListTask(tarefa)
         }

@@ -103,14 +103,19 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
         })
 
-        botAdicionarEtiqueta.setOnClickListener {
-            createAlertAddEtiqueta()
-        }
         botao_menu.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
             intent.putExtra("disciplinaNome", disciplinaNome)
             startActivity(intent)
             finish()
+        }
+
+        botao_deleta_tarefa.setOnClickListener {
+            createAlertDeletaTarefa()
+        }
+
+        botAdicionarEtiqueta.setOnClickListener {
+            createAlertAddEtiqueta()
         }
 
         // Manipulação do Título da Tarefa
@@ -222,8 +227,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             //inputCheckbox.imeOptions = EditorInfo.IME_ACTION_DONE
         }
 
-
-
+        // Chamada do método para conseguir a data
         pickDate()
 
         // Código para o e-mail
@@ -291,6 +295,29 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         }
         setCheckList(listaCheckbox)
         Log.i("Checklist na tarefa:", checklist.toString())
+    }
+
+    fun createAlertDeletaTarefa() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(tarefaAtual?.titulo)
+        builder.setMessage("Deseja excluir essa tarefa?")
+        builder.setPositiveButton("Sim") { dialog, which ->
+
+            // Excluir dados da tarefa atual do banco de dados
+            viewModelTarefa.removeTarefa(tarefaAtual!!)
+            Log.i("Tarefa excluída",viewModelTarefa.tarefaList.value.toString())
+            Toast.makeText(this, "Tarefa excluída", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, ListaActivity::class.java)
+            intent.putExtra("disciplinaNome", disciplinaNome)
+            startActivity(intent)
+            finish()
+        }
+        builder.setNegativeButton("Cancelar") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+
     }
 
     // Funções do PickDate
