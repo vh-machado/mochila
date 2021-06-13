@@ -90,7 +90,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         var idDisciplina = intent.getSerializableExtra("idDisciplina") as String
         Log.i("idTarefa", idTarefa)
         Log.i("idDisciplina", idDisciplina)
-        //viewModelTarefa.tarefaList
+
         defineDisciplina(idDisciplina)
         viewModelTarefa.tarefaList.observe(this, {
             it.forEach {
