@@ -54,6 +54,19 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
+            <ImageView
+                android:id="@+id/botao_deleta_tarefa"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/gunmetal"
+                android:padding="3dp"
+                android:src="@drawable/ic_deletar"
+                app:tint="@color/white" />
+
         </RelativeLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
