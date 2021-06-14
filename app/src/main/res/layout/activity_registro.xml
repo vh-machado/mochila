@@ -146,29 +146,54 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingTop="5dp">
+                            android:layout_height="match_parent">
 
-                            <TextView
-                                android:id="@+id/textViewDis"
-                                android:layout_width="219dp"
-                                android:layout_height="40dp"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
+                            <RelativeLayout
+                                android:id="@+id/layout_disciplina"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
                                 android:layout_marginStart="15dp"
-                                android:layout_marginTop="9dp"
-                                android:layout_marginEnd="164dp"
-                                android:layout_marginBottom="207dp"
-                                android:fontFamily="@font/roboto_black"
-                                android:padding="3dp"
-                                android:text="Disciplinas"
-                                android:textColor="@color/burnt_sienna"
-                                android:textSize="18sp">
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginTop="15dp">
+                                <TextView
+                                    android:id="@+id/textViewDisciplina"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_black"
+                                    android:layout_alignParentStart="true"
+                                    android:text="Disciplinas"
+                                    android:textColor="@color/burnt_sienna"
+                                    android:textSize="18sp">
 
-                            </TextView>
+                                </TextView>
 
+                                <ImageView
+                                    android:id="@+id/botao_abre_add_disciplina"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    app:srcCompat="@android:drawable/ic_input_add"
+                                    app:tint="@color/burnt_sienna" />
+                            </RelativeLayout>
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_disciplinas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/layout_disciplina"
+                                android:background="@color/white"
+                                android:clipToPadding="false"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp"
+                                android:layout_margin="10dp"
+                                android:visibility="visible"
+                                tools:listitem="@layout/card_disciplina_item" />
+
+                            <!--
                             <ScrollView
                                 android:layout_width="382dp"
                                 android:layout_height="236dp"
@@ -209,74 +234,7 @@
                                         app:layout_constraintHorizontal_bias="0.476"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintVertical_bias="0.791">
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:padding="2dp">
-
-
-                                            <TextView
-                                                android:id="@+id/edDisciplina"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentStart="true"
-                                                android:layout_alignParentLeft="true"
-                                                android:layout_alignParentTop="true"
-                                                android:layout_alignParentEnd="true"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_alignParentBottom="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginStart="20dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginEnd="20dp"
-                                                android:layout_marginRight="5dp"
-                                                android:layout_marginBottom="28dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/roboto"
-                                                android:hint="Disciplina:"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-                                            <!--
-                                            <TextView
-                                                android:id="@+id/edNomeProf"
-                                                android:layout_width="348dp"
-                                                android:layout_height="40dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="Nome Professor(a):"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-
-                                            <TextView
-                                                android:id="@+id/edEmailProf"
-                                                android:layout_width="348dp"
-                                                android:layout_height="46dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="E-mail Professor(a):"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-                                            -->
-                                        </RelativeLayout>
-
-
-                                    </com.google.android.material.card.MaterialCardView>
+                                        app:layout_constraintVertical_bias="0.791"/>
 
                                     <com.google.android.material.card.MaterialCardView
 
@@ -295,74 +253,7 @@
                                         app:layout_constraintHorizontal_bias="0.476"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintVertical_bias="0.791">
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:padding="2dp">
-
-
-                                            <TextView
-                                                android:id="@+id/edDisciplina2"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentStart="true"
-                                                android:layout_alignParentLeft="true"
-                                                android:layout_alignParentTop="true"
-                                                android:layout_alignParentEnd="true"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_alignParentBottom="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginStart="20dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginEnd="20dp"
-                                                android:layout_marginRight="5dp"
-                                                android:layout_marginBottom="28dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="Disciplina:"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-                                            <!--
-                                            <TextView
-                                                android:id="@+id/edNomeProf"
-                                                android:layout_width="348dp"
-                                                android:layout_height="40dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="Nome Professor(a):"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-
-                                            <TextView
-                                                android:id="@+id/edEmailProf"
-                                                android:layout_width="348dp"
-                                                android:layout_height="46dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="E-mail Professor(a):"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-                                            -->
-                                        </RelativeLayout>
-
-
-                                    </com.google.android.material.card.MaterialCardView>
+                                        app:layout_constraintVertical_bias="0.791"/>
 
 
                                     <com.google.android.material.card.MaterialCardView
@@ -375,7 +266,6 @@
                                         android:backgroundTint="@color/light_cyan"
                                         android:padding="3dp"
                                         app:cardBackgroundColor="@color/light_cyan"
-                                        app:cardCornerRadius="10dp"
                                         app:cardElevation="5dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
@@ -383,71 +273,6 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
                                         app:layout_constraintVertical_bias="0.791">
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:padding="2dp">
-
-
-                                            <TextView
-                                                android:id="@+id/edDisciplina6"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentStart="true"
-                                                android:layout_alignParentLeft="true"
-                                                android:layout_alignParentTop="true"
-                                                android:layout_alignParentEnd="true"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_alignParentBottom="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginStart="20dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginEnd="20dp"
-                                                android:layout_marginRight="5dp"
-                                                android:layout_marginBottom="28dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/roboto"
-                                                android:hint="Disciplina:"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-                                            <!--
-                                            <TextView
-                                                android:id="@+id/edNomeProf"
-                                                android:layout_width="348dp"
-                                                android:layout_height="40dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="Nome Professor(a):"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-
-                                            <TextView
-                                                android:id="@+id/edEmailProf"
-                                                android:layout_width="348dp"
-                                                android:layout_height="46dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:backgroundTint="@color/white"
-                                                android:fontFamily="@font/montserrat"
-                                                android:hint="E-mail Professor(a):"
-                                                android:textColorHint="@color/browser_actions_title_color"
-                                                android:textSize="14sp">
-
-                                            </TextView>
-
-                                            -->
-                                        </RelativeLayout>
-
 
                                     </com.google.android.material.card.MaterialCardView>
 
@@ -463,6 +288,7 @@
 
                                 </LinearLayout>
                             </ScrollView>
+                            -->
 
                         </RelativeLayout>
 
