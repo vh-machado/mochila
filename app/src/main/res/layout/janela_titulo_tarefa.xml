@@ -32,18 +32,20 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/icone_janela"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:contentDescription="image"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_lista"
+            android:src="@drawable/ic_tarefa_add"
             app:tint="@color/burnt_sienna" />
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textview_janela"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/image"
@@ -51,80 +53,29 @@
         android:gravity="center"
         android:lines="2"
         android:padding="10dp"
-        android:text="Adicione uma disciplina para criar uma lista"
+        android:text="Criando nova tarefa"
         android:textColor="@color/gunmetal"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout1"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Disciplina"
         app:boxStrokeColor="#4C94BD"
         app:hintTextColor="#4C94BD"
-        app:startIconDrawable="@drawable/ic_livro">
+        android:hint="Título">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/campo_nome_disciplina"
+            android:id="@+id/input_titulo_tarefa"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/roboto"
             android:inputType="textPersonName"
-            android:textSize="12sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout2"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Professor(a)"
-        app:boxStrokeColor="#4C94BD"
-        app:hintTextColor="#4C94BD"
-        app:startIconDrawable="@drawable/ic_person">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/campo_nome_professor"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/roboto"
-            android:inputType="textPersonName"
-            android:textSize="12sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="8dp"
-        android:hint="E-mail do professor"
-        app:boxStrokeColor="#4C94BD"
-        app:hintTextColor="#4C94BD"
-        app:startIconDrawable="@drawable/ic_email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/campo_email_professor"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/roboto"
-            android:inputType="textEmailAddress"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -134,7 +85,7 @@
         android:layout_height="wrap_content">
 
         <android.widget.Button
-            android:id="@+id/botao_add_disciplina"
+            android:id="@+id/botao_cria_tarefa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -149,7 +100,7 @@
             android:fontFamily="@font/roboto_black"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Adicionar"
+            android:text="Criar"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />

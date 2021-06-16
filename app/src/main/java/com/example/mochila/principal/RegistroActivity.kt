@@ -118,7 +118,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        builder.window!!.setLayout(700, 1200)
+        builder.window!!.setLayout(700, 1240)
         builder.show()
 
 

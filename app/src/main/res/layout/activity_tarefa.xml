@@ -58,13 +58,14 @@
                 android:id="@+id/botao_deleta_tarefa"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="8dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp"
                 android:background="@color/gunmetal"
+                android:onClick="showPopup"
                 android:padding="3dp"
-                android:src="@drawable/ic_deletar"
+                android:src="@drawable/ic_mais_vert"
                 app:tint="@color/white" />
 
         </RelativeLayout>
@@ -99,7 +100,7 @@
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/circulo" />
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
                 android:id="@+id/titulo_tarefa"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -110,11 +111,9 @@
                 android:layout_toEndOf="@id/circulo_card"
                 android:backgroundTint="@color/bdazzled_blue"
                 android:fontFamily="@font/roboto_black"
-                android:hint="Título da tarefa"
-                android:inputType="textPersonName"
                 android:padding="8dp"
+                android:text=""
                 android:textColor="@color/white"
-                android:textColorHint="#C2CEDC"
                 android:textSize="19sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -597,7 +596,7 @@
                                 android:focusable="true"
                                 android:padding="8dp"
                                 android:text=" "
-                                android:textColor="#F1F3F6"/>
+                                android:textColor="#F1F3F6" />
 
                             <!--
                             <TextView
