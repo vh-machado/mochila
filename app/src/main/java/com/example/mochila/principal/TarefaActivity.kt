@@ -3,7 +3,6 @@ package com.example.mochila.principal
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -12,32 +11,30 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.mochila.R
 import com.example.mochila.bancoDados.DisciplinasViewModel
 import com.example.mochila.bancoDados.TarefaEntity
 import com.example.mochila.bancoDados.TarefaViewModel
-import com.example.mochila.bancoDados.TituloTarefaUpdate
 import com.example.mochila.databinding.ActivityTarefaBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.*
 import kotlinx.android.synthetic.main.activity_janelinha_tarefa.view.*
-
 import kotlinx.android.synthetic.main.activity_tarefa.*
 import kotlinx.android.synthetic.main.activity_tarefa.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import java.lang.Exception
+import kotlinx.android.synthetic.main.janela_registro_disciplina.view.*
+import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.*
+import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.botao_fechar
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+
+class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    PopupMenu.OnMenuItemClickListener {
     private lateinit var viewModelTarefa: TarefaViewModel
     private lateinit var viewModelDisciplinas: DisciplinasViewModel
     var tarefaAtual: TarefaEntity? = null
@@ -78,8 +75,8 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
                 it.forEach {
                     if (disciplinaId == it.disciplinaId) {
                         Log.i("Tarefa da disciplina", it.nomeDisciplina)
-                        disciplinaNome = it.nomeDisciplina.uppercase()
-                        textView_lista_disciplina.setText("•   $disciplinaNome")
+                        disciplinaNome = it.nomeDisciplina
+                        textView_lista_disciplina.setText("•   ${disciplinaNome.uppercase()}")
                         emailProfessor = it.emailProfessor
                     }
                 }
@@ -88,8 +85,10 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
         var idTarefa = intent.getSerializableExtra("idTarefa") as String
         var idDisciplina = intent.getSerializableExtra("idDisciplina") as String
+        var cardTarefaConcluida = intent.getSerializableExtra("tarefaConcluida") as Boolean?
         Log.i("idTarefa", idTarefa)
         Log.i("idDisciplina", idDisciplina)
+        //Log.i("tarefaConcluida", tarefaConcluida.toString())
 
         defineDisciplina(idDisciplina)
         viewModelTarefa.tarefaList.observe(this, {
@@ -103,22 +102,37 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
         })
 
+        // Atualiza o status de concluído da tarefa conforme o checkbox do card na lista
+        /*
+        if (tarefaAtual != null) {
+            viewModelTarefa.atualizaConcluido(
+                cardTarefaConcluida,
+                tarefaAtual!!.tarefaId,
+                tarefaAtual!!.disciplinaId
+            )
+        }
+         */
+
         botao_menu.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
             intent.putExtra("disciplinaNome", disciplinaNome)
+            Log.i("disciplinaNome", disciplinaNome)
             startActivity(intent)
             finish()
         }
 
+        /*
         botao_deleta_tarefa.setOnClickListener {
             createAlertDeletaTarefa()
         }
+         */
 
         botAdicionarEtiqueta.setOnClickListener {
             createAlertAddEtiqueta()
         }
 
         // Manipulação do Título da Tarefa
+        /*
         titulo_tarefa.inputType = InputType.TYPE_NULL
         titulo_tarefa.setOnTouchListener { v, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
@@ -151,6 +165,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             }
             false
         }
+         */
 
         // Manipulação do MultiLine EditText da Descrição da tarefa
         botao_salvar_descricao.visibility = INVISIBLE
@@ -251,6 +266,36 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     }
 
+    // Cria o menu de opções da tarefa
+    fun showPopup(v: View){
+        PopupMenu(this,v).apply {
+            setOnMenuItemClickListener(this@TarefaActivity)
+            inflate(R.menu.tarefa_menu)
+            show()
+        }
+        /*
+        val popup = PopupMenu(this, v)
+        popup.setOnMenuItemClickListener(this)
+        val inflater: MenuInflater = popup.menuInflater
+        inflater.inflate(R.menu.tarefa_menu, popup.menu)
+        popup.show()*/
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_renomear_tarefa -> {
+                createAlertRenomeiaTarefa()
+                true
+            }
+            R.id.item_excluir_tarefa -> {
+                createAlertDeletaTarefa()
+                true
+            }
+            else -> false
+        }
+    }
+
+    // Seta os dados armazenados da tarefa
     private fun setDados(tarefa: TarefaEntity) {
         tarefaAtual = tarefa
         titulo_tarefa.setText(tarefaAtual?.titulo)
@@ -262,7 +307,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         checklist = tarefaAtual?.checklist
         checklistConcluido = tarefaAtual?.checklistConcluido
 
-        if (tarefaConcluida){
+        if (tarefaConcluida) {
             textview_concluir.setText("Concluído")
             cardConcluir.setCardBackgroundColor(getColorStateList(R.color.Cinza))
         }
@@ -297,6 +342,33 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         Log.i("Checklist na tarefa:", checklist.toString())
     }
 
+    fun createAlertRenomeiaTarefa() {
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded).create()
+        val view: View = LayoutInflater.from(this).inflate(R.layout.janela_titulo_tarefa, null)
+        builder.setView(view)
+        var window = builder.window
+        window!!.setGravity(Gravity.CENTER)
+        builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        //builder.window!!.setLayout(700, 1100)
+        builder.show()
+        view.icone_janela.setImageResource(R.drawable.ic_editar)
+        view.textview_janela.text = "Renomeando tarefa"
+        view.botao_cria_tarefa.text = "Renomear"
+
+        view.botao_cria_tarefa.setOnClickListener{
+            viewModelTarefa.atualizaTitulo(
+                view.input_titulo_tarefa.text.toString(),
+                tarefaAtual!!.tarefaId,
+                tarefaAtual!!.disciplinaId
+            )
+            builder.dismiss()
+        }
+
+        view.botao_fechar.setOnClickListener {
+            builder.dismiss()
+        }
+    }
+
     fun createAlertDeletaTarefa() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(tarefaAtual?.titulo)
@@ -305,7 +377,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
             // Excluir dados da tarefa atual do banco de dados
             viewModelTarefa.removeTarefa(tarefaAtual!!)
-            Log.i("Tarefa excluída",viewModelTarefa.tarefaList.value.toString())
+            Log.i("Tarefa excluída", viewModelTarefa.tarefaList.value.toString())
             Toast.makeText(this, "Tarefa excluída", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ListaActivity::class.java)
@@ -719,7 +791,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
             linear_layout.removeView(layout_checkbox)
 
-            if (checklistConcluido?.contains(checkbox.text)==true){
+            if (checklistConcluido?.contains(checkbox.text) == true) {
                 checklistConcluido?.remove(checkbox.text.toString())
                 viewModelTarefa.atualizaChecklistConcluido(
                     checklistConcluido!!,
