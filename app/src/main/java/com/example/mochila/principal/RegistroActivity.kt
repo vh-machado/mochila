@@ -2,6 +2,7 @@ package com.example.mochila.principal
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,6 +56,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
+        //iv_perfil.setImageResource(FirebaseAuth.getInstance().currentUser?.photoUrl)
         textview_username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
         textview_useremail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
 
@@ -165,12 +168,15 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        builder.window!!.setLayout(700, 1200)
+        //builder.window!!.setLayout(700, 1180)
         builder.show()
 
-        view.text_nome_disciplina.text = dadosDisciplina.nomeDisciplina
-        view.text_nome_professor.text = dadosDisciplina.nomeProfessor
-        view.text_email_professor.text = dadosDisciplina.emailProfessor
+        view.text_nome_disciplina.setText(dadosDisciplina.nomeDisciplina)
+        view.text_nome_disciplina.inputType = InputType.TYPE_NULL
+        view.text_nome_professor.setText(dadosDisciplina.nomeProfessor)
+        view.text_nome_professor.inputType = InputType.TYPE_NULL
+        view.text_email_professor.setText(dadosDisciplina.emailProfessor)
+        view.text_email_professor.inputType = InputType.TYPE_NULL
 
         view.botao_fechar.setOnClickListener {
             builder.dismiss()

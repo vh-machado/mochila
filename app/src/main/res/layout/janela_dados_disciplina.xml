@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/rounded_shape"
@@ -43,78 +43,95 @@
             app:tint="@color/burnt_sienna" />
     </RelativeLayout>
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image"
-        android:fontFamily="@font/roboto"
-        android:gravity="center"
-        android:lines="2"
-        android:padding="10dp"
-        android:text="Consulte as informações da disciplina ou exclua a disciplina para excluir a lista"
-        android:textColor="@color/gunmetal"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Disciplina"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
+        app:startIconDrawable="@drawable/ic_livro">
 
-    <TextView
-        android:id="@+id/text_nome_disciplina"
-        android:layout_width="320dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_nome_disciplina"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto"
+            android:inputType="none"
+            android:textSize="12sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/pale_cerulean"
-        android:elevation="5dp"
-        android:fontFamily="@font/roboto"
-        android:padding="15dp"
-        android:text="Disciplina"
-        android:textColor="@color/gunmetal"
-        android:textSize="16sp" />
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Professor(a)"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
+        app:startIconDrawable="@drawable/ic_person">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_nome_professor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto"
+            android:inputType="none"
+            android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/text_nome_professor"
-        android:layout_width="320dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/pale_cerulean"
-        android:elevation="5dp"
-        android:fontFamily="@font/roboto"
-        android:padding="15dp"
-        android:text="Professor"
-        android:textColor="@color/gunmetal"
-        android:textSize="16sp" />
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:hint="E-mail do professor"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
+        app:startIconDrawable="@drawable/ic_email">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_email_professor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto"
+            android:inputType="none"
+            android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/text_email_professor"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/pale_cerulean"
-        android:elevation="5dp"
-        android:fontFamily="@font/roboto"
-        android:padding="15dp"
-        android:text="E-mail do professor"
-        android:textColor="@color/gunmetal"
-        android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp">
 
         <ImageButton
             android:id="@+id/botao_excluir_disciplina"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
             android:background="@drawable/rounded_shape"
             android:elevation="5dp"
             android:src="@drawable/ic_deletar" />
@@ -122,18 +139,16 @@
         <android.widget.Button
             android:id="@+id/botao_confirmar_excluir_disciplina"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
             android:background="@drawable/rounded_shape"
             android:backgroundTint="#701F0A"
             android:elevation="5dp"
             android:fontFamily="@font/roboto_black"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
             android:text="Excluir"
+            android:padding="8dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
