@@ -128,34 +128,39 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
         view.botao_add_disciplina.setOnClickListener {
 
-            var disciplina = view.campo_nome_disciplina.getText().toString()
-            var nomeProfessor = view.campo_nome_professor.getText().toString()
-            var emailProfessor = view.campo_email_professor.getText().toString()
 
-            Log.i(
-                "Disciplinas não-atualizadas",
-                viewModelDisciplinas.disciplinasList.value.toString()
-            )
-            // Atualiza a disciplina
-            //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
-            viewModelDisciplinas.saveNewMedia(
-                DisciplinasEntity(
-                    UUID.randomUUID().toString(),
-                    Firebase.auth.currentUser!!.uid,
-                    disciplina,
-                    nomeProfessor,
-                    emailProfessor,
-                    0
+                var disciplina = view.campo_nome_disciplina.getText().toString()
+                var nomeProfessor = view.campo_nome_professor.getText().toString()
+                var emailProfessor = view.campo_email_professor.getText().toString()
 
+                Log.i(
+                    "Disciplinas não-atualizadas",
+                    viewModelDisciplinas.disciplinasList.value.toString()
                 )
-            )
-            Log.i("Disciplinas atualizadas", viewModelDisciplinas.disciplinasList.value.toString())
+                // Atualiza a disciplina
+                //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+                viewModelDisciplinas.saveNewMedia(
+                    DisciplinasEntity(
+                        UUID.randomUUID().toString(),
+                        Firebase.auth.currentUser!!.uid,
+                        disciplina,
+                        nomeProfessor,
+                        emailProfessor,
+                        0
 
-            builder.dismiss()
+                    )
+                )
+                Log.i(
+                    "Disciplinas atualizadas",
+                    viewModelDisciplinas.disciplinasList.value.toString()
+                )
+                builder.dismiss()
+
+            
+
         }
-
         view.botao_fechar.setOnClickListener {
-            builder.dismiss()
+                builder.dismiss()
         }
 
     }
@@ -212,6 +217,18 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
             builder.dismiss()
         }
     }
+     fun validarCampoRegistroDisciplina():Boolean{
+        val nomeDisciplina1 = campo_nome_disciplina.text.toString()
+        val nomeProfessor1 = campo_nome_professor.text.toString()
+        val infoEmail1 = campo_email_professor.text.toString()
+        if(nomeDisciplina1.isNullOrBlank() == true || nomeProfessor1.isNullOrBlank()== true || infoEmail1.isNullOrBlank()== true){
+            Toast.makeText(this,"Nenhum campo pode ficar vazio. Certifique-se que todos os campos foram preenchidos", Toast.LENGTH_SHORT).show()
+            return true
+        }
+          else{
+              return false
+        }
+    }
 
     override fun disciplinaClick(position: Int) {
         val adapter = disciplinaAdapter
@@ -223,18 +240,5 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         createAlertDadosDisciplina(clickedDisciplina)
     }
 
-    /*
-    fun AlertAvatar(){
-
-        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded).create()
-        val view: View =
-            LayoutInflater.from(this).inflate(R.layout.janela_registro_disciplina, null)
-        builder.setView(view)
-        var window = builder.window
-        window!!.setGravity(Gravity.CENTER)
-        builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        builder.show()
-    }
-     */
 
 }
