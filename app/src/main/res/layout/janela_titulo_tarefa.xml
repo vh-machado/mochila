@@ -66,8 +66,8 @@
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        app:boxStrokeColor="@color/pale_cerulean"
-        app:hintTextColor="@color/pale_cerulean"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
         android:hint="Título">
 
         <com.google.android.material.textfield.TextInputEditText

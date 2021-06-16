@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="550dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/rounded_shape"
     android:backgroundTint="@color/white"
@@ -57,73 +57,73 @@
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="3dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/light_cyan"
-        android:elevation="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="5dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Disciplina"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
+        app:startIconDrawable="@drawable/ic_livro">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_nome_disciplina"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/light_cyan"
             android:fontFamily="@font/roboto"
-            android:hint="Disciplina"
             android:inputType="textPersonName"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/light_cyan"
-        android:elevation="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="5dp">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Professor(a)"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
+        app:startIconDrawable="@drawable/ic_person">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_nome_professor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/light_cyan"
             android:fontFamily="@font/roboto"
-            android:hint="Professor(a):"
             android:inputType="textPersonName"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/light_cyan"
-        android:elevation="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="5dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:hint="E-mail do professor"
+        app:boxStrokeColor="#4C94BD"
+        app:hintTextColor="#4C94BD"
+        app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_email_professor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/light_cyan"
             android:fontFamily="@font/roboto"
-            android:hint="E-mail do professor(a):"
             android:inputType="textEmailAddress"
             android:textSize="12sp" />
 
