@@ -1,6 +1,5 @@
 package com.example.mochila.bancoDados
 
-import androidx.room.Dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
@@ -14,4 +13,8 @@ interface UsersDAO {
 
     @Delete
     suspend fun removeOfUsersList(user: UsersEntity)
+
+    @Update
+    suspend fun updateUsers(user: UsersEntity)
+
 }

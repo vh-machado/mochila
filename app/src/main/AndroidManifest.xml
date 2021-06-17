@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mochila">
+        <activity android:name=".ActivityAvatar"></activity>
+        <activity android:name=".principal.janelinhaTarefa"></activity>
         <activity android:name=".principal.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,13 +20,13 @@
         </activity>
         <activity
             android:name=".principal.TarefaActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".principal.LoginActivity"/>
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".principal.LoginActivity"></activity>
         <activity
             android:name=".principal.ListaActivity"
             android:label="@string/title_activity_lista"
-            android:theme="@style/Theme.Mochila.NoActionBar" />
-        <activity android:name=".principal.RegistroActivity" />
+            android:theme="@style/Theme.Mochila.NoActionBar"></activity>
+        <activity android:name=".principal.RegistroActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.*
 
 @Database(
-    entities = [UsersEntity::class],
-    version = 1,
+    entities = [UsersEntity::class,TarefaEntity::class,DisciplinasEntity::class],
+    version = 15,
     exportSchema = false
 )
+@TypeConverters(ConverterArray::class)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun usersDAO(): UsersDAO
+    abstract fun tarefaDAO(): TarefasDAO
+    abstract fun disciplinasDAO(): DisciplinasDAO
 
     companion object {
         @Volatile
@@ -26,7 +29,7 @@ abstract class AppDataBase : RoomDatabase() {
                     context.applicationContext,
                     AppDataBase::class.java,
                     "AppDataBase"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }
