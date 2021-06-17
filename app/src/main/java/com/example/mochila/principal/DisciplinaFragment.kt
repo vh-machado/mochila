@@ -33,7 +33,6 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
     var listaTarefas: ArrayList<TarefaEntity> = arrayListOf()
     var cardList: MutableList<CardItem> = mutableListOf(CardItem("", "", "", "", 0, false))
-    val TAG = "ListaActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,6 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
             disciplinaBoolean = arguments?.getBoolean(disciplinaKey)
             idDisciplina = arguments?.getString(idDisciplinaKey)
         }
-
     }
 
     companion object {
@@ -77,9 +75,9 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
                         cardList.removeAt(0)
                     }
                 }
+
                 var listaDados: MutableList<CardItem> =
                     mutableListOf(CardItem("", "", "", "", 0, false))
-                //var lista: emptyArray<TarefaEntity>
                 it.forEach {
                     if (it.disciplinaId == idDisciplina) {
                         listaTarefas.add(it)
@@ -96,7 +94,7 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
                             it.concluido
                         )
                         listaDados.add(newCard)
-                        Log.i("item adicionado", listaDados.toString())
+                        //Log.i("item adicionado", listaDados.toString())
                     }
                 }
                 // Atualiza RecyclerView
@@ -109,7 +107,6 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
                     Log.i("Atualizar RecyclerView", it.toString())
 
-                    //cardAdapter.setCards(cardList)
                     cardAdapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(
@@ -122,36 +119,20 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
             }
         })
 
-
         return view
     }
-
-    /*
-    fun removerItem(view: View) {
-        val index: Int = Random.nextInt(8)
-
-        cardList!!.removeAt(index)
-        cardAdapter.notifyItemRemoved(index)
-    }
-    */
 
     override fun onItemClick(position: Int) {
         cardAdapter.notifyItemChanged(position)
         val intent = Intent(activity, TarefaActivity::class.java)
         val adapter = cardAdapter
-
-        //intent.putExtra("tarefaClicada", tarefa)
         intent.putExtra("tarefaDados",listaTarefas[position])
-        //intent.putExtra("idTarefa", position.toString())
-        //intent.putExtra("idDisciplina", idDisciplina)
-        //intent.putExtra("tarefaConcluida", clickedItem.concluido)
         adapter.notifyDataSetChanged()
         startActivity(intent)
 
     }
 
     override fun onCheckBoxClick(position: Int, isChecked: Boolean) {
-        //cardAdapter.notifyItemChanged(position)
         val checkedItem: CardItem = cardList[position]
         viewModelTarefa.atualizaConcluido(
             isChecked,

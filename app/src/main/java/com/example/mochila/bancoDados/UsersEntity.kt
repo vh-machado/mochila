@@ -14,14 +14,6 @@ data class UsersEntity(
     var email: String = "",
 )
 
-/*
-@Entity
-class UsersUpdate(
-    @ColumnInfo(name = "id") var id: String = "",
-    @ColumnInfo(name = "disciplinas") private var disciplinas: String = ""
-)
-*/
-
 
 
 

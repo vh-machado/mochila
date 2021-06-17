@@ -96,9 +96,9 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
                     )
                 )
             }
-            Log.i("cardsDisciplinas", cards.toString())
+            //Log.i("cardsDisciplinas", cards.toString())
             listaDisciplinas = cards
-            Log.i("listaDisciplinas", listaDisciplinas.toString())
+            //Log.i("listaDisciplinas", listaDisciplinas.toString())
             recycler_view_disciplinas.layoutManager = LinearLayoutManager(this)
             recycler_view_disciplinas.setHasFixedSize(true)
             disciplinaAdapter.setData(listaDisciplinas)
@@ -108,7 +108,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
         viewModelTarefa.tarefaList.observe(this) {
             listaTarefas = it
-            Log.i("listaTarefas", listaTarefas.toString())
+            //Log.i("listaTarefas", listaTarefas.toString())
         }
 
     }
@@ -122,35 +122,15 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
         builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        //builder.window!!.setLayout(700, 1240)
         builder.show()
 
         var textoValido = false
-        /*
-        fun validarCampoRegistroDisciplina(
-            campoDisciplina: String,
-            campoProf: String,
-            campoEmailProf: String
-        ): Boolean {
-            if (campoDisciplina.isNullOrBlank() == true || campoProf.isNullOrBlank() == true || campoEmailProf.isNullOrBlank() == true) {
-                Toast.makeText(
-                    this,
-                    "Nenhum campo pode ficar vazio. Certifique-se que todos os campos foram preenchidos",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return true
-            } else {
-                return false
-            }
-        }
-        */
         view.botao_add_disciplina.setOnClickListener {
             val disciplina = view.campo_nome_disciplina.getText().toString()
             val nomeProfessor = view.campo_nome_professor.getText().toString()
             val emailProfessor = view.campo_email_professor.getText().toString()
 
-            // Atualiza a disciplina
-            //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+            // Armazena os dados da disciplina
             if (textoValido) {
                 viewModelDisciplinas.saveNewMedia(
                     DisciplinasEntity(
@@ -194,7 +174,6 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        //builder.window!!.setLayout(700, 1180)
         builder.show()
 
         view.text_nome_disciplina.setText(dadosDisciplina.nomeDisciplina)
@@ -219,7 +198,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
                     viewModelTarefa.removeTarefa(it)
                 }
             }
-            Log.i("Tarefas depois da disciplina excluída", listaTarefas.toString())
+
             viewModelDisciplinas.removeMedia(
                 DisciplinasEntity(
                     dadosDisciplina.idDisciplina,
@@ -233,8 +212,6 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
                 "Disciplinas pós disciplina excluída",
                 viewModelDisciplinas.disciplinasList.value.toString()
             )
-
-
             builder.dismiss()
         }
     }
@@ -242,8 +219,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
     override fun disciplinaClick(position: Int) {
         val adapter = disciplinaAdapter
         disciplinaAdapter.notifyItemChanged(position)
-        Log.i("Position", position.toString())
-        Log.i("Disciplina selecionada", listaDisciplinas[position].toString())
+        //Log.i("Disciplina selecionada", listaDisciplinas[position].toString())
         val clickedDisciplina: CardDisciplinaItem = listaDisciplinas[position]
         adapter.notifyDataSetChanged()
         createAlertDadosDisciplina(clickedDisciplina)

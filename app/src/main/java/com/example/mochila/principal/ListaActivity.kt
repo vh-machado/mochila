@@ -44,24 +44,9 @@ class ListaActivity : AppCompatActivity() {
         // Definir as abas das listas/disciplinas
         setTabs()
 
-        /*
-        botao_signout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            var googleSignInClient: GoogleSignInClient
-            val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.web_client_id))
-                .requestEmail()
-                .build()
-            googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-            googleSignInClient.signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
-        */
-
         iv_perfil_miniatura.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }
-        //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()
 
         botao_add_tarefa.setOnClickListener {
             if (viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true) {
@@ -79,32 +64,10 @@ class ListaActivity : AppCompatActivity() {
 
     }
 
-    /*
-    fun inserirItem(view: View){
-        val index: Int = Random.nextInt(8)
-
-        val newItem = CardItem(
-            "Nova tarefa na posição $index",
-            "Data",
-            0
-        )
-
-        cardList.add(index, newItem)
-        adapter.notifyItemInserted(index)
-    }
-
-    fun removerItem(view: View){
-        val index: Int = Random.nextInt(8)
-
-        cardList.removeAt(index)
-        adapter.notifyItemRemoved(index)
-    }
-    */
-
     private fun setTabs() {
 
         viewModelDisciplinas.disciplinasList.observe(this) {
-            Log.i("Disciplinas", it.toString())
+            //Log.i("Disciplinas", it.toString())
 
             if (viewModelDisciplinas.disciplinasList.value?.isNotEmpty() == true) {
                 val adapter = ViewPagerListaAdapter(supportFragmentManager)
@@ -115,7 +78,7 @@ class ListaActivity : AppCompatActivity() {
                     disciplina = it.nomeDisciplina
                     var listaDisciplina = DisciplinaFragment.newInstance(true, it.disciplinaId)
                     adapter.addFragment(listaDisciplina, disciplina)
-                    Log.i("Disciplina fragmento", it.nomeDisciplina)
+                    //Log.i("Disciplina fragmento", it.nomeDisciplina)
                 }
 
                 viewPager_Lista.adapter = adapter
@@ -138,7 +101,6 @@ class ListaActivity : AppCompatActivity() {
                     viewPager_Lista.setCurrentItem(0)
                 }
 
-                Log.i("Disciplinas", it.toString())
             } else {
                 Toast.makeText(
                     this,
@@ -156,7 +118,6 @@ class ListaActivity : AppCompatActivity() {
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        //builder.window!!.setLayout(700, 1100)
         builder.show()
 
         var textoValido = false
@@ -167,7 +128,7 @@ class ListaActivity : AppCompatActivity() {
                 var tabIdDisciplina: String? = null
                 var tamanhoLista = 0
                 var disciplinaDados: DisciplinasEntity? = null
-                Log.i("Tab nome", tabNomeDisciplina)
+                //Log.i("Tab nome", tabNomeDisciplina)
                 viewModelDisciplinas.disciplinasList.value?.forEach {
                     if (it.nomeDisciplina == tabNomeDisciplina) {
                         tabIdDisciplina = it.disciplinaId
@@ -202,8 +163,7 @@ class ListaActivity : AppCompatActivity() {
                         arrayListOf()
                     )
                 )
-                Log.i("Tarefa Adicionada", viewModelTarefa.tarefaList.value.toString())
-                Log.i("Tarefas salvas", viewModelTarefa.tarefaList.value.toString())
+
                 viewModelDisciplinas.updateMedia(
                     DisciplinasEntity(
                         disciplinaDados!!.disciplinaId,

@@ -62,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
     //Change UI according to user data.
     fun updateUI(account: FirebaseUser?) {
         if (account != null) {
-            Log.i("Login usuário", viewModelUser.userList.value.toString())
             Toast.makeText(this, "Você realizou login com sucesso", Toast.LENGTH_LONG).show()
             startActivity(Intent(this, ListaActivity::class.java))
         } else {
@@ -79,7 +78,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signIn() {
         val signInIntent = googleSignInClient!!.signInIntent
-        //if (viewModelUser.userList.value?.get(0) == null){
 
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -125,7 +123,4 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
-    //SIGN OUT DO USUÁRIO
-    //Firebase.auth.signOut()
 }
