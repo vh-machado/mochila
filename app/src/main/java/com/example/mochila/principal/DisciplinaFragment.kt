@@ -31,6 +31,7 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
 
     private lateinit var viewModelTarefa: TarefaViewModel
 
+    var listaTarefas: ArrayList<TarefaEntity> = arrayListOf()
     var cardList: MutableList<CardItem> = mutableListOf(CardItem("", "", "", "", 0, false))
     val TAG = "ListaActivity"
 
@@ -78,8 +79,10 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
                 }
                 var listaDados: MutableList<CardItem> =
                     mutableListOf(CardItem("", "", "", "", 0, false))
+                //var lista: emptyArray<TarefaEntity>
                 it.forEach {
                     if (it.disciplinaId == idDisciplina) {
+                        listaTarefas.add(it)
                         var progresso = 0
                         if (it.checklist.isNotEmpty()) {
                             progresso = (it.checklistConcluido.size * 100) / it.checklist.size
@@ -138,8 +141,9 @@ class DisciplinaFragment : Fragment(), CardAdapter.OnItemClickListener {
         val adapter = cardAdapter
 
         //intent.putExtra("tarefaClicada", tarefa)
-        intent.putExtra("idTarefa", position.toString())
-        intent.putExtra("idDisciplina", idDisciplina)
+        intent.putExtra("tarefaDados",listaTarefas[position])
+        //intent.putExtra("idTarefa", position.toString())
+        //intent.putExtra("idDisciplina", idDisciplina)
         //intent.putExtra("tarefaConcluida", clickedItem.concluido)
         adapter.notifyDataSetChanged()
         startActivity(intent)

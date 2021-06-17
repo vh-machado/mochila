@@ -59,16 +59,18 @@
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        android:hint="Título"
         app:boxStrokeColor="#4C94BD"
-        app:hintTextColor="#4C94BD"
-        android:hint="Título">
+        app:errorEnabled="true"
+        app:errorIconDrawable="@drawable/ic_error"
+        app:hintTextColor="#4C94BD">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_titulo_tarefa"

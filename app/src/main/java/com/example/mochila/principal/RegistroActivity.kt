@@ -4,15 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.*
-import android.view.ViewGroup
 import android.widget.Toast
 import coil.load
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +37,7 @@ import kotlinx.android.synthetic.main.janela_registro_disciplina.view.*
 import kotlinx.android.synthetic.main.janela_registro_disciplina.view.botao_fechar
 import kotlinx.android.synthetic.main.janela_registro_disciplina.view.campo_email_professor
 import kotlinx.android.synthetic.main.janela_registro_disciplina.view.campo_nome_professor
+import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.*
 
 class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplinaClickListener {
     private lateinit var viewModelUser: UsersViewModel
@@ -122,9 +121,12 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        builder.window!!.setLayout(700, 1240)
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        //builder.window!!.setLayout(700, 1240)
         builder.show()
 
+        var textoValido = false
+        /*
         fun validarCampoRegistroDisciplina(
             campoDisciplina: String,
             campoProf: String,
@@ -141,7 +143,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
                 return false
             }
         }
-
+        */
         view.botao_add_disciplina.setOnClickListener {
             val disciplina = view.campo_nome_disciplina.getText().toString()
             val nomeProfessor = view.campo_nome_professor.getText().toString()
@@ -149,7 +151,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
             // Atualiza a disciplina
             //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
-            if (!validarCampoRegistroDisciplina(disciplina, nomeProfessor, emailProfessor)) {
+            if (textoValido) {
                 viewModelDisciplinas.saveNewMedia(
                     DisciplinasEntity(
                         UUID.randomUUID().toString(),
@@ -162,9 +164,22 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
                     )
                 )
                 builder.dismiss()
+            } else {
+                view.input_layout1_registro.error = "Campo obrigatório"
             }
 
         }
+
+        view.campo_nome_disciplina.doOnTextChanged { text, start, before, count ->
+            if (text.isNullOrBlank()) {
+                textoValido = false
+                view.input_layout1_registro.error = "Campo obrigatório"
+            } else {
+                textoValido = true
+                view.input_layout1_registro.error = null
+            }
+        }
+
         view.botao_fechar.setOnClickListener {
             builder.dismiss()
         }

@@ -119,36 +119,34 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="15dp">
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="5dp">
 
         <ImageButton
             android:id="@+id/botao_excluir_disciplina"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:background="@drawable/rounded_shape"
             android:elevation="5dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/ic_deletar" />
 
         <android.widget.Button
             android:id="@+id/botao_confirmar_excluir_disciplina"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/rounded_shape"
             android:backgroundTint="#701F0A"
             android:elevation="5dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Excluir"
             android:padding="8dp"
+            android:text="Excluir"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
