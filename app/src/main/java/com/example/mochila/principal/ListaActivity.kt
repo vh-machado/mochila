@@ -12,9 +12,11 @@ import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.load
 import com.example.mochila.R
 import com.example.mochila.bancoDados.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlinx.android.synthetic.main.janela_registro_disciplina.*
 import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.*
@@ -35,6 +37,7 @@ class ListaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
 
+        iv_perfil_miniatura.load(FirebaseAuth.getInstance().currentUser?.photoUrl)
         // Definir as abas das listas/disciplinas
         setTabs()
 
@@ -52,7 +55,7 @@ class ListaActivity : AppCompatActivity() {
         }
         */
 
-        botao_menu.setOnClickListener {
+        iv_perfil_miniatura.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }
         //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()

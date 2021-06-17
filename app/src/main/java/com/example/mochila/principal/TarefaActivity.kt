@@ -113,7 +113,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         }
          */
 
-        botao_menu.setOnClickListener {
+        botao_voltar_tarefa.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
             intent.putExtra("disciplinaNome", disciplinaNome)
             Log.i("disciplinaNome", disciplinaNome)
@@ -273,12 +273,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             inflate(R.menu.tarefa_menu)
             show()
         }
-        /*
-        val popup = PopupMenu(this, v)
-        popup.setOnMenuItemClickListener(this)
-        val inflater: MenuInflater = popup.menuInflater
-        inflater.inflate(R.menu.tarefa_menu, popup.menu)
-        popup.show()*/
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {

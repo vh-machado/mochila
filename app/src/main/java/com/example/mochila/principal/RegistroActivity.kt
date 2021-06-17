@@ -7,10 +7,10 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
+import coil.load
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
@@ -29,7 +29,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_registro.*
-import kotlinx.android.synthetic.main.activity_registro.botao_menu
+import kotlinx.android.synthetic.main.activity_registro.botao_voltar_registro
+import kotlinx.android.synthetic.main.activity_registro.view.*
 import kotlinx.android.synthetic.main.fragment_disciplina.view.*
 import kotlinx.android.synthetic.main.janela_dados_disciplina.*
 import kotlinx.android.synthetic.main.janela_dados_disciplina.view.*
@@ -56,7 +57,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
-        //iv_perfil.setImageResource(FirebaseAuth.getInstance().currentUser?.photoUrl)
+        iv_perfil.load(FirebaseAuth.getInstance().currentUser?.photoUrl)
         textview_username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
         textview_useremail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
 
@@ -64,7 +65,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
             createAlertAddDisciplina()
         }
 
-        botao_menu.setOnClickListener {
+        botao_voltar_registro.setOnClickListener {
             startActivity(Intent(this, ListaActivity::class.java))
         }
 
@@ -106,9 +107,9 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
         }
 
-        viewModelTarefa.tarefaList.observe(this){
+        viewModelTarefa.tarefaList.observe(this) {
             listaTarefas = it
-            Log.i("listaTarefas",listaTarefas.toString())
+            Log.i("listaTarefas", listaTarefas.toString())
         }
 
     }
@@ -124,21 +125,31 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         builder.window!!.setLayout(700, 1240)
         builder.show()
 
-
+        fun validarCampoRegistroDisciplina(
+            campoDisciplina: String,
+            campoProf: String,
+            campoEmailProf: String
+        ): Boolean {
+            if (campoDisciplina.isNullOrBlank() == true || campoProf.isNullOrBlank() == true || campoEmailProf.isNullOrBlank() == true) {
+                Toast.makeText(
+                    this,
+                    "Nenhum campo pode ficar vazio. Certifique-se que todos os campos foram preenchidos",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return true
+            } else {
+                return false
+            }
+        }
 
         view.botao_add_disciplina.setOnClickListener {
+            val disciplina = view.campo_nome_disciplina.getText().toString()
+            val nomeProfessor = view.campo_nome_professor.getText().toString()
+            val emailProfessor = view.campo_email_professor.getText().toString()
 
-
-                var disciplina = view.campo_nome_disciplina.getText().toString()
-                var nomeProfessor = view.campo_nome_professor.getText().toString()
-                var emailProfessor = view.campo_email_professor.getText().toString()
-
-                Log.i(
-                    "Disciplinas não-atualizadas",
-                    viewModelDisciplinas.disciplinasList.value.toString()
-                )
-                // Atualiza a disciplina
-                //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+            // Atualiza a disciplina
+            //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+            if (!validarCampoRegistroDisciplina(disciplina, nomeProfessor, emailProfessor)) {
                 viewModelDisciplinas.saveNewMedia(
                     DisciplinasEntity(
                         UUID.randomUUID().toString(),
@@ -150,17 +161,12 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
                     )
                 )
-                Log.i(
-                    "Disciplinas atualizadas",
-                    viewModelDisciplinas.disciplinasList.value.toString()
-                )
                 builder.dismiss()
-
-            
+            }
 
         }
         view.botao_fechar.setOnClickListener {
-                builder.dismiss()
+            builder.dismiss()
         }
 
     }
@@ -215,18 +221,6 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
 
             builder.dismiss()
-        }
-    }
-     fun validarCampoRegistroDisciplina():Boolean{
-        val nomeDisciplina1 = campo_nome_disciplina.text.toString()
-        val nomeProfessor1 = campo_nome_professor.text.toString()
-        val infoEmail1 = campo_email_professor.text.toString()
-        if(nomeDisciplina1.isNullOrBlank() == true || nomeProfessor1.isNullOrBlank()== true || infoEmail1.isNullOrBlank()== true){
-            Toast.makeText(this,"Nenhum campo pode ficar vazio. Certifique-se que todos os campos foram preenchidos", Toast.LENGTH_SHORT).show()
-            return true
-        }
-          else{
-              return false
         }
     }
 
