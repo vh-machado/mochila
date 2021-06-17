@@ -48,7 +48,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     var anoSalvo = ""
     private lateinit var binding: ActivityTarefaBinding
 
-    // Pertence ao código de etiqueta
     var cout = 0
     var cout1 = 0
     var tarefaConcluida = false
@@ -94,33 +93,16 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             idTarefa = intent.getSerializableExtra("idTarefa") as String
             idDisciplina = intent.getSerializableExtra("idDisciplina") as String
         }
-        var cardTarefaConcluida = intent.getSerializableExtra("tarefaConcluida") as Boolean?
-        Log.i("idTarefa", idTarefa)
-        Log.i("idDisciplina", idDisciplina)
-        //Log.i("tarefaConcluida", tarefaConcluida.toString())
 
         defineDisciplina(idDisciplina)
         viewModelTarefa.tarefaList.observe(this, {
             it.forEach {
-                Log.i("Tarefa listada", it.toString())
                 if (it.tarefaId == idTarefa && it.disciplinaId == idDisciplina) {
                     setDados(it)
                 }
             }
-            Log.i("tarefaList", viewModelTarefa.tarefaList.value.toString())
 
         })
-
-        // Atualiza o status de concluído da tarefa conforme o checkbox do card na lista
-        /*
-        if (tarefaAtual != null) {
-            viewModelTarefa.atualizaConcluido(
-                cardTarefaConcluida,
-                tarefaAtual!!.tarefaId,
-                tarefaAtual!!.disciplinaId
-            )
-        }
-         */
 
         botao_voltar_tarefa.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
@@ -130,56 +112,13 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             finish()
         }
 
-        /*
-        botao_deleta_tarefa.setOnClickListener {
-            createAlertDeletaTarefa()
-        }
-         */
-
         botAdicionarEtiqueta.setOnClickListener {
             createAlertAddEtiqueta()
         }
 
-        // Manipulação do Título da Tarefa
-        /*
-        titulo_tarefa.inputType = InputType.TYPE_NULL
-        titulo_tarefa.setOnTouchListener { v, event ->
-            if (event.action == KeyEvent.ACTION_DOWN) {
-
-                titulo_tarefa.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-                titulo_tarefa.isCursorVisible = true
-                titulo_tarefa.isFocusableInTouchMode = true
-                Log.i("Titulo inputype != 0", titulo_tarefa.inputType.toString())
-
-                titulo_tarefa.setOnKeyListener { v1, keyCode, event1 ->
-                    if (keyCode == KeyEvent.KEYCODE_ENTER && event1.action == KeyEvent.ACTION_UP) {
-                        //Atualização do Título da Tarefa no Banco de Dados
-                        viewModelTarefa.atualizaTitulo(
-                            titulo_tarefa.text.toString(),
-                            tarefaAtual!!.tarefaId,
-                            tarefaAtual!!.disciplinaId
-                        )
-                        titulo_tarefa.inputType = InputType.TYPE_NULL
-                        Log.i("Titulo inputype == 0", titulo_tarefa.inputType.toString())
-
-                        return@setOnKeyListener true
-                    }
-                    false
-                }
-
-                return@setOnTouchListener true
-            } else if (event.action == KeyEvent.ACTION_UP) {
-                v.performClick()
-                return@setOnTouchListener false
-            }
-            false
-        }
-         */
-
         // Manipulação do MultiLine EditText da Descrição da tarefa
         botao_salvar_descricao.visibility = INVISIBLE
         botao_editar_descricao.visibility = VISIBLE
-        //multilineDescricao.setRawInputType(EditorInfo.TYPE_NULL)
         multilineDescricao.isEnabled = false
 
         botao_editar_descricao.setOnClickListener {
@@ -187,7 +126,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             botao_salvar_descricao.visibility = VISIBLE
             multilineDescricao.isCursorVisible = true
             multilineDescricao.isFocusableInTouchMode = true
-            //multilineDescricao.setRawInputType(EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE)
             multilineDescricao.isEnabled = true
             multilineDescricao.requestFocus()
         }
@@ -195,7 +133,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         botao_salvar_descricao.setOnClickListener {
             botao_salvar_descricao.visibility = INVISIBLE
             botao_editar_descricao.visibility = VISIBLE
-            //multilineDescricao.setRawInputType(EditorInfo.TYPE_NULL)
             //Atualização da Descrição da Tarefa no Banco de Dados
             viewModelTarefa.atualizaDescricao(
                 multilineDescricao.text.toString(),
@@ -244,11 +181,9 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         }
 
         botao_fechar_input_checklist.setOnClickListener {
-            //multilineDescricao.isFocusable = false
             layout_input_checklist.isGone = true
             botao_add_checkbox.isGone = false
             inputCheckbox.text.clear()
-            //inputCheckbox.imeOptions = EditorInfo.IME_ACTION_DONE
         }
 
         // Chamada do método para conseguir a data
@@ -324,13 +259,6 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         }
         setEtiquetas(listaChips)
         Log.i("chips na tarefa:", chips.toString())
-        /*
-        var foraChips = arrayListOf<String>()
-        chips?.forEach {
-            foraChips.remove(it)
-        }
-        setEtiquetas(foraChips)
-        */
 
         linear_layout_checklist.removeAllViews()
         checklist?.removeIf { i ->
@@ -502,7 +430,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         builder.setMessage("Deseja concluir essa tarefa?")
         builder.setPositiveButton("Sim") { dialog, which ->
 
-            Toast.makeText(this, "Tarefa concluida", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Tarefa concluída", Toast.LENGTH_SHORT).show()
             viewModelTarefa.atualizaConcluido(
                 true,
                 tarefaAtual!!.tarefaId,
@@ -762,22 +690,16 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             50,
             50
         )
-        //layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
         layoutParams.addRule(RelativeLayout.END_OF, checkbox.id)
         layoutParams.addRule(RelativeLayout.ALIGN_END, checkbox.id)
-        //layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-        //layoutParams.bottomMargin = 10
 
         botao_excluir_checkbox.layoutParams = layoutParams
-        //botao_excluir_checkbox.setMargins(0,0,0,5)
         botao_excluir_checkbox.setImageResource(R.drawable.ic_fechar)
         botao_excluir_checkbox.visibility = INVISIBLE
         if (editChecklist) {
             botao_excluir_checkbox.visibility = VISIBLE
         }
-
-        Log.i("Novo checkbox", checkbox.text.toString())
 
         checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             checklistConcluido?.removeIf { i ->
@@ -829,27 +751,15 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     //Código para enviar e-mail para o professor
     private fun getContato(destinatario: String, assunto: String) {
-        /*ACTION_SEND action to launch an email cliente installed on your Android device */
         val mIntent = Intent(Intent.ACTION_SEND)
-        /*To send an email you need to specify mailto: as URI using setData()nethid and
-        data type will be to text / plain using setTyp() method */
         mIntent.data = Uri.parse("mailto")
         mIntent.type = "text/plain"
-        // put recipient email in intent
-        /*recipient is put as array because you nay wanna send email to multiple emails so enter comma(,) separated,
-        it will be stored in array*/
         mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(destinatario))
-        //put the subject in the intent
         mIntent.putExtra(Intent.EXTRA_SUBJECT, assunto)
         try {
-            // start email intent
             startActivity(Intent.createChooser(mIntent, "Choose email cliente..."))
-
         } catch (e: Exception) {
-            // if any thing goes wrong for example no email client application or any exception
-            // get and show exception message
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-
         }
     }
 
