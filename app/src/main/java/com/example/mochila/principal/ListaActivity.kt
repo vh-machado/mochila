@@ -10,14 +10,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.core.view.get
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.load
 import com.example.mochila.R
 import com.example.mochila.bancoDados.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_lista.*
 import kotlinx.android.synthetic.main.janela_registro_disciplina.*
+import kotlinx.android.synthetic.main.janela_registro_disciplina.view.*
 import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.*
+import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.botao_fechar
 import java.util.*
 
 class ListaActivity : AppCompatActivity() {
@@ -35,6 +40,7 @@ class ListaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
 
+        iv_perfil_miniatura.load(FirebaseAuth.getInstance().currentUser?.photoUrl)
         // Definir as abas das listas/disciplinas
         setTabs()
 
@@ -52,7 +58,7 @@ class ListaActivity : AppCompatActivity() {
         }
         */
 
-        botao_menu.setOnClickListener {
+        iv_perfil_miniatura.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }
         //Toast.makeText(this, viewModelUser.userList.value, Toast.LENGTH_LONG).show()
@@ -153,66 +159,81 @@ class ListaActivity : AppCompatActivity() {
         //builder.window!!.setLayout(700, 1100)
         builder.show()
 
+        var textoValido = false
         view.botao_cria_tarefa.setOnClickListener {
+            if (textoValido) {
+                var tabNomeDisciplina =
+                    viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
+                var tabIdDisciplina: String? = null
+                var tamanhoLista = 0
+                var disciplinaDados: DisciplinasEntity? = null
+                Log.i("Tab nome", tabNomeDisciplina)
+                viewModelDisciplinas.disciplinasList.value?.forEach {
+                    if (it.nomeDisciplina == tabNomeDisciplina) {
+                        tabIdDisciplina = it.disciplinaId
+                        tamanhoLista = it.quantidadeTarefa
+                        disciplinaDados = it
 
-            var tabNomeDisciplina =
-                viewPager_Lista.adapter?.getPageTitle(viewPager_Lista.currentItem).toString()
-            var tabIdDisciplina: String? = null
-            var tamanhoLista = 0
-            var disciplinaDados: DisciplinasEntity? = null
-            Log.i("Tab nome", tabNomeDisciplina)
-            viewModelDisciplinas.disciplinasList.value?.forEach {
-                if (it.nomeDisciplina == tabNomeDisciplina) {
-                    tabIdDisciplina = it.disciplinaId
-                    tamanhoLista = it.quantidadeTarefa
-                    disciplinaDados = it
-
+                    }
                 }
+
+                var novaTarefaId = UUID.randomUUID().toString()
+                viewModelTarefa.saveNewMedia(
+                    TarefaEntity(
+                        novaTarefaId,
+                        tabIdDisciplina!!,
+                        view.input_titulo_tarefa.text.toString(),
+                        "",
+                        "",
+                        false,
+                        arrayListOf(""),
+                        arrayListOf(
+                            "Apresentação",
+                            "Cálculo",
+                            "Escrita",
+                            "Estudo",
+                            "Leitura",
+                            "Pesquisa",
+                            "Grupo",
+                            "Vídeo",
+                            "Vídeo-aula"
+                        ),
+                        arrayListOf(),
+                        arrayListOf()
+                    )
+                )
+                Log.i("Tarefa Adicionada", viewModelTarefa.tarefaList.value.toString())
+                Log.i("Tarefas salvas", viewModelTarefa.tarefaList.value.toString())
+                viewModelDisciplinas.updateMedia(
+                    DisciplinasEntity(
+                        disciplinaDados!!.disciplinaId,
+                        disciplinaDados!!.usuarioId,
+                        disciplinaDados!!.nomeDisciplina,
+                        disciplinaDados!!.nomeProfessor,
+                        disciplinaDados!!.emailProfessor,
+                        (tamanhoLista + 1)
+                    )
+                )
+
+                val intent = Intent(this, TarefaActivity::class.java)
+                intent.putExtra("idTarefa", novaTarefaId)
+                intent.putExtra("idDisciplina", disciplinaDados!!.disciplinaId)
+                startActivity(intent)
+                finish()
+                builder.dismiss()
+            } else {
+                view.input_layout.error = "Campo obrigatório"
             }
+        }
 
-            viewModelTarefa.saveNewMedia(
-                TarefaEntity(
-                    tamanhoLista.toString(),
-                    tabIdDisciplina!!,
-                    view.input_titulo_tarefa.text.toString(),
-                    "",
-                    "",
-                    false,
-                    arrayListOf(""),
-                    arrayListOf(
-                        "Apresentação",
-                        "Cálculo",
-                        "Escrita",
-                        "Estudo",
-                        "Leitura",
-                        "Pesquisa",
-                        "Grupo",
-                        "Vídeo",
-                        "Vídeo-aula"
-                    ),
-                    arrayListOf(),
-                    arrayListOf()
-                )
-            )
-            Log.i("Tarefa Adicionada", viewModelTarefa.tarefaList.value.toString())
-            Log.i("Tarefas salvas", viewModelTarefa.tarefaList.value.toString())
-            viewModelDisciplinas.updateMedia(
-                DisciplinasEntity(
-                    disciplinaDados!!.disciplinaId,
-                    disciplinaDados!!.usuarioId,
-                    disciplinaDados!!.nomeDisciplina,
-                    disciplinaDados!!.nomeProfessor,
-                    disciplinaDados!!.emailProfessor,
-                    (tamanhoLista + 1)
-                )
-            )
-
-            val intent = Intent(this, TarefaActivity::class.java)
-            intent.putExtra("idTarefa", tamanhoLista.toString())
-            intent.putExtra("idDisciplina", disciplinaDados!!.disciplinaId)
-            startActivity(intent)
-            finish()
-            builder.dismiss()
+        view.input_titulo_tarefa.doOnTextChanged { text, start, before, count ->
+            if (text.isNullOrBlank()) {
+                textoValido = false
+                view.input_layout.error = "Campo obrigatório"
+            } else {
+                textoValido = true
+                view.input_layout.error = null
+            }
         }
 
         view.botao_fechar.setOnClickListener {

@@ -85,6 +85,10 @@ dependencies {
 
     // Imagem Circular
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    // Coil
+    implementation 'io.coil-kt:coil:1.2.2'
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     // Firebase Auth
     implementation platform('com.google.firebase:firebase-bom:28.0.1')

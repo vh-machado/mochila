@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.example.mochila.R
 import com.example.mochila.bancoDados.DisciplinasViewModel
@@ -83,8 +84,16 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             })
         }
 
-        var idTarefa = intent.getSerializableExtra("idTarefa") as String
-        var idDisciplina = intent.getSerializableExtra("idDisciplina") as String
+        var idTarefa = ""
+        var idDisciplina = ""
+        if (intent.hasExtra("tarefaDados")){
+            var tarefaDados = intent.getSerializableExtra("tarefaDados") as TarefaEntity
+            idTarefa = tarefaDados.tarefaId
+            idDisciplina = tarefaDados.disciplinaId
+        } else {
+            idTarefa = intent.getSerializableExtra("idTarefa") as String
+            idDisciplina = intent.getSerializableExtra("idDisciplina") as String
+        }
         var cardTarefaConcluida = intent.getSerializableExtra("tarefaConcluida") as Boolean?
         Log.i("idTarefa", idTarefa)
         Log.i("idDisciplina", idDisciplina)
@@ -113,7 +122,7 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         }
          */
 
-        botao_menu.setOnClickListener {
+        botao_voltar_tarefa.setOnClickListener {
             val intent = Intent(this, ListaActivity::class.java)
             intent.putExtra("disciplinaNome", disciplinaNome)
             Log.i("disciplinaNome", disciplinaNome)
@@ -260,25 +269,18 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         cardConcluir.setOnClickListener {
             AlertConcluir()
-
         }
 
 
     }
 
     // Cria o menu de opções da tarefa
-    fun showPopup(v: View){
-        PopupMenu(this,v).apply {
+    fun showPopup(v: View) {
+        PopupMenu(this, v).apply {
             setOnMenuItemClickListener(this@TarefaActivity)
             inflate(R.menu.tarefa_menu)
             show()
         }
-        /*
-        val popup = PopupMenu(this, v)
-        popup.setOnMenuItemClickListener(this)
-        val inflater: MenuInflater = popup.menuInflater
-        inflater.inflate(R.menu.tarefa_menu, popup.menu)
-        popup.show()*/
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -354,14 +356,30 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         view.icone_janela.setImageResource(R.drawable.ic_editar)
         view.textview_janela.text = "Renomeando tarefa"
         view.botao_cria_tarefa.text = "Renomear"
+        view.input_titulo_tarefa.setText(tarefaAtual?.titulo)
 
-        view.botao_cria_tarefa.setOnClickListener{
-            viewModelTarefa.atualizaTitulo(
-                view.input_titulo_tarefa.text.toString(),
-                tarefaAtual!!.tarefaId,
-                tarefaAtual!!.disciplinaId
-            )
-            builder.dismiss()
+        var textoValido = false
+        view.botao_cria_tarefa.setOnClickListener {
+            if (textoValido) {
+                viewModelTarefa.atualizaTitulo(
+                    view.input_titulo_tarefa.text.toString(),
+                    tarefaAtual!!.tarefaId,
+                    tarefaAtual!!.disciplinaId
+                )
+                builder.dismiss()
+            } else {
+                view.input_layout.error = "Campo obrigatório"
+            }
+        }
+
+        view.input_titulo_tarefa.doOnTextChanged { text, start, before, count ->
+            if (text.isNullOrBlank()) {
+                textoValido = false
+                view.input_layout.error = "Campo obrigatório"
+            } else {
+                textoValido = true
+                view.input_layout.error = null
+            }
         }
 
         view.botao_fechar.setOnClickListener {
@@ -376,14 +394,14 @@ class TarefaActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         builder.setPositiveButton("Sim") { dialog, which ->
 
             // Excluir dados da tarefa atual do banco de dados
-            viewModelTarefa.removeTarefa(tarefaAtual!!)
-            Log.i("Tarefa excluída", viewModelTarefa.tarefaList.value.toString())
-            Toast.makeText(this, "Tarefa excluída", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ListaActivity::class.java)
             intent.putExtra("disciplinaNome", disciplinaNome)
             startActivity(intent)
             finish()
+            Toast.makeText(this, "Tarefa excluída", Toast.LENGTH_SHORT).show()
+            viewModelTarefa.removeTarefa(tarefaAtual!!)
+            Log.i("Tarefa excluída", viewModelTarefa.tarefaList.value.toString())
         }
         builder.setNegativeButton("Cancelar") { dialog, which ->
             dialog.dismiss()

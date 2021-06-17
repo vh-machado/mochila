@@ -20,9 +20,10 @@
             android:paddingRight="4dp">
 
             <ImageView
-                android:id="@+id/botao_menu"
+                android:id="@+id/botao_voltar_tarefa"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_margin="8dp"
                 android:padding="5dp"
                 android:src="@drawable/arrow_back" />
@@ -31,8 +32,9 @@
                 android:id="@+id/mochila_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_margin="8dp"
-                android:layout_toEndOf="@id/botao_menu"
+                android:layout_toEndOf="@id/botao_voltar_tarefa"
                 android:fontFamily="@font/fredoka_one"
                 android:padding="4dp"
                 android:text="MOCHILA"
@@ -43,6 +45,7 @@
                 android:id="@+id/textView_lista_disciplina"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_toEndOf="@id/mochila_menu"
@@ -60,6 +63,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/gunmetal"

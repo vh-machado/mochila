@@ -4,15 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
-import android.view.ViewGroup
+import android.view.*
+import android.view.View.*
 import android.widget.Toast
+import coil.load
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +27,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_lista.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_registro.*
-import kotlinx.android.synthetic.main.activity_registro.botao_menu
+import kotlinx.android.synthetic.main.activity_registro.botao_voltar_registro
+import kotlinx.android.synthetic.main.activity_registro.view.*
 import kotlinx.android.synthetic.main.fragment_disciplina.view.*
 import kotlinx.android.synthetic.main.janela_dados_disciplina.*
 import kotlinx.android.synthetic.main.janela_dados_disciplina.view.*
@@ -38,6 +37,7 @@ import kotlinx.android.synthetic.main.janela_registro_disciplina.view.*
 import kotlinx.android.synthetic.main.janela_registro_disciplina.view.botao_fechar
 import kotlinx.android.synthetic.main.janela_registro_disciplina.view.campo_email_professor
 import kotlinx.android.synthetic.main.janela_registro_disciplina.view.campo_nome_professor
+import kotlinx.android.synthetic.main.janela_titulo_tarefa.view.*
 
 class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplinaClickListener {
     private lateinit var viewModelUser: UsersViewModel
@@ -56,7 +56,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
-        //iv_perfil.setImageResource(FirebaseAuth.getInstance().currentUser?.photoUrl)
+        iv_perfil.load(FirebaseAuth.getInstance().currentUser?.photoUrl)
         textview_username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
         textview_useremail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
 
@@ -64,7 +64,7 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
             createAlertAddDisciplina()
         }
 
-        botao_menu.setOnClickListener {
+        botao_voltar_registro.setOnClickListener {
             startActivity(Intent(this, ListaActivity::class.java))
         }
 
@@ -106,9 +106,9 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
         }
 
-        viewModelTarefa.tarefaList.observe(this){
+        viewModelTarefa.tarefaList.observe(this) {
             listaTarefas = it
-            Log.i("listaTarefas",listaTarefas.toString())
+            Log.i("listaTarefas", listaTarefas.toString())
         }
 
     }
@@ -121,24 +121,37 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
         var window = builder.window
         window!!.setGravity(Gravity.CENTER)
         builder.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        builder.window!!.setLayout(700, 1240)
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        //builder.window!!.setLayout(700, 1240)
         builder.show()
 
-
-
+        var textoValido = false
+        /*
+        fun validarCampoRegistroDisciplina(
+            campoDisciplina: String,
+            campoProf: String,
+            campoEmailProf: String
+        ): Boolean {
+            if (campoDisciplina.isNullOrBlank() == true || campoProf.isNullOrBlank() == true || campoEmailProf.isNullOrBlank() == true) {
+                Toast.makeText(
+                    this,
+                    "Nenhum campo pode ficar vazio. Certifique-se que todos os campos foram preenchidos",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return true
+            } else {
+                return false
+            }
+        }
+        */
         view.botao_add_disciplina.setOnClickListener {
+            val disciplina = view.campo_nome_disciplina.getText().toString()
+            val nomeProfessor = view.campo_nome_professor.getText().toString()
+            val emailProfessor = view.campo_email_professor.getText().toString()
 
-
-                var disciplina = view.campo_nome_disciplina.getText().toString()
-                var nomeProfessor = view.campo_nome_professor.getText().toString()
-                var emailProfessor = view.campo_email_professor.getText().toString()
-
-                Log.i(
-                    "Disciplinas não-atualizadas",
-                    viewModelDisciplinas.disciplinasList.value.toString()
-                )
-                // Atualiza a disciplina
-                //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+            // Atualiza a disciplina
+            //viewModelUser.atualizaDisciplinas(disciplinas, Firebase.auth.currentUser!!.uid)
+            if (textoValido) {
                 viewModelDisciplinas.saveNewMedia(
                     DisciplinasEntity(
                         UUID.randomUUID().toString(),
@@ -150,17 +163,25 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
                     )
                 )
-                Log.i(
-                    "Disciplinas atualizadas",
-                    viewModelDisciplinas.disciplinasList.value.toString()
-                )
                 builder.dismiss()
-
-            
+            } else {
+                view.input_layout1_registro.error = "Campo obrigatório"
+            }
 
         }
+
+        view.campo_nome_disciplina.doOnTextChanged { text, start, before, count ->
+            if (text.isNullOrBlank()) {
+                textoValido = false
+                view.input_layout1_registro.error = "Campo obrigatório"
+            } else {
+                textoValido = true
+                view.input_layout1_registro.error = null
+            }
+        }
+
         view.botao_fechar.setOnClickListener {
-                builder.dismiss()
+            builder.dismiss()
         }
 
     }
@@ -215,18 +236,6 @@ class RegistroActivity : AppCompatActivity(), CardDisciplinaAdapter.OnDisciplina
 
 
             builder.dismiss()
-        }
-    }
-     fun validarCampoRegistroDisciplina():Boolean{
-        val nomeDisciplina1 = campo_nome_disciplina.text.toString()
-        val nomeProfessor1 = campo_nome_professor.text.toString()
-        val infoEmail1 = campo_email_professor.text.toString()
-        if(nomeDisciplina1.isNullOrBlank() == true || nomeProfessor1.isNullOrBlank()== true || infoEmail1.isNullOrBlank()== true){
-            Toast.makeText(this,"Nenhum campo pode ficar vazio. Certifique-se que todos os campos foram preenchidos", Toast.LENGTH_SHORT).show()
-            return true
-        }
-          else{
-              return false
         }
     }
 
